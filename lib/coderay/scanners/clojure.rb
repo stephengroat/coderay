@@ -178,7 +178,7 @@ module CodeRay
               state = self[1] ? :regexp : :string
               encoder.begin_group state
               encoder.text_token match, :delimiter
-            elsif match = scan(/#{NUM}/o) and not matched.empty?
+            elsif (match = scan(/#{NUM}/o)) && (not matched.empty?)
               encoder.text_token match, match[/[.e\/]/i] ? :float : :integer
             else
               encoder.text_token getch, :error

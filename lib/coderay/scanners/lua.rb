@@ -89,11 +89,11 @@ module Scanners
             kind = IDENT_KIND[match]
 
             # Extra highlighting for entities following certain keywords
-            if kind == :keyword and match == 'function'
+            if (kind == :keyword) && (match == 'function')
               state = :function_expected
-            elsif kind == :keyword and match == 'goto'
+            elsif (kind == :keyword) && (match == 'goto')
               state = :goto_label_expected
-            elsif kind == :keyword and match == 'local'
+            elsif (kind == :keyword) && (match == 'local')
               state = :local_var_expected
             end
 

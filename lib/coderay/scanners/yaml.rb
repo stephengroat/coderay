@@ -30,7 +30,7 @@ module Scanners
         elsif match = scan(/#.*/)
           encoder.text_token match, :comment
 
-        elsif bol? and case
+        elsif bol? && case
           when match = scan(/---|\.\.\./)
             encoder.begin_group :head
             encoder.text_token match, :head
@@ -41,7 +41,7 @@ module Scanners
             next
           end
 
-        elsif state == :value and case
+        elsif (state == :value) && case
           when !check(/(?:"[^"]*")(?=: |:$)/) && match = scan(/"/)
             encoder.begin_group :string
             encoder.text_token match, :delimiter

@@ -205,13 +205,13 @@ module Test
 
       def keyword_display(array)
         list = array.collect {|e, *| e.to_s}
-        Array === array or list.sort!
+        (Array === array) || list.sort!
         list.collect {|e| e.sub(/^(.)([A-Za-z]+)(?=\w*$)/, '\\1[\\2]')}.join(', ')
       end
 
       def run
         @suite = @collector[self]
-        result = @runner[self] or return false
+        (result = @runner[self]) || (return false)
         Dir.chdir(@workdir) if @workdir
         result.run(@suite, @output_level).passed?
       end

@@ -93,7 +93,7 @@ EOT
 
       private
       def _expected_exception?(actual_exception, exceptions, modules) # :nodoc:
-        exceptions.include?(actual_exception.class) or
+        exceptions.include?(actual_exception.class) ||
           modules.any? {|mod| actual_exception.is_a?(mod)}
       end
 

@@ -65,12 +65,12 @@ module Test
                 sub_suite = recursive_collect(e_name, already_gathered)
                 sub_suites << sub_suite unless(sub_suite.empty?)
               else
-                next if /~\z/ =~ e_name or /\A\.\#/ =~ e
+                next if /~\z/ =~ e_name || /\A\.\#/ =~ e
 
-                if @pattern and !@pattern.empty?
+                if @pattern && !@pattern.empty?
                   next unless @pattern.any? {|pat| pat =~ e_name}
                 end
-                if @exclude and !@exclude.empty?
+                if @exclude && !@exclude.empty?
                   next if @exclude.any? {|pat| pat =~ e_name}
                 end
                 collect_file(e_name, sub_suites, already_gathered)

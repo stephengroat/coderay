@@ -55,7 +55,7 @@ module Encoders
       end
 
       def wrap!(element, *args)
-        return self if not element or element == wrapped_in
+        return self if (not element) || (element == wrapped_in)
 
         case element
         when :div
