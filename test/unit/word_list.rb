@@ -21,9 +21,9 @@ class WordListTest < Test::Unit::TestCase
 
   # make a WordList
   IDENT_KIND = WordList.new(:ident)
-               .add(RESERVED_WORDS, :reserved)
-               .add(PREDEFINED_TYPES, :predefined_type)
-               .add(PREDEFINED_CONSTANTS, :predefined_constant)
+                       .add(RESERVED_WORDS, :reserved)
+                       .add(PREDEFINED_TYPES, :predefined_type)
+                       .add(PREDEFINED_CONSTANTS, :predefined_constant)
 
   def test_word_list_example
     assert_equal :predefined_type, IDENT_KIND['void']

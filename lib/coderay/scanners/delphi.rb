@@ -32,11 +32,11 @@ module Scanners
     ]  # :nodoc:
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident)
-                 .add(KEYWORDS, :keyword)
-                 .add(DIRECTIVES, :directive) # :nodoc:
+                                       .add(KEYWORDS, :keyword)
+                                       .add(DIRECTIVES, :directive) # :nodoc:
 
     NAME_FOLLOWS = WordList::CaseIgnoring.new(false)
-                   .add(%w(procedure function .)) # :nodoc:
+                                         .add(%w(procedure function .)) # :nodoc:
 
     protected
 

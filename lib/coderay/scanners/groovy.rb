@@ -16,8 +16,8 @@ module Scanners
     GROOVY_MAGIC_VARIABLES = %w[it] # :nodoc:
 
     IDENT_KIND = Java::IDENT_KIND.dup
-                 .add(GROOVY_KEYWORDS, :keyword)
-                 .add(GROOVY_MAGIC_VARIABLES, :local_variable) # :nodoc:
+                                 .add(GROOVY_KEYWORDS, :keyword)
+                                 .add(GROOVY_MAGIC_VARIABLES, :local_variable) # :nodoc:
 
     ESCAPE = / [bfnrtv$\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x # :nodoc: no 4-byte unicode chars? U[a-fA-F0-9]{8}
