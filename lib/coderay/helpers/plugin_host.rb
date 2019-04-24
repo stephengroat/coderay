@@ -171,18 +171,14 @@ module CodeRay
         begin
           require path
         rescue LoadError => boom
-          if h.key?(:default)
-            h[:default]
-          else
-            raise PluginNotFound, format('%p could not load plugin %p: %s', self, id, boom)
-          end
+          raise PluginNotFound, format('%p could not load plugin %p: %s', self, id, boom) unless h.key?(:default)
+
+          h[:default] if h.key?(:default)
         else
           # Plugin should have registered by now
-          if h.key? id
-            h[id]
-          else
-            raise PluginNotFound, "No #{name} plugin for #{id.inspect} found in #{path}."
-          end
+          raise PluginNotFound, "No #{name} plugin for #{id.inspect} found in #{path}." unless h.key?(id)
+
+          h[id] if h.key?(id)
         end
       end
     end
@@ -201,11 +197,9 @@ module CodeRay
       when Symbol
         id.to_s
       when String
-        if id[/\w+/] == id
-          id.downcase
-        else
-          raise ArgumentError, "Invalid id given: #{id}"
-        end
+        raise ArgumentError, "Invalid id given: #{id}" unless id[/\w+/] == id
+
+        id.downcase if id[/\w+/] == id
       else
         raise ArgumentError, "Symbol or String expected, but #{id.class} given."
       end
