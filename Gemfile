@@ -15,4 +15,5 @@ group :development do
   gem 'test-unit',        RUBY_VERSION < '1.9' ? '~> 2.0'     : '>= 3.0'
   gem 'json', '>= 1.8' if RUBY_VERSION < '1.9'
   gem 'rdoc',             Gem::Version.new(RUBY_VERSION) < Gem::Version.new('1.9.3') ? '~> 4.2.2' : Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.2.2') ? '< 6' : '>= 6'
+  gem 'rubocop'
 end
