@@ -6,7 +6,7 @@ require 'coderay'
 
 mydir = File.dirname(__FILE__)
 suite = Dir[File.join(mydir, '*.rb')].
-  map { |tc| File.basename(tc).sub(/\.rb$/, '') } - %w'suite for_redcloth'
+        map { |tc| File.basename(tc).sub(/\.rb$/, '') } - %w'suite for_redcloth'
 
 puts "Running basic CodeRay #{CodeRay::VERSION} tests: #{suite.join(', ')}"
 

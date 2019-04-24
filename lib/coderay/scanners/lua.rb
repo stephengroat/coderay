@@ -42,9 +42,9 @@ module Scanners
 
     # Automatic token kind selection for normal words.
     IDENT_KIND = CodeRay::WordList.new(:ident).
-      add(KEYWORDS, :keyword).
-      add(PREDEFINED_CONSTANTS, :predefined_constant).
-      add(PREDEFINED_EXPRESSIONS, :predefined)
+                 add(KEYWORDS, :keyword).
+                 add(PREDEFINED_CONSTANTS, :predefined_constant).
+                 add(PREDEFINED_EXPRESSIONS, :predefined)
 
     protected
 
