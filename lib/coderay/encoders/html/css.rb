@@ -2,14 +2,14 @@ module CodeRay
 module Encoders
   class HTML
     class CSS # :nodoc:
-      attr :stylesheet
+      attr_reader :stylesheet
 
-      def CSS.load_stylesheet(style = nil)
+      def self.load_stylesheet(style = nil)
         CodeRay::Styles[style]
       end
 
       def initialize(style = :default)
-        @styles = Hash.new
+        @styles = {}
         style = CSS.load_stylesheet style
         @stylesheet = [
           style::CSS_MAIN_STYLES,
@@ -24,10 +24,10 @@ module Encoders
 
         style = ''
         1.upto css_classes.size do |offset|
-          break if style = cl[css_classes[offset .. -1]]
+          break if style = cl[css_classes[offset..-1]]
         end
         # warn 'Style not found: %p' % [styles] if style.empty?
-        return style
+        style
       end
 
       private
@@ -52,7 +52,7 @@ module Encoders
           selectors.split(',').each do |selector|
             classes = selector.scan(/[-\w]+/)
             cl = classes.pop
-            @styles[cl] ||= Hash.new
+            @styles[cl] ||= {}
             @styles[cl][classes] = style.to_s.strip.delete(' ').chomp(';')
           end
         end

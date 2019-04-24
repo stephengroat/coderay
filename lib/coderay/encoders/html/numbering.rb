@@ -8,9 +8,7 @@ module Encoders
         options = DEFAULT_OPTIONS.merge options
 
         start = options[:line_number_start]
-        unless start.is_a? Integer
-          raise ArgumentError, 'Invalid value %p for :line_number_start; Integer expected.' % start
-        end
+        raise ArgumentError, format('Invalid value %p for :line_number_start; Integer expected.', start) unless start.is_a? Integer
 
         anchor_prefix = options[:line_number_anchors]
         anchor_prefix = 'line' if anchor_prefix == true
@@ -29,7 +27,7 @@ module Encoders
         bold_every = options[:bold_every]
         highlight_lines = options[:highlight_lines]
         bolding =
-          if bold_every == false && highlight_lines == nil
+          if bold_every == false && highlight_lines.nil?
             anchoring
           elsif highlight_lines.is_a? Enumerable
             highlight_lines = highlight_lines.to_set
@@ -51,16 +49,16 @@ module Encoders
               end
             end
           else
-            raise ArgumentError, 'Invalid value %p for :bolding; false or Integer expected.' % bold_every
+            raise ArgumentError, format('Invalid value %p for :bolding; false or Integer expected.', bold_every)
           end
 
         if position_of_last_newline = output.rindex(RUBY_VERSION >= '1.9' ? /\n/ : "\n")
-          after_last_newline = output[position_of_last_newline + 1 .. -1]
+          after_last_newline = output[position_of_last_newline + 1..-1]
           ends_with_newline = after_last_newline[/\A(?:<\/span>)*\z/]
 
           line_count = if ends_with_newline
             output.count("\n")
-          else
+                       else
             output.count("\n") + 1
                        end
         else
@@ -79,7 +77,7 @@ module Encoders
           end
 
         when :table
-          line_numbers = (start ... start + line_count).map(&bolding).join("\n")
+          line_numbers = (start...start + line_count).map(&bolding).join("\n")
           line_numbers << "\n"
           line_numbers_table_template = Output::TABLE.apply('LINE_NUMBERS', line_numbers)
 
@@ -91,8 +89,7 @@ module Encoders
           raise NotImplementedError, 'The :list option is no longer available. Use :table.'
 
         else
-          raise ArgumentError, 'Unknown value %p for mode: expected one of %p' %
-            [mode, [:table, :inline]]
+          raise ArgumentError, format('Unknown value %p for mode: expected one of %p', mode, %i[table inline])
         end
 
         output

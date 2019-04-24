@@ -2,7 +2,7 @@ require 'test/unit'
 require 'coderay'
 $VERBOSE = true
 
-require File.expand_path('../../lib/assert_warning', __FILE__)
+require File.expand_path('../lib/assert_warning', __dir__)
 
 class LinesOfCodeTest < Test::Unit::TestCase
   def test_creation

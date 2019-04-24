@@ -2,7 +2,11 @@ namespace :test do
   desc 'run functional tests'
   task :functional do
     ruby './test/functional/suite.rb'
-    ruby './test/functional/for_redcloth.rb' unless (''.chop! rescue true)
+    ruby './test/functional/for_redcloth.rb' unless begin
+                                                       ''.chop!
+                                                    rescue StandardError
+                                                       true
+                                                     end
   end
 
   desc 'run unit tests'
@@ -18,26 +22,28 @@ namespace :test do
 
   desc 'update scanner test suite from GitHub'
   task :update_scanner_suite do
-    if File.exist? scanner_suite
-      Dir.chdir File.dirname(scanner_suite) do
-        if File.directory? '.git'
-          puts 'Updating scanner test suite...'
-          sh 'git pull'
-        elsif File.directory? '.svn'
-          raise <<-ERROR
+    unless ENV['SKIP_UPDATE_SCANNER_SUITE']
+      if File.exist? scanner_suite
+        Dir.chdir File.dirname(scanner_suite) do
+          if File.directory? '.git'
+            puts 'Updating scanner test suite...'
+            sh 'git pull'
+          elsif File.directory? '.svn'
+            raise <<-ERROR
 Found the deprecated Subversion scanner test suite in ./#{File.dirname(scanner_suite)}.
 Please rename or remove it and run again to use the GitHub repository:
 
   mv test/scanners test/scanners-old
-          ERROR
-        else
-          raise 'No scanner test suite found.'
+            ERROR
+          else
+            raise 'No scanner test suite found.'
+          end
         end
+      else
+        puts 'Downloading scanner test suite...'
+        sh 'git clone https://github.com/rubychan/coderay-scanner-tests.git test/scanners/'
       end
-    else
-      puts 'Downloading scanner test suite...'
-      sh 'git clone https://github.com/rubychan/coderay-scanner-tests.git test/scanners/'
-    end unless ENV['SKIP_UPDATE_SCANNER_SUITE']
+    end
   end
 
   namespace :scanner do
@@ -80,4 +86,4 @@ Please rename or remove it and run again to use the GitHub repository:
   end
 end
 
-task :test => %w(test:functional test:units test:exe)
+task :test => %w[test:functional test:units test:exe]

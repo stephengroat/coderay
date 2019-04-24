@@ -23,14 +23,17 @@ module Encoders
     def text_token(text, kind)
       super
 
-      if @first
-        @first = false
-      else
-        @out << @sep
-      end if @sep
+      if @sep
+        if @first
+          @first = false
+        else
+          @out << @sep
+        end
+      end
     end
 
     protected
+
     def setup(options)
       super
 

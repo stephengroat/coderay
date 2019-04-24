@@ -274,7 +274,5 @@ module Test # :nodoc:
 end
 
 at_exit do
-  unless $! || Test::Unit.run?
-    exit Test::Unit::AutoRunner.run
-  end
+  exit Test::Unit::AutoRunner.run unless $ERROR_INFO || Test::Unit.run?
 end

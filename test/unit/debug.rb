@@ -15,15 +15,15 @@ class DebugEncoderTest < Test::Unit::TestCase
   TEST_INPUT = CodeRay::Tokens[
     ['10', :integer],
     ['(\\)', :operator],
-    [:begin_group, :string],
+    %i[begin_group string],
     ['test', :content],
-    [:end_group, :string],
-    [:begin_line, :head],
+    %i[end_group string],
+    %i[begin_line head],
     ["\n", :space],
     ["\n  \t", :space],
     ["   \n", :space],
     ['[]', :method],
-    [:end_line, :head],
+    %i[end_line head],
   ].flatten
   TEST_OUTPUT = <<-'DEBUG'.chomp
 integer(10)operator((\\\))string<content(test)>head[
@@ -59,13 +59,13 @@ method([])]
   TEST_OUTPUT = CodeRay::Tokens[
     ['10', :integer],
     ['(\\)', :operator],
-    [:begin_group, :string],
+    %i[begin_group string],
     ['test', :content],
-    [:end_group, :string],
-    [:begin_line, :unknown],
+    %i[end_group string],
+    %i[begin_line unknown],
     ["\n\n  \t   \n", :space],
     ['[]', :method],
-    [:end_line, :unknown],
+    %i[end_line unknown],
   ].flatten
   
   def test_filtering_text_tokens

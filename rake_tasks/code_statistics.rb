@@ -20,7 +20,7 @@ class CodeStatistics
   def initialize(*pairs)
     @pairs = pairs
     @statistics = calculate_statistics
-    @total = if pairs.empty? then nil else calculate_total end
+    @total = pairs.empty? ? nil : calculate_total
   end
 
   # Print a textual table viewing the stats
@@ -28,7 +28,7 @@ class CodeStatistics
   # Intended for console output.
   def print
     print_header
-    @pairs.each { |name, path| print_line name, @statistics[name] }
+    @pairs.each { |name, _path| print_line name, @statistics[name] }
     print_splitter
 
     if @total
@@ -44,11 +44,10 @@ class CodeStatistics
   DEFAULT_FILE_PATTERN = /\.rb$/.freeze
 
   def calculate_statistics
-    @pairs.inject({}) do |stats, (name, path, pattern, is_ruby_code)|
+    @pairs.each_with_object({}) do |(name, path, pattern, is_ruby_code), stats|
       pattern ||= DEFAULT_FILE_PATTERN
       path = File.join path, '*.rb'
       stats[name] = calculate_directory_statistics path, pattern, is_ruby_code
-      stats
     end
   end
 
@@ -135,18 +134,26 @@ class CodeStatistics
   end
 
   def print_line(name, statistics)
-    m_over_c = (statistics[:methods] / (statistics[:classes] + statistics[:modules])) rescue m_over_c = 0
-    loc_over_m = (statistics[:codelines] / statistics[:methods]) - 2 rescue loc_over_m = 0
+    m_over_c = begin
+                 (statistics[:methods] / (statistics[:classes] + statistics[:modules]))
+               rescue StandardError
+                 m_over_c = 0
+               end
+    loc_over_m = begin
+                   (statistics[:codelines] / statistics[:methods]) - 2
+                 rescue StandardError
+                   loc_over_m = 0
+                 end
 
     name = if name[TEST_TYPES]
       "T #{name}"
-    else
+           else
       "  #{name}"
            end
 
-    line = '| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |' % (
+    line = format('| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |', (
       [name, *statistics.values_at(:files, :lines, :codelines, :comments, :classes, :modules, :methods)] +
-      [m_over_c, loc_over_m] )
+      [m_over_c, loc_over_m]))
 
     puts line
   end
@@ -155,13 +162,13 @@ class CodeStatistics
     code = calculate_code
     tests = calculate_tests
 
-    puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{sprintf("%.2f", tests.to_f / code)}]"
+    puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{format('%.2f', tests.to_f / code)}]"
     puts ''
   end
 end
 
 # Run a test script.
-if $0 == __FILE__
+if $PROGRAM_NAME == __FILE__
   $VERBOSE = true
   CodeStatistics.new(
     ['This dir', File.dirname(__FILE__)]

@@ -142,7 +142,7 @@ module Encoders
     HTML_ESCAPE_PATTERN = /[\t"&><\0-\x8\xB-\x1F]/.freeze
 
     TOKEN_KIND_TO_INFO = Hash.new do |h, kind|
-      h[kind] = kind.to_s.gsub(/_/, ' ').gsub(/\b\w/) { $&.capitalize }
+      h[kind] = kind.to_s.tr('_', ' ').gsub(/\b\w/) { $&.capitalize }
     end
 
     TRANSPARENT_TOKEN_KINDS = Set[
@@ -199,9 +199,7 @@ module Encoders
       if @out.respond_to? :to_str
         @out.extend Output
         @out.css = @css
-        if options[:line_numbers]
-          Numbering.number! @out, options[:line_numbers], options
-        end
+        Numbering.number! @out, options[:line_numbers], options if options[:line_numbers]
         @out.wrap! options[:wrap]
         @out.apply_title! options[:title]
       end
@@ -220,7 +218,7 @@ module Encoders
       style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
 
       text = text.gsub(/#{HTML_ESCAPE_PATTERN}/o) { |m| @HTML_ESCAPE[m] } if text =~ /#{HTML_ESCAPE_PATTERN}/o
-      text = break_lines(text, style) if @break_lines && (style || @opened.size > 0) && text.index("\n")
+      text = break_lines(text, style) if @break_lines && (style || !@opened.empty?) && text.index("\n")
 
       if style
         @out << style << text << '</span>'
@@ -249,7 +247,7 @@ module Encoders
         else
           style.sub('>', ' class="line">')
                 end
-      else
+              else
         '<span class="line">'
               end
       @opened << kind
@@ -264,13 +262,9 @@ module Encoders
     protected
 
     def check_options!(options)
-      unless [false, nil, :debug, :info, :info_long].include? options[:hint]
-        raise ArgumentError, 'Unknown value %p for :hint; expected :info, :info_long, :debug, false, or nil.' % [options[:hint]]
-      end
+      raise ArgumentError, format('Unknown value %p for :hint; expected :info, :info_long, :debug, false, or nil.', options[:hint]) unless [false, nil, :debug, :info, :info_long].include? options[:hint]
 
-      unless [:class, :style].include? options[:css]
-        raise ArgumentError, 'Unknown value %p for :css.' % [options[:css]]
-      end
+      raise ArgumentError, format('Unknown value %p for :css.', options[:css]) unless %i[class style].include? options[:css]
 
       options[:break_lines] = true if options[:line_numbers] == :inline
     end
@@ -306,9 +300,7 @@ module Encoders
     end
 
     def check_group_nesting(name, kind)
-      if @opened.empty? || @opened.last != kind
-        warn "Malformed token stream: Trying to close a #{name} (%p) that is not open. Open are: %p." % [kind, @opened[1..-1]]
-      end
+      warn format("Malformed token stream: Trying to close a #{name} (%p) that is not open. Open are: %p.", kind, @opened[1..-1]) if @opened.empty? || @opened.last != kind
     end
 
     def break_lines(text, style)

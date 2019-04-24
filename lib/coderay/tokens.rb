@@ -91,7 +91,7 @@ module CodeRay
       part_size = 0
       size = sizes.first
       i = 0
-      self.each do |item|
+      each do |item|
         case content
         when nil
           content = item
@@ -134,12 +134,12 @@ module CodeRay
           when :end_group, :end_line
             opened.pop
           else
-            raise ArgumentError, 'Unknown token action: %p, kind = %p' % [content, item]
+            raise ArgumentError, format('Unknown token action: %p, kind = %p', content, item)
           end
           part << content << item
           content = nil
         else
-          raise ArgumentError, 'Token input junk: %p, kind = %p' % [content, item]
+          raise ArgumentError, format('Token input junk: %p, kind = %p', content, item)
         end
       end
       parts << part
@@ -153,10 +153,21 @@ module CodeRay
     end
 
     alias text_token push
-    def begin_group(kind); push :begin_group, kind end
-    def end_group(kind); push :end_group, kind end
-    def begin_line(kind); push :begin_line, kind end
-    def end_line(kind); push :end_line, kind end
+    def begin_group(kind) 
+      push :begin_group, kind 
+    end
+
+    def end_group(kind) 
+      push :end_group, kind 
+    end
+
+    def begin_line(kind) 
+      push :begin_line, kind 
+    end
+
+    def end_line(kind) 
+      push :end_line, kind 
+    end
     alias tokens concat
   end
 end

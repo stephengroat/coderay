@@ -40,7 +40,7 @@ module Scanners
           states.pop
 
         elsif case states.last
-          when :initial, :media, :sass_inline
+              when :initial, :media, :sass_inline
             if match = scan(/(?>#{RE::Ident})(?!\()/ox)
               encoder.text_token match, value_expected ? :value : (check(/.*:(?![a-z])/) ? :key : :tag)
               next
@@ -75,7 +75,7 @@ module Scanners
               next
             end
 
-          when :block
+              when :block
             if match = scan(/(?>#{RE::Ident})(?!\()/ox)
               if value_expected
                 encoder.text_token match, :value
@@ -85,7 +85,7 @@ module Scanners
               next
             end
 
-          when :sqstring, :dqstring
+              when :sqstring, :dqstring
             if match = scan(states.last == :sqstring ? /(?:[^\n\'\#]+|\\\n|#{RE::Escape}|#(?!\{))+/o : /(?:[^\n\"\#]+|\\\n|#{RE::Escape}|#(?!\{))+/o)
               encoder.text_token match, :content
             elsif match = scan(/['"]/)
@@ -101,18 +101,18 @@ module Scanners
               encoder.text_token match, :error unless match.empty?
               states.pop
             else
-              raise_inspect "else case #{states.last} reached; %p not handled." % peek(1), encoder
+              raise_inspect format("else case #{states.last} reached; %p not handled.", peek(1)), encoder
             end
 
-          when :include
+              when :include
             if match = scan(/[^\s'",]+/)
               encoder.text_token match, :include
               next
             end
 
-          else
+              else
             #:nocov:
-            raise_inspect 'Unknown state: %p' % [states.last], encoder
+            raise_inspect format('Unknown state: %p', states.last), encoder
             #:nocov:
 
           end
@@ -144,9 +144,7 @@ module Scanners
         elsif match = scan(/\}/)
           value_expected = false
           encoder.text_token match, :operator
-          if states.last == :block || states.last == :media
-            states.pop
-          end
+          states.pop if states.last == :block || states.last == :media
 
         elsif match = scan(/['"]/)
           encoder.begin_group :string
@@ -209,9 +207,7 @@ module Scanners
 
       states.pop if states.last == :include
 
-      if options[:keep_state]
-        @state = states.dup
-      end
+      @state = states.dup if options[:keep_state]
 
       while state = states.pop
         if state == :sass_inline

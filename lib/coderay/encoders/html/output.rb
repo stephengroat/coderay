@@ -50,25 +50,25 @@ module Encoders
       end
 
       def apply_title!(title)
-        sub!(/(<title>)(<\/title>)/) { $1 + title + $2 }
+        sub!(/(<title>)(<\/title>)/) { Regexp.last_match(1) + title + Regexp.last_match(2) }
         self
       end
 
       def wrap!(element, *args)
-        return self if (not element) || (element == wrapped_in)
+        return self if !element || (element == wrapped_in)
 
         case element
         when :div
-          raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? nil
+          raise format("Can't wrap %p in %p", wrapped_in, element) unless wrapped_in? nil
 
           wrap_in! DIV
         when :span
-          raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? nil
+          raise format("Can't wrap %p in %p", wrapped_in, element) unless wrapped_in? nil
 
           wrap_in! SPAN
         when :page
           wrap! :div if wrapped_in? nil
-          raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? :div
+          raise format("Can't wrap %p in %p", wrapped_in, element) unless wrapped_in? :div
 
           wrap_in! Output.page_template_for_css(@css)
           if args.first.is_a?(Hash) && title = args.first[:title]
@@ -76,7 +76,7 @@ module Encoders
           end
           self
         else
-          raise 'Unknown value %p for :wrap' % element
+          raise format('Unknown value %p for :wrap', element)
         end
         @wrapped_in = element
         self
@@ -86,7 +86,7 @@ module Encoders
         Output.make_stylesheet @css, in_tag
       end
 
-#-- don't include the templates in docu
+      #-- don't include the templates in docu
 
       class Template < String # :nodoc:
         def self.wrap!(str, template, target)
@@ -95,7 +95,7 @@ module Encoders
             str[0, 0] = $`
             str << $'
           else
-            raise 'Template target <%%%p%%> not found' % target
+            raise format('Template target <%%%p%%> not found', target)
           end
         end
 
@@ -104,7 +104,7 @@ module Encoders
           if self =~ target
             Template.new($` + replacement + $')
           else
-            raise 'Template target <%%%p%%> not found' % target
+            raise format('Template target <%%%p%%> not found', target)
           end
         end
       end

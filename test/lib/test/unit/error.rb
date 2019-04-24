@@ -37,13 +37,13 @@ module Test
 
       # Returns a brief version of the error description.
       def short_display
-        "#@test_name: #{message.split("\n")[0]}"
+        "#{@test_name}: #{message.split("\n")[0]}"
       end
 
       # Returns a verbose version of the error description.
       def long_display
         backtrace = filter_backtrace(@exception.backtrace).join("\n    ")
-        "Error:\n#@test_name:\n#{message}\n    #{backtrace}"
+        "Error:\n#{@test_name}:\n#{message}\n    #{backtrace}"
       end
 
       # Overridden to return long_display.

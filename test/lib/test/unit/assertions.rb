@@ -40,11 +40,10 @@ module Test
       #   end
 
       public
-      def assert_block(message='assert_block failed.') # :yields:
+
+      def assert_block(message = 'assert_block failed.') # :yields:
         _wrap_assertion do
-          if (! yield)
-            raise AssertionFailedError.new(message.to_s)
-          end
+          raise AssertionFailedError, message.to_s unless yield
         end
       end
 
@@ -55,7 +54,8 @@ module Test
       #   assert [1, 2].include?(5)
 
       public
-      def assert(boolean, message=nil)
+
+      def assert(boolean, message = nil)
         _wrap_assertion do
           assert_block('assert should not be called with a block.') { !block_given? }
           assert_block(build_message(message, '<?> is not true.', boolean)) { boolean }
@@ -73,7 +73,8 @@ module Test
       #   assert_equal 'MY STRING', 'my string'.upcase
 
       public
-      def assert_equal(expected, actual, message=nil)
+
+      def assert_equal(expected, actual, message = nil)
         full_message = build_message(message, <<EOT, expected, actual)
 <?> expected but was
 <?>.
@@ -82,6 +83,7 @@ EOT
       end
 
       private
+
       def _check_exception_class(args) # :nodoc:
         args.partition do |klass|
           next if klass.instance_of?(Module)
@@ -92,9 +94,10 @@ EOT
       end
 
       private
+
       def _expected_exception?(actual_exception, exceptions, modules) # :nodoc:
         exceptions.include?(actual_exception.class) ||
-          modules.any? {|mod| actual_exception.is_a?(mod)}
+          modules.any? { |mod| actual_exception.is_a?(mod) }
       end
 
       ##
@@ -106,11 +109,12 @@ EOT
       #   end
 
       public
+
       def assert_raise(*args)
         _wrap_assertion do
           message = if Module === args.last
             ''
-          else
+                    else
             args.pop
                     end
           exceptions, modules = _check_exception_class(args)
@@ -126,7 +130,7 @@ EOT
             false
           end
           full_message = build_message(message, "<?> exception expected but was\n?", expected, actual_exception)
-          assert_block(full_message) {_expected_exception?(actual_exception, exceptions, modules)}
+          assert_block(full_message) { _expected_exception?(actual_exception, exceptions, modules) }
           actual_exception
         end
       end
@@ -137,6 +141,7 @@ EOT
       # Will be deprecated in 1.9, and removed in 2.0.
 
       public
+
       def assert_raises(*args, &block)
         assert_raise(*args, &block)
       end
@@ -148,7 +153,8 @@ EOT
       #   assert_instance_of String, 'foo'
 
       public
-      def assert_instance_of(klass, object, message='')
+
+      def assert_instance_of(klass, object, message = '')
         _wrap_assertion do
           assert_equal(Class, klass.class, 'assert_instance_of takes a Class as its first argument')
           full_message = build_message(message, <<EOT, object, klass, object.class)
@@ -156,7 +162,7 @@ EOT
 <?> but was
 <?>.
 EOT
-          assert_block(full_message){object.instance_of?(klass)}
+          assert_block(full_message) { object.instance_of?(klass) }
         end
       end
 
@@ -167,7 +173,8 @@ EOT
       #   assert_nil [1, 2].uniq!
 
       public
-      def assert_nil(object, message='')
+
+      def assert_nil(object, message = '')
         assert_equal(nil, object, message)
       end
 
@@ -178,11 +185,12 @@ EOT
       #   assert_kind_of Object, 'foo'
 
       public
-      def assert_kind_of(klass, object, message='')
+
+      def assert_kind_of(klass, object, message = '')
         _wrap_assertion do
-          assert(klass.kind_of?(Module), 'The first parameter to assert_kind_of should be a kind_of Module.')
+          assert(klass.is_a?(Module), 'The first parameter to assert_kind_of should be a kind_of Module.')
           full_message = build_message(message, "<?>\nexpected to be kind_of\\?\n<?> but was\n<?>.", object, klass, object.class)
-          assert_block(full_message){object.kind_of?(klass)}
+          assert_block(full_message) { object.is_a?(klass) }
         end
       end
 
@@ -193,12 +201,13 @@ EOT
       #   assert_respond_to 'bugbear', :slice
 
       public
-      def assert_respond_to(object, method, message='')
+
+      def assert_respond_to(object, method, message = '')
         _wrap_assertion do
           full_message = build_message(nil, "<?>\ngiven as the method name argument to #assert_respond_to must be a Symbol or #respond_to\\?(:to_str).", method)
 
           assert_block(full_message) do
-            method.kind_of?(Symbol) || method.respond_to?(:to_str)
+            method.is_a?(Symbol) || method.respond_to?(:to_str)
           end
           full_message = build_message(message, <<EOT, object, object.class, method)
 <?>
@@ -216,12 +225,13 @@ EOT
       #   assert_match(/\d+/, 'five, 6, seven')
 
       public
-      def assert_match(pattern, string, message='')
+
+      def assert_match(pattern, string, message = '')
         _wrap_assertion do
-          pattern = case(pattern)
-            when String
+          pattern = case pattern
+                    when String
               Regexp.new(Regexp.escape(pattern))
-            else
+                    else
               pattern
           end
           full_message = build_message(message, "<?> expected to be =~\n<?>.", string, pattern)
@@ -238,7 +248,8 @@ EOT
       #   assert_same o, o
 
       public
-      def assert_same(expected, actual, message='')
+
+      def assert_same(expected, actual, message = '')
         full_message = build_message(message, <<EOT, expected, expected.__id__, actual, actual.__id__)
 <?>
 with id <?> expected to be equal\\? to
@@ -257,10 +268,11 @@ EOT
       #   assert_operator 5, :>=, 4
 
       public
-      def assert_operator(object1, operator, object2, message='')
+
+      def assert_operator(object1, operator, object2, message = '')
         _wrap_assertion do
           full_message = build_message(nil, "<?>\ngiven as the operator for #assert_operator must be a Symbol or #respond_to\\?(:to_str).", operator)
-          assert_block(full_message){operator.kind_of?(Symbol) || operator.respond_to?(:to_str)}
+          assert_block(full_message) { operator.is_a?(Symbol) || operator.respond_to?(:to_str) }
           full_message = build_message(message, <<EOT, object1, AssertionMessage.literal(operator), object2)
 <?> expected to be
 ?
@@ -279,20 +291,21 @@ EOT
       #   end
 
       public
+
       def assert_nothing_raised(*args)
         _wrap_assertion do
           message = if Module === args.last
             ''
-          else
+                    else
             args.pop
                     end
           exceptions, modules = _check_exception_class(args)
           begin
             yield
           rescue Exception => e
-            if ((args.empty? && !e.instance_of?(AssertionFailedError)) ||
-                _expected_exception?(e, exceptions, modules))
-              assert_block(build_message(message, "Exception raised:\n?", e)){false}
+            if (args.empty? && !e.instance_of?(AssertionFailedError)) ||
+               _expected_exception?(e, exceptions, modules)
+              assert_block(build_message(message, "Exception raised:\n?", e)) { false }
             else
               raise
             end
@@ -308,8 +321,9 @@ EOT
       #   flunk 'Not done testing yet.'
 
       public
-      def flunk(message='Flunked')
-        assert_block(build_message(message)){false}
+
+      def flunk(message = 'Flunked')
+        assert_block(build_message(message)) { false }
       end
 
       ##
@@ -319,7 +333,8 @@ EOT
       #   assert_not_same Object.new, Object.new
 
       public
-      def assert_not_same(expected, actual, message='')
+
+      def assert_not_same(expected, actual, message = '')
         full_message = build_message(message, <<EOT, expected, expected.__id__, actual, actual.__id__)
 <?>
 with id <?> expected to not be equal\\? to
@@ -336,7 +351,8 @@ EOT
       #   assert_not_equal 'some string', 5
 
       public
-      def assert_not_equal(expected, actual, message='')
+
+      def assert_not_equal(expected, actual, message = '')
         full_message = build_message(message, "<?> expected to be != to\n<?>.", expected, actual)
         assert_block(full_message) { expected != actual }
       end
@@ -348,9 +364,10 @@ EOT
       #   assert_not_nil '1 two 3'.sub!(/two/, '2')
 
       public
-      def assert_not_nil(object, message='')
+
+      def assert_not_nil(object, message = '')
         full_message = build_message(message, '<?> expected to not be nil.', object)
-        assert_block(full_message){!object.nil?}
+        assert_block(full_message) { !object.nil? }
       end
 
       ##
@@ -360,7 +377,8 @@ EOT
       #   assert_no_match(/two/, 'one 2 three')
 
       public
-      def assert_no_match(regexp, string, message='')
+
+      def assert_no_match(regexp, string, message = '')
         _wrap_assertion do
           assert_instance_of(Regexp, regexp, 'The first argument to assert_no_match should be a Regexp.')
           full_message = build_message(message, "<?> expected to not match\n<?>.", regexp, string)
@@ -368,8 +386,8 @@ EOT
         end
       end
 
-      UncaughtThrow = {NameError => /^uncaught throw \`(.+)\'$/,
-                       ThreadError => /^uncaught throw \`(.+)\' in thread /}.freeze #`
+      UncaughtThrow = { NameError => /^uncaught throw \`(.+)\'$/,
+                        ThreadError => /^uncaught throw \`(.+)\' in thread / }.freeze # `
 
       ##
       # Passes if the block throws +expected_symbol+
@@ -380,24 +398,23 @@ EOT
       #   end
 
       public
-      def assert_throws(expected_symbol, message='', &proc)
+
+      def assert_throws(expected_symbol, message = '')
         _wrap_assertion do
           assert_instance_of(Symbol, expected_symbol, 'assert_throws expects the symbol that should be thrown for its first argument')
-          assert_block('Should have passed a block to assert_throws.'){block_given?}
+          assert_block('Should have passed a block to assert_throws.') { block_given? }
           caught = true
           begin
             catch(expected_symbol) do
-              proc.call
+              yield
               caught = false
             end
             full_message = build_message(message, '<?> should have been thrown.', expected_symbol)
-            assert_block(full_message){caught}
+            assert_block(full_message) { caught }
           rescue NameError, ThreadError => error
-            if UncaughtThrow[error.class] !~ error.message
-              raise error
-            end
+            raise error if UncaughtThrow[error.class] !~ error.message
 
-            full_message = build_message(message, "<?> expected to be thrown but\n<?> was thrown.", expected_symbol, $1.intern)
+            full_message = build_message(message, "<?> expected to be thrown but\n<?> was thrown.", expected_symbol, Regexp.last_match(1).intern)
             flunk(full_message)
           end
         end
@@ -412,17 +429,16 @@ EOT
       #  end
 
       public
-      def assert_nothing_thrown(message='', &proc)
+
+      def assert_nothing_thrown(message = '')
         _wrap_assertion do
           assert(block_given?, 'Should have passed a block to assert_nothing_thrown')
           begin
-            proc.call
+            yield
           rescue NameError, ThreadError => error
-            if UncaughtThrow[error.class] !~ error.message
-              raise error
-            end
+            raise error if UncaughtThrow[error.class] !~ error.message
 
-            full_message = build_message(message, '<?> was thrown when nothing was expected', $1.intern)
+            full_message = build_message(message, '<?> was thrown when nothing was expected', Regexp.last_match(1).intern)
             flunk(full_message)
           end
           assert(true, 'Expected nothing to be thrown')
@@ -437,9 +453,10 @@ EOT
       #   assert_in_delta 0.05, (50000.0 / 10**6), 0.00001
 
       public
-      def assert_in_delta(expected_float, actual_float, delta, message='')
+
+      def assert_in_delta(expected_float, actual_float, delta, message = '')
         _wrap_assertion do
-          {expected_float => 'first float', actual_float => 'second float', delta => 'delta'}.each do |float, name|
+          { expected_float => 'first float', actual_float => 'second float', delta => 'delta' }.each do |float, name|
             assert_respond_to(float, :to_f, "The arguments must respond to to_f; the #{name} did not")
           end
           assert_operator(delta, :>=, 0.0, 'The delta should not be negative')
@@ -464,7 +481,8 @@ EOT
       #   assert_send [[1, 2], :include?, 4]
 
       public
-      def assert_send(send_array, message='')
+
+      def assert_send(send_array, message = '')
         _wrap_assertion do
           assert_instance_of(Array, send_array, 'assert_send requires an array of send information')
           assert(send_array.size >= 2, 'assert_send requires at least a receiver and a message name')
@@ -481,15 +499,19 @@ EOT
       # +arguments+ replaces the '?'s positionally in the template.
 
       public
-      def build_message(head, template=nil, *arguments)
+
+      def build_message(head, template = nil, *arguments)
         template &&= template.chomp
-        return AssertionMessage.new(head, template, arguments)
+        AssertionMessage.new(head, template, arguments)
       end
 
       private
+
       def _wrap_assertion
         @_assertion_wrapped ||= false
-        unless (@_assertion_wrapped)
+        if @_assertion_wrapped
+          return yield
+        else
           @_assertion_wrapped = true
           begin
             add_assertion
@@ -497,8 +519,6 @@ EOT
           ensure
             @_assertion_wrapped = false
           end
-        else
-          return yield
         end
       end
 
@@ -507,14 +527,15 @@ EOT
       # include Test::Unit::Assertions to record assertion counts.
 
       private
-      def add_assertion
-      end
+
+      def add_assertion; end
 
       ##
       # Select whether or not to use the pretty-printer. If this option is set
       # to false before any assertions are made, pp.rb will not be required.
 
       public
+
       def self.use_pp=(value)
         AssertionMessage.use_pp = value
       end
@@ -547,14 +568,14 @@ EOT
 
           def initialize(parts)
             @parts = parts
-            @count = parts.find_all{|e| e == '?'}.size
+            @count = parts.find_all { |e| e == '?' }.size
           end
 
           def result(parameters)
-            raise 'The number of parameters does not match the number of substitutions.' if(parameters.size != count)
+            raise 'The number of parameters does not match the number of substitutions.' if parameters.size != count
 
             params = parameters.dup
-            @parts.collect{|e| e == '?' ? params.shift : e.gsub(/\\\?/m, '?')}.join('')
+            @parts.collect { |e| e == '?' ? params.shift : e.gsub(/\\\?/m, '?') }.join('')
           end
         end
 
@@ -572,7 +593,7 @@ EOT
 
         def convert(object)
           case object
-            when Exception
+          when Exception
               <<EOM.chop
 Class: <#{convert(object.class)}>
 Message: <#{convert(object.message)}>
@@ -580,14 +601,16 @@ Message: <#{convert(object.message)}>
 #{filter_backtrace(object.backtrace).join("\n")}
 ---------------
 EOM
-            else
-              if(self.class.use_pp)
-                begin
-                  require 'pp'
-                rescue LoadError
-                  self.class.use_pp = false
-                  return object.inspect
-                end unless(defined?(PP))
+          else
+              if self.class.use_pp
+                unless defined?(PP)
+                  begin
+                    require 'pp'
+                  rescue LoadError
+                    self.class.use_pp = false
+                    return object.inspect
+                  end
+                end
                 PP.pp(object, '').chomp
               else
                 object.inspect
@@ -605,14 +628,12 @@ EOM
 
         def to_s
           message_parts = []
-          if (@head)
+          if @head
             head = @head.to_s
-            unless(head.empty?)
-              message_parts << add_period(head)
-            end
+            message_parts << add_period(head) unless head.empty?
           end
-          tail = template.result(@parameters.collect{|e| convert(e)})
-          message_parts << tail unless(tail.empty?)
+          tail = template.result(@parameters.collect { |e| convert(e) })
+          message_parts << tail unless tail.empty?
           message_parts.join("\n")
         end
       end

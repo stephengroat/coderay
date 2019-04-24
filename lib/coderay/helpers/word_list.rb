@@ -51,7 +51,6 @@ module CodeRay
     end
   end
 
-
   # A CaseIgnoring WordList is like a WordList, only that
   # keys are compared case-insensitively (normalizing keys using +downcase+).
   class WordList::CaseIgnoring < WordList

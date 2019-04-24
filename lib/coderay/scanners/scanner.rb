@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module CodeRay
   module Scanners
     # = Scanner
@@ -35,9 +33,9 @@ module CodeRay
       # The default options for all scanner classes.
       #
       # Define @default_options for subclasses.
-      DEFAULT_OPTIONS = { }.freeze
+      DEFAULT_OPTIONS = {}.freeze
 
-      KINDS_NOT_LOC = [:comment, :doctype, :docstring].freeze
+      KINDS_NOT_LOC = %i[comment doctype docstring].freeze
 
       attr_accessor :state
 
@@ -52,7 +50,7 @@ module CodeRay
 
           code = if code.respond_to? :encoding
             encode_with_encoding code, encoding
-          else
+                 else
             to_unix code
                  end
           # code = code.dup if code.eql? original
@@ -119,9 +117,7 @@ module CodeRay
       #
       # Else, a Tokens object is used.
       def initialize(code = '', options = {})
-        if self.class == Scanner
-          raise NotImplementedError, "I am only the basic Scanner class. I can't scan anything. :( Use my subclasses."
-        end
+        raise NotImplementedError, "I am only the basic Scanner class. I can't scan anything. :( Use my subclasses." if self.class == Scanner
 
         @options = self.class::DEFAULT_OPTIONS.merge options
 
@@ -166,14 +162,14 @@ module CodeRay
 
         begin
           scan_tokens @tokens, options
-        rescue => e
-          message = 'Error in %s#scan_tokens, initial state was: %p' % [self.class, defined?(state) && state]
+        rescue StandardError => e
+          message = format('Error in %s#scan_tokens, initial state was: %p', self.class, defined?(state) && state)
           raise_inspect e.message, @tokens, message, 30, e.backtrace
         end
 
         @cached_tokens = @tokens
         if source.is_a? Array
-          @tokens.split_into_parts(*source.map { |part| part.size })
+          @tokens.split_into_parts(*source.map(&:size))
         else
           @tokens
         end
@@ -231,8 +227,7 @@ module CodeRay
       #
       # Use reset for initialization that has to be done once per
       # scan.
-      def setup # :doc:
-      end
+      def setup; end
 
       def set_string_from_source(source)
         case source
@@ -255,7 +250,7 @@ module CodeRay
       #
       # Subclasses must implement this method; it must return +tokens+
       # and must only use Tokens#<< for storing scanned tokens!
-      def scan_tokens(tokens, options) # :doc:
+      def scan_tokens(_tokens, _options) # :doc:
         raise NotImplementedError, "#{self.class}#scan_tokens not implemented."
       end
 
@@ -285,13 +280,13 @@ surrounding code:
       MESSAGE
 
       def raise_inspect_arguments(message, tokens, state, ambit)
-        return File.basename(caller[0]),
-          message,
-          tokens_size(tokens),
-          tokens_last(tokens, 10).map(&:inspect).join("\n"),
-          scanner_state_info(state),
-          binary_string[pos - ambit, ambit],
-          binary_string[pos, ambit]
+        [File.basename(caller[0]),
+         message,
+         tokens_size(tokens),
+         tokens_last(tokens, 10).map(&:inspect).join("\n"),
+         scanner_state_info(state),
+         binary_string[pos - ambit, ambit],
+         binary_string[pos, ambit]]
       end
 
       SCANNER_STATE_INFO = <<-INFO.freeze
@@ -301,11 +296,7 @@ bol?: %p,  eos?: %p
       INFO
 
       def scanner_state_info(state)
-        SCANNER_STATE_INFO % [
-          line, column, pos,
-          matched, state || 'No state given!',
-          bol?, eos?,
-        ]
+        format(SCANNER_STATE_INFO, line, column, pos, matched, state || 'No state given!', bol?, eos?)
       end
 
       # Scanner error with additional status information

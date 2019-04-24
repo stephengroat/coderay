@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'pathname'
 
-$:.unshift File.expand_path('../../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __dir__)
 require 'coderay'
 
 class PluginScannerTest < Test::Unit::TestCase
@@ -32,7 +32,7 @@ class PluginScannerTest < Test::Unit::TestCase
   def test_load_all
     assert_instance_of Symbol, Plugins.load_all.first
     assert_operator Plugins.all_plugins.first, :<, Plugins::Plugin
-    assert_equal 'The Example', Plugins.all_plugins.map { |plugin| plugin.title }.sort.first
+    assert_equal 'The Example', Plugins.all_plugins.map(&:title).min
   end
 
   def test_default

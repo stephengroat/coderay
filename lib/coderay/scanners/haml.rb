@@ -19,8 +19,7 @@ module Scanners
       @html_scanner          = CodeRay.scanner :html, :tokens => @tokens, :keep_tokens => true
     end
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       match = nil
       code = ''
 
@@ -49,7 +48,7 @@ module Scanners
               when /:\w+/
                 encoder.text_token match, :comment
               else
-                raise 'else-case reached: %p' % [code]
+                raise format('else-case reached: %p', code)
               end
             end
           end
@@ -99,7 +98,7 @@ module Scanners
 
             code = ''
             level = 1
-            while true
+            loop do
               code << scan(/([^\{\},\n]|, *\n?)*/)
               case match = getch
               when '{'
@@ -157,7 +156,6 @@ module Scanners
       end
 
       encoder
-
     end
   end
 end

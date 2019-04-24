@@ -6,28 +6,28 @@ module Test
       end
 
       def filter=(filters)
-        @filters = case(filters)
-          when Proc
+        @filters = case filters
+                   when Proc
             [filters]
-          when Array
+                   when Array
             filters
         end
       end
 
       def add_suite(destination, suite)
-        to_delete = suite.tests.find_all{|t| !include?(t)}
-        to_delete.each{|t| suite.delete(t)}
-        destination << suite unless(suite.size == 0)
+        to_delete = suite.tests.find_all { |t| !include?(t) }
+        to_delete.each { |t| suite.delete(t) }
+        destination << suite unless suite.empty?
       end
 
       def include?(test)
-        return true if(@filters.empty?)
+        return true if @filters.empty?
 
         @filters.each do |filter|
           result = filter[test]
-          if(result.nil?)
+          if result.nil?
             next
-          elsif(!result)
+          elsif !result
             return false
           else
             return true
@@ -37,7 +37,7 @@ module Test
       end
 
       def sort(suites)
-        suites.sort_by{|s| s.name}
+        suites.sort_by(&:name)
       end
     end
   end

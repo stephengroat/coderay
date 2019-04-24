@@ -50,16 +50,17 @@ module Test
           result.remove_listener(TestResult::CHANGED, result_listener)
           end_time = Time.now
           elapsed_time = end_time - begin_time
-          notify_listeners(FINISHED, elapsed_time) #"Finished in #{elapsed_time} seconds.")
-          return result
+          notify_listeners(FINISHED, elapsed_time) # "Finished in #{elapsed_time} seconds.")
+          result
         end
 
         private
+
         # A factory method to create the result the mediator
         # should run with. Can be overridden by subclasses if
         # one wants to use a different result.
         def create_result
-          return TestResult.new
+          TestResult.new
         end
       end
     end

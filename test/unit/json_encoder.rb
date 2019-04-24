@@ -3,23 +3,23 @@ require 'coderay'
 
 class JSONEncoderTest < Test::Unit::TestCase
   def test_json_output
-    old_load_paths = $:.dup
+    old_load_paths = $LOAD_PATH.dup
     begin
-      $:.delete '.'
-      $:.delete File.dirname(__FILE__)
+      $LOAD_PATH.delete '.'
+      $LOAD_PATH.delete File.dirname(__FILE__)
       json = CodeRay.scan('puts "Hello world!"', :ruby).json
       assert_equal [
-        {'type' => 'text', 'text' => 'puts', 'kind' => 'ident'},
-        {'type' => 'text', 'text' => ' ', 'kind' => 'space'},
-        {'type' => 'block', 'action' => 'open', 'kind' => 'string'},
-        {'type' => 'text', 'text' => '"', 'kind' => 'delimiter'},
-        {'type' => 'text', 'text' => 'Hello world!', 'kind' => 'content'},
-        {'type' => 'text', 'text' => '"', 'kind' => 'delimiter'},
-        {'type' => 'block', 'action' => 'close', 'kind' => 'string'},
+        { 'type' => 'text', 'text' => 'puts', 'kind' => 'ident' },
+        { 'type' => 'text', 'text' => ' ', 'kind' => 'space' },
+        { 'type' => 'block', 'action' => 'open', 'kind' => 'string' },
+        { 'type' => 'text', 'text' => '"', 'kind' => 'delimiter' },
+        { 'type' => 'text', 'text' => 'Hello world!', 'kind' => 'content' },
+        { 'type' => 'text', 'text' => '"', 'kind' => 'delimiter' },
+        { 'type' => 'block', 'action' => 'close', 'kind' => 'string' }
       ], JSON.load(json)
     ensure
-      for path in old_load_paths - $:
-        $: << path
+      for path in old_load_paths - $LOAD_PATH
+        $LOAD_PATH << path
       end
     end
   end

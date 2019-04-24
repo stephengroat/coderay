@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module CodeRay
 module Scanners
   # Scanner for the Lua[http://lua.org] programming lanuage.
@@ -14,10 +12,9 @@ module Scanners
 
     # Keywords used in Lua.
     KEYWORDS = %w[and break do else elseif end
-      for function goto if in
-      local not or repeat return
-      then until while
-    ].freeze
+                  for function goto if in
+                  local not or repeat return
+                  then until while].freeze
 
     # Constants set by the Lua core.
     PREDEFINED_CONSTANTS = %w[false true nil].freeze
@@ -125,11 +122,11 @@ module Scanners
             start_delim = match
             state       = :string
 
-                            # Prefix                hex number <-|-> decimal number
+          # Prefix                hex number <-|-> decimal number
           elsif match = scan(/-? (?:0x\h* \. \h+ (?:p[+\-]?\d+)? | \d*\.\d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :float)
 
-                            # Prefix         hex number <-|-> decimal number
+          # Prefix         hex number <-|-> decimal number
           elsif match = scan(/-? (?:0x\h+ (?:p[+\-]?\d+)? | \d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :integer)
 
@@ -262,9 +259,7 @@ module Scanners
 
       end
 
-      if options[:keep_state]
-        @state = state
-      end
+      @state = state if options[:keep_state]
 
       encoder.end_group :string if [:string].include? state
       brace_depth.times { encoder.end_group :map }

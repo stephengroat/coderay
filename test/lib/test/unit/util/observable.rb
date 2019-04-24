@@ -27,20 +27,18 @@ module Test
         #
         #  listener = add_listener("Channel") { ... }
         #  remove_listener("Channel", listener)
-        def add_listener(channel_name, listener_key=NOTHING, &listener) # :yields: value
-          unless(block_given?)
-            raise ArgumentError.new('No callback was passed as a listener')
-          end
+        def add_listener(channel_name, listener_key = NOTHING, &listener) # :yields: value
+          raise ArgumentError, 'No callback was passed as a listener' unless block_given?
 
           key = listener_key
-          if (listener_key == NOTHING)
+          if listener_key == NOTHING
             listener_key = listener
             key = ProcWrapper.new(listener)
           end
 
           channels[channel_name] ||= {}
           channels[channel_name][key] = listener
-          return listener_key
+          listener_key
         end
 
         # Removes the listener indicated by listener_key
@@ -49,17 +47,13 @@ module Test
         # nil if none was found.
         def remove_listener(channel_name, listener_key)
           channel = channels[channel_name]
-          return nil unless (channel)
+          return nil unless channel
 
           key = listener_key
-          if (listener_key.instance_of?(Proc))
-            key = ProcWrapper.new(listener_key)
-          end
-          if (channel.key?(key))
-            return channel.delete(key)
-          end
+          key = ProcWrapper.new(listener_key) if listener_key.instance_of?(Proc)
+          return channel.delete(key) if channel.key?(key)
 
-          return nil
+          nil
         end
 
         # Calls all the procs registered on the channel
@@ -74,17 +68,18 @@ module Test
         # method directly?
         def notify_listeners(channel_name, *arguments)
           channel = channels[channel_name]
-          return 0 unless (channel)
+          return 0 unless channel
 
           listeners = channel.values
           listeners.each { |listener| listener.call(*arguments) }
-          return listeners.size
+          listeners.size
         end
 
         private
+
         def channels
           @channels ||= {}
-          return @channels
+          @channels
         end
       end
     end

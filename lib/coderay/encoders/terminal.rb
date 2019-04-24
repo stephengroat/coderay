@@ -154,7 +154,7 @@ module CodeRay
       end
       alias begin_line begin_group
 
-      def end_group(kind)
+      def end_group(_kind)
         if @opened.pop
           @color_scopes.pop
           @out << "\e[0m"

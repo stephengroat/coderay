@@ -14,17 +14,17 @@ module Encoders
       @count = 0
     end
 
-    def finish(options)
+    def finish(_options)
       output @count
     end
 
     public
 
-    def text_token(text, kind)
+    def text_token(_text, _kind)
       @count += 1
     end
 
-    def begin_group(kind)
+    def begin_group(_kind)
       @count += 1
     end
     alias end_group begin_group

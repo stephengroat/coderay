@@ -57,11 +57,8 @@ module Scanners
     end
 
     def scan_tokens(encoder, options)
-
       state, string_delimiter = options[:state] || @state
-      if string_delimiter
-        encoder.begin_group state
-      end
+      encoder.begin_group state if string_delimiter
 
       value_expected = true
       key_expected = false
@@ -77,7 +74,7 @@ module Scanners
             value_expected = true if !value_expected && match.index("\n")
             encoder.text_token match, :space
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .*() ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .*() ) }mx)
             value_expected = true
             encoder.text_token match, :comment
             state = :open_multi_line_comment if self[1]
@@ -132,7 +129,7 @@ module Scanners
           elsif match = scan(/["']/)
             state = if key_expected && check(KEY_CHECK_PATTERN[match])
               :key
-            else
+                    else
               :string
                     end
             encoder.begin_group state
@@ -185,34 +182,30 @@ module Scanners
             key_expected = value_expected = false
             state = :initial
           else
-            raise_inspect "else case #{string_delimiter} reached; %p not handled." % peek(1), encoder
+            raise_inspect format("else case #{string_delimiter} reached; %p not handled.", peek(1)), encoder
           end
 
         when :open_multi_line_comment
-          if match = scan(%r! .*? \*/ !mx)
+          if match = scan(%r{ .*? \*/ }mx)
             state = :initial
           else
-            match = scan(%r! .+ !mx)
+            match = scan(%r{ .+ }mx)
           end
           value_expected = true
           encoder.text_token match, :comment if match
 
         else
           #:nocov:
-          raise_inspect 'Unknown state: %p' % [state], encoder
+          raise_inspect format('Unknown state: %p', state), encoder
           #:nocov:
 
         end
 
       end
 
-      if options[:keep_state]
-        @state = state, string_delimiter
-      end
+      @state = state, string_delimiter if options[:keep_state]
 
-      if [:string, :regexp].include? state
-        encoder.end_group state
-      end
+      encoder.end_group state if %i[string regexp].include? state
 
       encoder
     end

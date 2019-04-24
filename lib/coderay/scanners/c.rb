@@ -9,23 +9,23 @@ module Scanners
       'asm', 'break', 'case', 'continue', 'default', 'do',
       'else', 'enum', 'for', 'goto', 'if', 'return',
       'sizeof', 'struct', 'switch', 'typedef', 'union', 'while',
-      'restrict', # added in C99
+      'restrict' # added in C99
     ].freeze # :nodoc:
 
     PREDEFINED_TYPES = [
       'int', 'long', 'short', 'char',
       'signed', 'unsigned', 'float', 'double',
-      'bool', 'complex', # added in C99
+      'bool', 'complex' # added in C99
     ].freeze # :nodoc:
 
     PREDEFINED_CONSTANTS = [
       'EOF', 'NULL',
-      'true', 'false', # added in C99
+      'true', 'false' # added in C99
     ].freeze # :nodoc:
     DIRECTIVES = [
       'auto', 'extern', 'register', 'static', 'void',
       'const', 'volatile', # added in C89
-      'inline', # added in C99
+      'inline' # added in C99
     ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
@@ -39,8 +39,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       label_expected = true
       case_expected = false
@@ -60,7 +59,7 @@ module Scanners
             end
             encoder.text_token match, :space
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) }mx)
             encoder.text_token match, :comment
 
           elsif match = scan(/ [-+*=<>?:;,!&^|()\[\]{}~%]+ | \/=? | \.(?!\d) /x)
@@ -150,7 +149,7 @@ module Scanners
             state = :initial
             label_expected = false
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         when :include_expected
@@ -174,9 +173,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group :string
-      end
+      encoder.end_group :string if state == :string
 
       encoder
     end

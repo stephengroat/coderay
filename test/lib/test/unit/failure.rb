@@ -28,17 +28,17 @@ module Test
 
       # Returns a brief version of the error description.
       def short_display
-        "#@test_name: #{@message.split("\n")[0]}"
+        "#{@test_name}: #{@message.split("\n")[0]}"
       end
 
       # Returns a verbose version of the error description.
       def long_display
-        location_display = if(location.size == 1)
+        location_display = if location.size == 1
           location[0].sub(/\A(.+:\d+).*/, ' [\\1]')
-        else
+                           else
           "\n    [#{location.join("\n     ")}]"
         end
-        "Failure:\n#@test_name#{location_display}:\n#@message"
+        "Failure:\n#{@test_name}#{location_display}:\n#{@message}"
       end
 
       # Overridden to return long_display.

@@ -9,34 +9,34 @@ module Scanners
     title 'C++'
 
     #-- http://www.cppreference.com/wiki/keywords/start
-    KEYWORDS = [
-      'and', 'and_eq', 'asm', 'bitand', 'bitor', 'break',
-      'case', 'catch', 'class', 'compl', 'const_cast',
-      'continue', 'default', 'delete', 'do', 'dynamic_cast', 'else',
-      'enum', 'export', 'for', 'goto', 'if', 'namespace', 'new',
-      'not', 'not_eq', 'or', 'or_eq', 'reinterpret_cast', 'return',
-      'sizeof', 'static_assert', 'static_cast', 'struct', 'switch',
-      'template', 'throw', 'try', 'typedef', 'typeid', 'typename', 'union',
-      'while', 'xor', 'xor_eq',
+    KEYWORDS = %w[
+      and and_eq asm bitand bitor break
+      case catch class compl const_cast
+      continue default delete do dynamic_cast else
+      enum export for goto if namespace new
+      not not_eq or or_eq reinterpret_cast return
+      sizeof static_assert static_cast struct switch
+      template throw try typedef typeid typename union
+      while xor xor_eq
     ].freeze  # :nodoc:
 
-    PREDEFINED_TYPES = [
-      'bool', 'char', 'char16_t', 'char32_t', 'double', 'float',
-      'int', 'long', 'short', 'signed', 'unsigned',
-      'wchar_t', 'string',
+    PREDEFINED_TYPES = %w[
+      bool char char16_t char32_t double float
+      int long short signed unsigned
+      wchar_t string
     ].freeze  # :nodoc:
-    PREDEFINED_CONSTANTS = [
-      'false', 'true',
-      'EOF', 'NULL', 'nullptr'
+    PREDEFINED_CONSTANTS = %w[
+      false true
+      EOF NULL nullptr
     ].freeze  # :nodoc:
     PREDEFINED_VARIABLES = [
-      'this',
+      'this'
     ].freeze  # :nodoc:
-    DIRECTIVES = [
-      'alignas', 'alignof', 'auto', 'const', 'constexpr', 'decltype', 'explicit',
-      'extern', 'final', 'friend', 'inline', 'mutable', 'noexcept', 'operator',
-      'override', 'private', 'protected', 'public', 'register', 'static',
-      'thread_local', 'using', 'virtual', 'void', 'volatile',
+    DIRECTIVES = %w[
+      alignas alignof auto const constexpr decltype explicit
+      extern final friend inline mutable noexcept operator
+      override private protected public register static
+      thread_local using virtual void volatile
     ].freeze  # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
@@ -51,8 +51,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       label_expected = true
       case_expected = false
@@ -72,7 +71,7 @@ module Scanners
             end
             encoder.text_token match, :space
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) }mx)
             encoder.text_token match, :comment
 
           elsif match = scan(/ \# \s* if \s* 0 /x)
@@ -164,7 +163,7 @@ module Scanners
             state = :initial
             label_expected = false
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         when :include_expected
@@ -202,9 +201,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group :string
-      end
+      encoder.end_group :string if state == :string
 
       encoder
     end

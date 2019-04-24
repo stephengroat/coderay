@@ -1,7 +1,7 @@
 require 'bundler/gem_tasks'
 require 'rubocop/rake_task'
 
-$:.unshift File.dirname(__FILE__) unless $:.include? '.'
+$LOAD_PATH.unshift File.dirname(__FILE__) unless $LOAD_PATH.include? '.'
 
 ROOT = '.'.freeze
 LIB_ROOT = File.join ROOT, 'lib'

@@ -13,11 +13,11 @@ module Scanners
       'del', 'elif', 'else', 'except', 'finally', 'for',
       'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not',
       'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield',
-      'nonlocal', # new in Python 3
+      'nonlocal' # new in Python 3
     ].freeze # :nodoc:
 
     OLD_KEYWORDS = [
-      'exec', 'print', # gone in Python 3
+      'exec', 'print' # gone in Python 3
     ].freeze  # :nodoc:
 
     PREDEFINED_METHODS_AND_TYPES = %w[
@@ -49,7 +49,7 @@ module Scanners
 
     PREDEFINED_VARIABLES_AND_CONSTANTS = [
       'False', 'True', 'None', # "keywords" since Python 3
-      'self', 'Ellipsis', 'NotImplemented',
+      'self', 'Ellipsis', 'NotImplemented'
     ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
@@ -73,18 +73,18 @@ module Scanners
       <<=? | >>=? | [<>=]=? | !=  # comparison and assignment
     /x.freeze # :nodoc:
 
-    STRING_DELIMITER_REGEXP = Hash.new { |h, delimiter|
+    STRING_DELIMITER_REGEXP = Hash.new do |h, delimiter|
       h[delimiter] = Regexp.union delimiter # :nodoc:
-    }
+    end
 
-    STRING_CONTENT_REGEXP = Hash.new { |h, delimiter|
+    STRING_CONTENT_REGEXP = Hash.new do |h, delimiter|
       h[delimiter] = / [^\\\n]+? (?= \\ | $ | #{Regexp.escape(delimiter)} ) /x # :nodoc:
-    }
+    end
 
     DEF_NEW_STATE = WordList.new(:initial)
-                            .add(%w(def), :def_expected)
-                            .add(%w(import from), :include_expected)
-                            .add(%w(class), :class_expected) # :nodoc:
+                            .add(%w[def], :def_expected)
+                            .add(%w[import from], :include_expected)
+                            .add(%w[class], :class_expected) # :nodoc:
 
     DESCRIPTOR = /
       #{NAME}
@@ -98,8 +98,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       string_delimiter = nil
       string_raw = false
@@ -134,7 +133,7 @@ module Scanners
             encoder.text_token match, :error unless match.empty?
             state = :initial
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder, state
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder, state
           end
 
         elsif match = scan(/ [ \t]+ | \\?\n /x)
@@ -206,7 +205,7 @@ module Scanners
             encoder.text_token match, :octal
 
           elsif match = scan(/\d+([lL])?/)
-            if self[1] == nil && scan(/[jJ]/)
+            if self[1].nil? && scan(/[jJ]/)
               match << matched
               encoder.text_token match, :imaginary
             else
@@ -272,9 +271,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group string_type
-      end
+      encoder.end_group string_type if state == :string
 
       encoder
     end

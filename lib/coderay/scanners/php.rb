@@ -1,4 +1,3 @@
-# encoding: utf-8
 module CodeRay
 module Scanners
   load :html
@@ -199,10 +198,10 @@ module Scanners
         <\?(?!xml)
       /xi.freeze
 
-      PHP_END = %r!
+      PHP_END = %r{
         </script> |
         \?>
-      !xi.freeze
+      }xi.freeze
 
       HTML_INDICATOR = /<!DOCTYPE html|<(?:html|body|div|p)[> ]/i.freeze
 
@@ -226,17 +225,16 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       states = if check(RE::PHP_START) || # starts with <?
-       (match?(/\s*<\S/) && check(/.{1,1000}#{RE::PHP_START}/om)) || # starts with tag and contains <?
-       check(/.{0,1000}#{RE::HTML_INDICATOR}/om) ||
-       check(/.{1,100}#{RE::PHP_START}/om) # PHP start after max 100 chars
+                  (match?(/\s*<\S/) && check(/.{1,1000}#{RE::PHP_START}/om)) || # starts with tag and contains <?
+                  check(/.{0,1000}#{RE::HTML_INDICATOR}/om) ||
+                  check(/.{1,100}#{RE::PHP_START}/om) # PHP start after max 100 chars
         # is HTML with embedded PHP, so start with HTML
         [:initial]
-      else
+               else
         # is just PHP, so start with PHP surrounded by HTML
-        [:initial, :php]
+        %i[initial php]
                end
 
       label_expected = true
@@ -264,7 +262,7 @@ module Scanners
           if match = scan(/\s+/)
             encoder.text_token match, :space
 
-          elsif match = scan(%r! (?m: \/\* (?: .*? \*\/ | .* ) ) | (?://|\#) .*? (?=#{RE::PHP_END}|$) !xo)
+          elsif match = scan(%r{ (?m: \/\* (?: .*? \*\/ | .* ) ) | (?://|\#) .*? (?=#{RE::PHP_END}|$) }xo)
             encoder.text_token match, :comment
 
           elsif match = scan(RE::IDENTIFIER)
@@ -347,10 +345,10 @@ module Scanners
           elsif match = scan(RE::PHP_END)
             encoder.text_token match, :inline_delimiter
             while state = states.pop
-              encoder.end_group :string if [:sqstring, :dqstring].include? state
+              encoder.end_group :string if %i[sqstring dqstring].include? state
               if state.is_a? Array
                 encoder.end_group :inline
-                encoder.end_group :string if [:sqstring, :dqstring].include? state.first
+                encoder.end_group :string if %i[sqstring dqstring].include? state.first
               end
             end
             states << :initial
@@ -506,10 +504,10 @@ module Scanners
       end
 
       while state = states.pop
-        encoder.end_group :string if [:sqstring, :dqstring].include? state
+        encoder.end_group :string if %i[sqstring dqstring].include? state
         if state.is_a? Array
           encoder.end_group :inline
-          encoder.end_group :string if [:sqstring, :dqstring].include? state.first
+          encoder.end_group :string if %i[sqstring dqstring].include? state.first
         end
       end
 

@@ -1,4 +1,4 @@
-$:.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 require 'coderay/version'
 
@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.version = if ENV['RELEASE']
     CodeRay::VERSION
-  else
+              else
     "#{CodeRay::VERSION}.rc#{ENV['RC'] || 1}"
               end
 

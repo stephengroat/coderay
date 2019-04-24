@@ -34,7 +34,7 @@ module CodeRay
       end
 
       # Subclasses are to store their default options in this constant.
-      DEFAULT_OPTIONS = { }.freeze
+      DEFAULT_OPTIONS = {}.freeze
 
       # The options you gave the Encoder at creating.
       attr_accessor :options, :scanner
@@ -107,30 +107,26 @@ module CodeRay
         when :end_line
           end_line kind
         else
-          raise ArgumentError, 'Unknown token content type: %p, kind = %p' % [content, kind]
+          raise ArgumentError, format('Unknown token content type: %p, kind = %p', content, kind)
         end
       end
 
       # Called for each text token ([text, kind]), where text is a String.
-      def text_token(text, kind)
+      def text_token(text, _kind)
         @out << text
       end
 
       # Starts a token group with the given +kind+.
-      def begin_group(kind)
-      end
+      def begin_group(kind); end
 
       # Ends a token group with the given +kind+.
-      def end_group(kind)
-      end
+      def end_group(kind); end
 
       # Starts a new line token group with the given +kind+.
-      def begin_line(kind)
-      end
+      def begin_line(kind); end
 
       # Ends a new line token group with the given +kind+.
-      def end_line(kind)
-      end
+      def end_line(kind); end
 
       protected
 
@@ -154,7 +150,7 @@ module CodeRay
 
       # Called with merged options after encoding starts.
       # The return value is the result of encoding, typically @out.
-      def finish(options)
+      def finish(_options)
         @out
       end
 
@@ -162,12 +158,10 @@ module CodeRay
       #
       # The already created +tokens+ object must be used; it must be a
       # Tokens object.
-      def compile(tokens, options = {})
+      def compile(tokens, _options = {})
         content = nil
         tokens.each do |item|
-          if item.is_a? Array
-            raise ArgumentError, 'Two-element array tokens are no longer supported.'
-          end
+          raise ArgumentError, 'Two-element array tokens are no longer supported.' if item.is_a? Array
 
           if content
             token content, item

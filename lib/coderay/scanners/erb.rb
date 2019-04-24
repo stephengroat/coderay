@@ -38,11 +38,10 @@ module Scanners
       @html_scanner.reset
     end
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       until eos?
 
-        if (match = scan_until(/(?=#{START_OF_ERB})/o) || scan_rest) && (not match.empty?)
+        if (match = scan_until(/(?=#{START_OF_ERB})/o) || scan_rest) && !match.empty?
           @html_scanner.tokenize match, :tokens => encoder
 
         elsif match = scan(/#{ERB_RUBY_BLOCK}/o)
@@ -53,11 +52,13 @@ module Scanners
           encoder.begin_group :inline
           encoder.text_token start_tag, :inline_delimiter
 
-          if start_tag == '<%#'
-            encoder.text_token code, :comment
-          else
-            @ruby_scanner.tokenize code, :tokens => encoder
-          end unless code.empty?
+          unless code.empty?
+            if start_tag == '<%#'
+              encoder.text_token code, :comment
+            else
+              @ruby_scanner.tokenize code, :tokens => encoder
+            end
+          end
 
           encoder.text_token end_tag, :inline_delimiter unless end_tag.empty?
           encoder.end_group :inline
@@ -70,7 +71,6 @@ module Scanners
       end
 
       encoder
-
     end
   end
 end

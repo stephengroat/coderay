@@ -1,16 +1,10 @@
-# encoding: utf-8
 module CodeRay
 module Scanners
   class Ruby
     class StringState < Struct.new :type, :interpreted, :delim, :heredoc,
-      :opening_paren, :paren_depth, :pattern, :next_state # :nodoc: all
+                                   :opening_paren, :paren_depth, :pattern, :next_state # :nodoc: all
 
-      CLOSING_PAREN = Hash[ *%w[
-        ( )
-        [ ]
-        < >
-        { }
-      ] ].each { |k, v| k.freeze; v.freeze } # debug, if I try to change it with <<
+      CLOSING_PAREN = Hash['(', ')', '[', ']', '<', '>', '{', '}'].each { |k, v| k.freeze; v.freeze } # debug, if I try to change it with <<
 
       STRING_PATTERN = Hash.new do |h, k|
         delim, interpreted = *k
@@ -48,7 +42,7 @@ module Scanners
           pattern = heredoc_pattern delim, interpreted, heredoc == :indented
           delim = nil
         else
-          pattern = STRING_PATTERN[ [delim, interpreted] ]
+          pattern = STRING_PATTERN[[delim, interpreted]]
           if closing_paren = CLOSING_PAREN[delim]
             opening_paren = delim
             delim = closing_paren

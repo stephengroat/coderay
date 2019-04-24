@@ -23,7 +23,7 @@ module Encoders
         gem 'json'
         require 'json'
       rescue LoadError
-        $stderr.puts "The JSON encoder needs the JSON library.\n" \
+        warn "The JSON encoder needs the JSON library.\n" \
           'Please gem install json.'
         raise
       end
@@ -33,6 +33,7 @@ module Encoders
     FILE_EXTENSION = 'json'.freeze
 
     protected
+
     def setup(options)
       super
 
@@ -40,7 +41,7 @@ module Encoders
       @out << '['
     end
 
-    def finish(options)
+    def finish(_options)
       @out << ']'
     end
 
@@ -55,6 +56,7 @@ module Encoders
     end
 
     public
+
     def text_token(text, kind)
       append :type => 'text', :text => text, :kind => kind
     end

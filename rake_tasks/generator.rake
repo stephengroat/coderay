@@ -15,7 +15,7 @@ namespace :generate do
     scanner_file = scanner_file_for_lang lang
     if File.exist? scanner_file
       print "#{scanner_file} already exists. Overwrite? [y|N] "
-      exit unless $stdin.gets.chomp.downcase == 'y'
+      exit unless $stdin.gets.chomp.casecmp('y').zero?
     end
 
     base_lang = ENV.fetch('BASE', 'json')

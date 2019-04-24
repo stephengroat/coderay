@@ -39,18 +39,15 @@ Token Types (%d):
 
     def finish(options)
       all = @type_stats['TOTAL']
-      all_count, all_size = all.count, all.size
-      @type_stats.each do |type, stat|
+      all_count = all.count
+      all_size = all.size
+      @type_stats.each do |_type, stat|
         stat.size /= stat.count.to_f
       end
       types_stats = @type_stats.sort_by { |k, v| [-v.count, k.to_s] }.map do |k, v|
-        TOKEN_TYPES_ROW % [k, v.count, 100.0 * v.count / all_count, v.size]
+        format(TOKEN_TYPES_ROW, k, v.count, 100.0 * v.count / all_count, v.size)
       end.join
-      @out << STATS % [
-        all_count, @real_token_count, all_size,
-        @type_stats.delete_if { |k, v| k.is_a? String }.size,
-        types_stats
-      ]
+      @out << format(STATS, all_count, @real_token_count, all_size, @type_stats.delete_if { |k, _v| k.is_a? String }.size, types_stats)
 
       super
     end

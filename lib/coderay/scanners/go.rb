@@ -5,28 +5,28 @@ module Scanners
     file_extension 'go'
 
     # http://golang.org/ref/spec#Keywords
-    KEYWORDS = [
-      'break', 'default', 'func', 'interface', 'select',
-      'case', 'defer', 'go', 'map', 'struct',
-      'chan', 'else', 'goto', 'package', 'switch',
-      'const', 'fallthrough', 'if', 'range', 'type',
-      'continue', 'for', 'import', 'return', 'var',
+    KEYWORDS = %w[
+      break default func interface select
+      case defer go map struct
+      chan else goto package switch
+      const fallthrough if range type
+      continue for import return var
     ].freeze # :nodoc:
 
     # http://golang.org/ref/spec#Types
-    PREDEFINED_TYPES = [
-      'bool',
-      'uint8', 'uint16', 'uint32', 'uint64',
-      'int8', 'int16', 'int32', 'int64',
-      'float32', 'float64',
-      'complex64', 'complex128',
-      'byte', 'rune', 'string', 'error',
-      'uint', 'int', 'uintptr',
+    PREDEFINED_TYPES = %w[
+      bool
+      uint8 uint16 uint32 uint64
+      int8 int16 int32 int64
+      float32 float64
+      complex64 complex128
+      byte rune string error
+      uint int uintptr
     ].freeze  # :nodoc:
 
-    PREDEFINED_CONSTANTS = [
-      'nil', 'iota',
-      'true', 'false',
+    PREDEFINED_CONSTANTS = %w[
+      nil iota
+      true false
     ].freeze  # :nodoc:
 
     PREDEFINED_FUNCTIONS = %w[
@@ -45,8 +45,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       label_expected = true
       case_expected = false
@@ -67,7 +66,7 @@ module Scanners
             end
             encoder.text_token match, :space
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) }mx)
             encoder.text_token match, :comment
 
           elsif match = scan(/ <?- (?![\d.]) | [+*=<>?:;,!&^|()\[\]{}~%]+ | \/=? | \.(?!\d) /x)
@@ -169,7 +168,7 @@ module Scanners
             state = :initial
             label_expected = false
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         when :include_expected
@@ -193,9 +192,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group :string
-      end
+      encoder.end_group :string if state == :string
 
       encoder
     end

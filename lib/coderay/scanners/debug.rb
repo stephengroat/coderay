@@ -16,8 +16,7 @@ module Scanners
       @known_token_kinds = TokenKinds.keys.map(&:to_s).to_set
     end
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       opened_tokens = []
 
       until eos?
@@ -35,7 +34,7 @@ module Scanners
         elsif match = scan(/ (\w+) ([<\[]) /x)
           kind = if @known_token_kinds.include? self[1]
             self[1].to_sym
-          else
+                 else
             :unknown
                  end
 

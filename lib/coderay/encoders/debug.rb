@@ -29,7 +29,7 @@ module Encoders
       @out << "#{kind}<"
     end
 
-    def end_group(kind)
+    def end_group(_kind)
       @out << '>'
     end
 
@@ -37,7 +37,7 @@ module Encoders
       @out << "#{kind}["
     end
 
-    def end_line(kind)
+    def end_line(_kind)
       @out << ']'
     end
   end

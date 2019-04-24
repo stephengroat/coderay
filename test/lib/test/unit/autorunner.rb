@@ -4,7 +4,7 @@ require 'optparse'
 module Test
   module Unit
     class AutoRunner
-      def self.run(force_standalone=false, default_dir=nil, argv=ARGV, &block)
+      def self.run(force_standalone = false, default_dir = nil, argv = ARGV, &block)
         r = new(force_standalone || standalone?, &block)
         r.base = default_dir
         r.process_args(argv)
@@ -12,32 +12,32 @@ module Test
       end
 
       def self.standalone?
-        return false unless('-e' == $0)
+        return false unless $PROGRAM_NAME == '-e'
 
         ObjectSpace.each_object(Class) do |klass|
-          return false if(klass < TestCase)
+          return false if klass < TestCase
         end
         true
       end
 
       RUNNERS = {
-        :console => proc do |r|
+        :console => proc do |_r|
           require 'test/unit/ui/console/testrunner'
           Test::Unit::UI::Console::TestRunner
         end,
-        :gtk => proc do |r|
+        :gtk => proc do |_r|
           require 'test/unit/ui/gtk/testrunner'
           Test::Unit::UI::GTK::TestRunner
         end,
-        :gtk2 => proc do |r|
+        :gtk2 => proc do |_r|
           require 'test/unit/ui/gtk2/testrunner'
           Test::Unit::UI::GTK2::TestRunner
         end,
-        :fox => proc do |r|
+        :fox => proc do |_r|
           require 'test/unit/ui/fox/testrunner'
           Test::Unit::UI::Fox::TestRunner
         end,
-        :tk => proc do |r|
+        :tk => proc do |_r|
           require 'test/unit/ui/tk/testrunner'
           Test::Unit::UI::Tk::TestRunner
         end
@@ -47,7 +47,7 @@ module Test
         [:silent, UI::SILENT],
         [:progress, UI::PROGRESS_ONLY],
         [:normal, UI::NORMAL],
-        [:verbose, UI::VERBOSE],
+        [:verbose, UI::VERBOSE]
       ].freeze
 
       COLLECTORS = {
@@ -55,16 +55,16 @@ module Test
           require 'test/unit/collector/objectspace'
           c = Collector::ObjectSpace.new
           c.filter = r.filters
-          c.collect($0.sub(/\.rb\Z/, ''))
+          c.collect($PROGRAM_NAME.sub(/\.rb\Z/, ''))
         end,
         :dir => proc do |r|
           require 'test/unit/collector/dir'
           c = Collector::Dir.new
           c.filter = r.filters
-          c.pattern.concat(r.pattern) if(r.pattern)
-          c.exclude.concat(r.exclude) if(r.exclude)
+          c.pattern.concat(r.pattern) if r.pattern
+          c.exclude.concat(r.exclude) if r.exclude
           c.base = r.base
-          $:.push(r.base) if r.base
+          $LOAD_PATH.push(r.base) if r.base
           c.collect(*(r.to_run.empty? ? ['.'] : r.to_run))
         end
       }.freeze
@@ -82,27 +82,27 @@ module Test
         @to_run = []
         @output_level = UI::NORMAL
         @workdir = nil
-        yield(self) if(block_given?)
+        yield(self) if block_given?
       end
 
       def process_args(args = ARGV)
         begin
-          options.order!(args) {|arg| @to_run << arg}
+          options.order!(args) { |arg| @to_run << arg }
         rescue OptionParser::ParseError => e
           puts e
           puts options
           $! = nil
           abort
         else
-          @filters << proc{false} unless(@filters.empty?)
+          @filters << proc { false } unless @filters.empty?
         end
-        not @to_run.empty?
+        !@to_run.empty?
       end
 
       def options
         @options ||= OptionParser.new do |o|
           o.banner = 'Test::Unit automatic runner.'
-          o.banner << "\nUsage: #{$0} [options] [-- untouched arguments]"
+          o.banner << "\nUsage: #{$PROGRAM_NAME} [options] [-- untouched arguments]"
 
           o.on
           o.on('-r', '--runner=RUNNER', RUNNERS,
@@ -111,7 +111,7 @@ module Test
             @runner = r
           end
 
-          if(@standalone)
+          if @standalone
             o.on('-b', '--basedir=DIR', 'Base directory of test suites.') do |b|
               @base = b
             end
@@ -142,24 +142,24 @@ module Test
           o.on('-n', '--name=NAME', String,
                'Runs tests matching NAME.',
                '(patterns may be used).') do |n|
-            n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
+            n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new(Regexp.last_match(1)) : n)
             @filters << case n
-            when Regexp
-              proc{|t| n =~ t.method_name ? true : nil}
-            else
-              proc{|t| n == t.method_name ? true : nil}
+                        when Regexp
+              proc { |t| n =~ t.method_name ? true : nil }
+                        else
+              proc { |t| n == t.method_name ? true : nil }
                         end
           end
 
           o.on('-t', '--testcase=TESTCASE', String,
                'Runs tests in TestCases matching TESTCASE.',
                '(patterns may be used).') do |n|
-            n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
+            n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new(Regexp.last_match(1)) : n)
             @filters << case n
-            when Regexp
-              proc{|t| n =~ t.class.name ? true : nil}
-            else
-              proc{|t| n == t.class.name ? true : nil}
+                        when Regexp
+              proc { |t| n =~ t.class.name ? true : nil }
+                        else
+              proc { |t| n == t.class.name ? true : nil }
                         end
           end
 
@@ -177,9 +177,9 @@ module Test
           o.on('--',
                'Stop processing options so that the',
                'remaining options will be passed to the',
-               'test.'){o.terminate}
+               'test.') { o.terminate }
 
-          o.on('-h', '--help', 'Display this help.'){puts o; exit}
+          o.on('-h', '--help', 'Display this help.') { puts o; exit }
 
           o.on_tail
           o.on_tail('Deprecated options:')
@@ -204,9 +204,9 @@ module Test
       end
 
       def keyword_display(array)
-        list = array.collect {|e, *| e.to_s}
+        list = array.collect { |e, *| e.to_s }
         (Array === array) || list.sort!
-        list.collect {|e| e.sub(/^(.)([A-Za-z]+)(?=\w*$)/, '\\1[\\2]')}.join(', ')
+        list.collect { |e| e.sub(/^(.)([A-Za-z]+)(?=\w*$)/, '\\1[\\2]') }.join(', ')
       end
 
       def run

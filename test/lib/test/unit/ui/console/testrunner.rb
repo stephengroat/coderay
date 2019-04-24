@@ -21,10 +21,10 @@ module Test
           # failures, and the final result. io specifies
           # where runner output should go to; defaults to
           # STDOUT.
-          def initialize(suite, output_level=NORMAL, io=STDOUT)
-            @suite = if (suite.respond_to?(:suite))
+          def initialize(suite, output_level = NORMAL, io = STDOUT)
+            @suite = if suite.respond_to?(:suite)
               suite.suite
-            else
+                     else
               suite
                      end
             @output_level = output_level
@@ -37,21 +37,20 @@ module Test
           def start
             setup_mediator
             attach_to_mediator
-            return start_mediator
+            start_mediator
           end
 
           private
+
           def setup_mediator
             @mediator = create_mediator(@suite)
             suite_name = @suite.to_s
-            if ( @suite.kind_of?(Module) )
-              suite_name = @suite.name
-            end
+            suite_name = @suite.name if @suite.is_a?(Module)
             output("Loaded suite #{suite_name}")
           end
 
           def create_mediator(suite)
-            return TestRunnerMediator.new(suite)
+            TestRunnerMediator.new(suite)
           end
 
           def attach_to_mediator
@@ -63,7 +62,7 @@ module Test
           end
 
           def start_mediator
-            return @mediator.run_suite
+            @mediator.run_suite
           end
 
           def add_fault(fault)
@@ -82,7 +81,7 @@ module Test
             output("Finished in #{elapsed_time} seconds.")
             @faults.each_with_index do |fault, index|
               nl
-              output('%3d) %s' % [index + 1, fault.long_display])
+              output(format('%3d) %s', index + 1, fault.long_display))
             end
             nl
             output(@result)
@@ -92,23 +91,23 @@ module Test
             output_single(name + ': ', VERBOSE)
           end
 
-          def test_finished(name)
-            output_single('.', PROGRESS_ONLY) unless (@already_outputted)
+          def test_finished(_name)
+            output_single('.', PROGRESS_ONLY) unless @already_outputted
             nl(VERBOSE)
             @already_outputted = false
           end
 
-          def nl(level=NORMAL)
+          def nl(level = NORMAL)
             output('', level)
           end
 
-          def output(something, level=NORMAL)
-            @io.puts(something) if (output?(level))
+          def output(something, level = NORMAL)
+            @io.puts(something) if output?(level)
             @io.flush
           end
 
-          def output_single(something, level=NORMAL)
-            @io.write(something) if (output?(level))
+          def output_single(something, level = NORMAL)
+            @io.write(something) if output?(level)
             @io.flush
           end
 
@@ -121,6 +120,4 @@ module Test
   end
 end
 
-if __FILE__ == $0
-  Test::Unit::UI::Console::TestRunner.start_command_line_test
-end
+Test::Unit::UI::Console::TestRunner.start_command_line_test if $PROGRAM_NAME == __FILE__

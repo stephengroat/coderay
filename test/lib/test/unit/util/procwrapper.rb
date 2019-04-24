@@ -20,25 +20,23 @@ module Test
         # Creates a new wrapper for a_proc.
         def initialize(a_proc)
           @a_proc = a_proc
-          @hash = a_proc.inspect.sub(/^(#<#{a_proc.class}:)/){''}.sub(/(>)$/){''}.hex
+          @hash = a_proc.inspect.sub(/^(#<#{a_proc.class}:)/) { '' }.sub(/(>)$/) { '' }.hex
         end
 
-        def hash
-          return @hash
-        end
+        attr_reader :hash
 
         def ==(other)
-          case(other)
-            when ProcWrapper
-              return @a_proc == other.to_proc
-            else
-              return super
+          case other
+          when ProcWrapper
+              @a_proc == other.to_proc
+          else
+              super
           end
         end
-        alias :eql? :==
+        alias eql? ==
 
         def to_proc
-          return @a_proc
+          @a_proc
         end
       end
     end

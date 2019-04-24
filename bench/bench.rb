@@ -1,5 +1,5 @@
 require 'benchmark'
-$: << File.expand_path('../../lib', __FILE__)
+$LOAD_PATH << File.expand_path('../lib', __dir__)
 require 'coderay'
 
 if ARGV.include? '-h'
@@ -21,20 +21,20 @@ unless size.zero?
   data = data[0, size]
 end
 size = data.size
-puts "encoding %d kB of #{lang} code to #{format}..." % [(size / 1000.0).round]
+puts format("encoding %d kB of #{lang} code to #{format}...", (size / 1000.0).round)
 
 n = ARGV.fetch(3, 10).to_s[/\d+/].to_i
 require 'profile' if ARGV.include? '-p'
 times = []
 n.times do |i|
   time = Benchmark.realtime { encoder.encode(data, lang) }
-  puts 'run %d: %5.2f s, %4.0f kB/s' % [i + 1, time, size / time / 1000.0]
+  puts format('run %d: %5.2f s, %4.0f kB/s', i + 1, time, size / time / 1000.0)
   times << time
 end
 
 times_sum = times.inject(0) { |time, sum| sum + time }
-puts 'Average time: %5.2f s, %4.0f kB/s' % [times_sum / times.size, (size * n) / times_sum / 1000.0]
-puts 'Best time:    %5.2f s, %4.0f kB/s' % [times.min, size / times.min / 1000.0]
+puts format('Average time: %5.2f s, %4.0f kB/s', times_sum / times.size, (size * n) / times_sum / 1000.0)
+puts format('Best time:    %5.2f s, %4.0f kB/s', times.min, size / times.min / 1000.0)
 
 __END__
 Usage:

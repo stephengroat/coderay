@@ -14,15 +14,15 @@ class StatisticEncoderTest < Test::Unit::TestCase
   TEST_INPUT = CodeRay::Tokens[
     ['10', :integer],
     ['(\\)', :operator],
-    [:begin_group, :string],
+    %i[begin_group string],
     ['test', :content],
-    [:end_group, :string],
-    [:begin_line, :test],
+    %i[end_group string],
+    %i[begin_line test],
     ["\n", :space],
     ["\n  \t", :space],
     ["   \n", :space],
     ['[]', :method],
-    [:end_line, :test],
+    %i[end_line test],
   ].flatten
   TEST_OUTPUT = <<-'DEBUG'.freeze
 

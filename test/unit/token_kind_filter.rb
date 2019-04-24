@@ -40,8 +40,8 @@ class TokenKindFilterTest < Test::Unit::TestCase
     end
     assert_equal 16, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :include => :blubb).count
     assert_equal 16, tokens.token_kind_filter(:include => :blubb).count
-    assert_equal 24, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :include => [:blubb, :content]).count
-    assert_equal 24, tokens.token_kind_filter(:include => [:blubb, :content]).count
+    assert_equal 24, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :include => %i[blubb content]).count
+    assert_equal 24, tokens.token_kind_filter(:include => %i[blubb content]).count
     assert_equal 32, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :exclude => :index).count
     assert_equal 32, tokens.token_kind_filter(:exclude => :index).count
   end

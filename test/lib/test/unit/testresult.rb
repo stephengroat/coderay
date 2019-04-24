@@ -21,8 +21,10 @@ module Test
 
       # Constructs a new, empty TestResult.
       def initialize
-        @run_count, @assertion_count = 0, 0
-        @failures, @errors = Array.new, Array.new
+        @run_count = 0
+        @assertion_count = 0
+        @failures = []
+        @errors = []
       end
 
       # Records a test run.
@@ -60,19 +62,19 @@ module Test
       # Returns whether or not this TestResult represents
       # successful completion.
       def passed?
-        return @failures.empty? && @errors.empty?
+        @failures.empty? && @errors.empty?
       end
 
       # Returns the number of failures this TestResult has
       # recorded.
       def failure_count
-        return @failures.size
+        @failures.size
       end
 
       # Returns the number of errors this TestResult has
       # recorded.
       def error_count
-        return @errors.size
+        @errors.size
       end
     end
   end

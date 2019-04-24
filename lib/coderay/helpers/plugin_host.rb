@@ -73,9 +73,7 @@ module CodeRay
 
     # The path where the plugins can be found.
     def plugin_path(*args)
-      unless args.empty?
-        @plugin_path = File.expand_path File.join(*args)
-      end
+      @plugin_path = File.expand_path File.join(*args) unless args.empty?
       @plugin_path ||= ''
     end
 
@@ -176,7 +174,7 @@ module CodeRay
           if h.key?(:default)
             h[:default]
           else
-            raise PluginNotFound, '%p could not load plugin %p: %s' % [self, id, boom]
+            raise PluginNotFound, format('%p could not load plugin %p: %s', self, id, boom)
           end
         else
           # Plugin should have registered by now

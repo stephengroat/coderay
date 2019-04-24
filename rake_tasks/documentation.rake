@@ -10,14 +10,16 @@ rescue LoadError
 end
 
 desc 'Generate documentation for CodeRay'
-Rake::RDocTask.new :doc do |rd|
-  rd.main = 'lib/README'
-  rd.title = 'CodeRay Documentation'
+if defined? Rake::RDocTask
+  Rake::RDocTask.new :doc do |rd|
+    rd.main = 'lib/README'
+    rd.title = 'CodeRay Documentation'
 
-  rd.options << '--line-numbers' << '--tab-width' << '2'
+    rd.options << '--line-numbers' << '--tab-width' << '2'
 
-  rd.main = 'README_INDEX.rdoc'
-  rd.rdoc_files.add 'README_INDEX.rdoc'
-  rd.rdoc_files.add Dir['lib']
-  rd.rdoc_dir = 'doc'
-end if defined? Rake::RDocTask
+    rd.main = 'README_INDEX.rdoc'
+    rd.rdoc_files.add 'README_INDEX.rdoc'
+    rd.rdoc_files.add Dir['lib']
+    rd.rdoc_dir = 'doc'
+  end
+end

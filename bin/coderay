@@ -69,7 +69,7 @@ def print_list_of(plugin_host)
   plugins = plugin_host.all_plugins.map do |plugin|
     info = "  #{plugin.plugin_id}: #{plugin.title}"
 
-    aliases = (plugin.aliases - [:default]).map { |key| "-#{key}" }.sort_by { |key| key.size }
+    aliases = (plugin.aliases - [:default]).map { |key| "-#{key}" }.sort_by(&:size)
     if plugin.respond_to?(:file_extension) || !aliases.empty?
       additional_info = []
       additional_info << aliases.join(', ') unless aliases.empty?
@@ -83,13 +83,9 @@ def print_list_of(plugin_host)
   puts plugins.sort
 end
 
-if option? '-v', '--version'
-  version
-end
+version if option? '-v', '--version'
 
-if option? '-h', '--help'
-  help
-end
+help if option? '-h', '--help'
 
 case subcommand
 when 'highlight', nil
@@ -120,13 +116,11 @@ when 'highlight', nil
       exit 1
     end
 
-    if input_file
-      input_lang ||= CodeRay::FileType.fetch input_file, :text, true
-    end
+    input_lang ||= CodeRay::FileType.fetch input_file, :text, true if input_file
 
     output_format ||= if output_file
       CodeRay::FileType[output_file] || :plain
-    else
+                      else
       :terminal
                       end
 
@@ -134,7 +128,7 @@ when 'highlight', nil
 
     input = if input_file
       File.read input_file
-    else
+            else
       $stdin.read
             end
 
@@ -150,13 +144,13 @@ when 'highlight', nil
     rescue CodeRay::PluginHost::PluginNotFound => boom
       $stdout = $stderr
       if boom.message[/CodeRay::(\w+)s could not load plugin :?(.*?): /]
-        puts "I don't know the #$1 \"#$2\"."
+        puts "I don't know the #{Regexp.last_match(1)} \"#{Regexp.last_match(2)}\"."
       else
         puts boom.message
       end
       # puts "I don't know this plugin: #{boom.message[/Could not load plugin (.*?): /, 1]}."
     rescue CodeRay::Scanners::Scanner::ScanError
-      # this is sometimes raised by pagers; ignore
+    # this is sometimes raised by pagers; ignore
     # FIXME: rescue Errno::EPIPE
     ensure
       file.close if output_file
@@ -183,17 +177,15 @@ when 'li', 'list'
     puts 'recognized file types:'
 
     filetypes = Hash.new { |h, k| h[k] = [] }
-    CodeRay::FileType::TypeFromExt.inject filetypes do |types, (ext, type)|
+    CodeRay::FileType::TypeFromExt.each_with_object filetypes do |(ext, type), types|
       types[type.to_s] << ".#{ext}"
-      types
     end
-    CodeRay::FileType::TypeFromName.inject filetypes do |types, (name, type)|
+    CodeRay::FileType::TypeFromName.each_with_object filetypes do |(name, type), types|
       types[type.to_s] << name
-      types
     end
 
     filetypes.sort.each do |type, exts|
-      puts "  #{type}: #{exts.sort_by { |ext| ext.size }.join(', ')}"
+      puts "  #{type}: #{exts.sort_by(&:size).join(', ')}"
     end
   end
 when 'stylesheet', 'style', 'css'

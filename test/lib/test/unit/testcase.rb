@@ -36,9 +36,9 @@ module Test
       # Creates a new instance of the fixture for running the
       # test represented by test_method_name.
       def initialize(test_method_name)
-        unless(respond_to?(test_method_name) &&
+        unless respond_to?(test_method_name) &&
                (method(test_method_name).arity == 0 ||
-                method(test_method_name).arity == -1))
+                method(test_method_name).arity == -1)
           throw :invalid_test
         end
         @method_name = test_method_name
@@ -50,20 +50,19 @@ module Test
       # each method.
       def self.suite
         method_names = public_instance_methods(true)
-        tests = method_names.delete_if {|method_name| method_name !~ /^test./}
+        tests = method_names.delete_if { |method_name| method_name !~ /^test./ }
         suite = TestSuite.new(name)
-        tests.sort.each do
-          |test|
+        tests.sort.each do |test|
           catch(:invalid_test) do
             suite << new(test)
           end
         end
-        if (suite.empty?)
+        if suite.empty?
           catch(:invalid_test) do
             suite << new('default_test')
           end
         end
-        return suite
+        suite
       end
 
       # Runs the individual test method represented by this
@@ -78,18 +77,18 @@ module Test
         rescue AssertionFailedError => e
           add_failure(e.message, e.backtrace)
         rescue Exception
-          raise if PASSTHROUGH_EXCEPTIONS.include? $!.class
+          raise if PASSTHROUGH_EXCEPTIONS.include? $ERROR_INFO.class
 
-          add_error($!)
+          add_error($ERROR_INFO)
         ensure
           begin
             teardown
           rescue AssertionFailedError => e
             add_failure(e.message, e.backtrace)
           rescue Exception
-            raise if PASSTHROUGH_EXCEPTIONS.include? $!.class
+            raise if PASSTHROUGH_EXCEPTIONS.include? $ERROR_INFO.class
 
-            add_error($!)
+            add_error($ERROR_INFO)
           end
         end
         result.add_run
@@ -98,13 +97,11 @@ module Test
 
       # Called before every test method runs. Can be used
       # to set up fixture information.
-      def setup
-      end
+      def setup; end
 
       # Called after every test method runs. Can be used to tear
       # down fixture information.
-      def teardown
-      end
+      def teardown; end
 
       def default_test
         flunk('No tests were specified')
@@ -114,7 +111,7 @@ module Test
       # not. Primarily for use in teardown so that artifacts
       # can be left behind if the test fails.
       def passed?
-        return @test_passed
+        @test_passed
       end
       private :passed?
 
@@ -127,7 +124,7 @@ module Test
       end
       private :add_assertion
 
-      def add_failure(message, all_locations=caller())
+      def add_failure(message, all_locations = caller)
         @test_passed = false
         @_result.add_failure(Failure.new(name, filter_backtrace(all_locations), message))
       end
@@ -152,8 +149,8 @@ module Test
 
       # It's handy to be able to compare TestCase instances.
       def ==(other)
-        return false unless(other.kind_of?(self.class))
-        return false unless(@method_name == other.method_name)
+        return false unless other.is_a?(self.class)
+        return false unless @method_name == other.method_name
 
         self.class == other.class
       end

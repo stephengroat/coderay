@@ -1,4 +1,3 @@
-# encoding: utf-8
 # Encoding.default_internal = 'UTF-8'
 
 # = CodeRay Library
@@ -126,7 +125,7 @@
 module CodeRay
   $CODERAY_DEBUG ||= false
 
-  CODERAY_PATH = File.expand_path('../coderay', __FILE__)
+  CODERAY_PATH = File.expand_path('coderay', __dir__)
 
   # Assuming the path is a subpath of lib/coderay/
   def self.coderay_path(*path)

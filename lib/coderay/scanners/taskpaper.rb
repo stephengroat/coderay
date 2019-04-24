@@ -6,7 +6,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
+    def scan_tokens(encoder, _options)
       until eos?
         if match = scan(/\S.*:.*$/)                  # project
           encoder.text_token(match, :namespace)

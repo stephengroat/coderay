@@ -1,8 +1,7 @@
-# encoding: utf-8
 require 'test/unit'
-require File.expand_path('../../lib/assert_warning', __FILE__)
+require File.expand_path('../lib/assert_warning', __dir__)
 
-$:.unshift File.expand_path('../../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __dir__)
 require 'coderay'
 
 class BasicTest < Test::Unit::TestCase
@@ -14,11 +13,11 @@ class BasicTest < Test::Unit::TestCase
   end
   
   def with_empty_load_path
-    old_load_path = $:.dup
-    $:.clear
+    old_load_path = $LOAD_PATH.dup
+    $LOAD_PATH.clear
     yield
   ensure
-    $:.replace old_load_path
+    $LOAD_PATH.replace old_load_path
   end
   
   def test_autoload
@@ -34,11 +33,11 @@ class BasicTest < Test::Unit::TestCase
   RUBY_TEST_TOKENS = [
     ['puts', :ident],
     [' ', :space],
-    [:begin_group, :string],
-      ['"', :delimiter],
-      ['Hello, World!', :content],
-      ['"', :delimiter],
-    [:end_group, :string]
+    %i[begin_group string],
+    ['"', :delimiter],
+    ['Hello, World!', :content],
+    ['"', :delimiter],
+    %i[end_group string]
   ].flatten
   def test_simple_scan
     assert_nothing_raised do
@@ -46,8 +45,8 @@ class BasicTest < Test::Unit::TestCase
     end
   end
   
-  RUBY_TEST_HTML = 'puts <span class="string"><span class="delimiter">&quot;</span>' + 
-    '<span class="content">Hello, World!</span><span class="delimiter">&quot;</span></span>'
+  RUBY_TEST_HTML = 'puts <span class="string"><span class="delimiter">&quot;</span>' \
+                   '<span class="content">Hello, World!</span><span class="delimiter">&quot;</span></span>'
   def test_simple_highlight
     assert_nothing_raised do
       assert_equal RUBY_TEST_HTML, CodeRay.scan(RUBY_TEST_CODE, :ruby).html
@@ -80,14 +79,14 @@ class BasicTest < Test::Unit::TestCase
   
   def test_duo
     assert_equal(RUBY_TEST_CODE,
-      CodeRay::Duo[:plain, :text].highlight(RUBY_TEST_CODE))
+                 CodeRay::Duo[:plain, :text].highlight(RUBY_TEST_CODE))
     assert_equal(RUBY_TEST_CODE,
-      CodeRay::Duo[:plain => :text].highlight(RUBY_TEST_CODE))
+                 CodeRay::Duo[:plain => :text].highlight(RUBY_TEST_CODE))
   end
   
   def test_duo_stream
     assert_equal(RUBY_TEST_CODE,
-      CodeRay::Duo[:plain, :text].highlight(RUBY_TEST_CODE, :stream => true))
+                 CodeRay::Duo[:plain, :text].highlight(RUBY_TEST_CODE, :stream => true))
   end
   
   def test_comment_filter
@@ -159,9 +158,7 @@ more code  # and another comment, in-line.
     assert_kind_of Hash, CodeRay::TokenKinds
     CodeRay::TokenKinds.each do |kind, css_class|
       assert_kind_of Symbol, kind
-      if css_class != false
-        assert_kind_of String, css_class, 'TokenKinds[%p] == %p' % [kind, css_class]
-      end
+      assert_kind_of String, css_class, format('TokenKinds[%p] == %p', kind, css_class) if css_class != false
     end
     assert_equal 'reserved', CodeRay::TokenKinds[:reserved]
     assert_equal false,      CodeRay::TokenKinds[:shibboleet]
@@ -201,7 +198,7 @@ more code  # and another comment, in-line.
       encoder << ['test', :content]
     end
     assert_raise ArgumentError do
-      encoder << [:strange, :input]
+      encoder << %i[strange input]
     end
     assert_raise ArgumentError do
       encoder.encode_tokens [['test', :token]]
@@ -228,7 +225,7 @@ more code  # and another comment, in-line.
   
   def test_scanner_tokenize
     assert_equal ['foo', :plain], CodeRay::Scanners::Plain.new.tokenize('foo')
-    assert_equal [['foo', :plain], ['bar', :plain]], CodeRay::Scanners::Plain.new.tokenize(['foo', 'bar'])
+    assert_equal [['foo', :plain], ['bar', :plain]], CodeRay::Scanners::Plain.new.tokenize(%w[foo bar])
     CodeRay::Scanners::Plain.new.tokenize 42
   end
   
@@ -287,7 +284,7 @@ more code  # and another comment, in-line.
   end
   
   class RaisingScanner < CodeRay::Scanners::Scanner
-    def scan_tokens(encoder, options)
+    def scan_tokens(_encoder, _options)
       raise_inspect 'message', [], :initial
     end
   end

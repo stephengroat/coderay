@@ -45,9 +45,7 @@ module CodeRay
       # If the filetype cannot be found, the +default+ value
       # is returned.
       def fetch(filename, default = nil, read_shebang = false)
-        if default && block_given?
-          warn 'Block supersedes default value argument; use either.'
-        end
+        warn 'Block supersedes default value argument; use either.' if default && block_given?
 
         if type = self[filename, read_shebang]
           type
@@ -55,7 +53,7 @@ module CodeRay
           return yield if block_given?
           return default if default
 
-          raise UnknownFileType, 'Could not determine type of %p.' % filename
+          raise UnknownFileType, format('Could not determine type of %p.', filename)
         end
       end
 

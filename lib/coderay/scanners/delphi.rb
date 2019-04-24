@@ -7,28 +7,28 @@ module Scanners
     register_for :delphi
     file_extension 'pas'
 
-    KEYWORDS = [
-      'and', 'array', 'as', 'at', 'asm', 'at', 'begin', 'case', 'class',
-      'const', 'constructor', 'destructor', 'dispinterface', 'div', 'do',
-      'downto', 'else', 'end', 'except', 'exports', 'file', 'finalization',
-      'finally', 'for', 'function', 'goto', 'if', 'implementation', 'in',
-      'inherited', 'initialization', 'inline', 'interface', 'is', 'label',
-      'library', 'mod', 'nil', 'not', 'object', 'of', 'or', 'out', 'packed',
-      'procedure', 'program', 'property', 'raise', 'record', 'repeat',
-      'resourcestring', 'set', 'shl', 'shr', 'string', 'then', 'threadvar',
-      'to', 'try', 'type', 'unit', 'until', 'uses', 'var', 'while', 'with',
-      'xor', 'on',
+    KEYWORDS = %w[
+      and array as at asm at begin case class
+      const constructor destructor dispinterface div do
+      downto else end except exports file finalization
+      finally for function goto if implementation in
+      inherited initialization inline interface is label
+      library mod nil not object of or out packed
+      procedure program property raise record repeat
+      resourcestring set shl shr string then threadvar
+      to try type unit until uses var while with
+      xor on
     ].freeze  # :nodoc:
 
-    DIRECTIVES = [
-      'absolute', 'abstract', 'assembler', 'at', 'automated', 'cdecl',
-      'contains', 'deprecated', 'dispid', 'dynamic', 'export',
-      'external', 'far', 'forward', 'implements', 'local',
-      'near', 'nodefault', 'on', 'overload', 'override',
-      'package', 'pascal', 'platform', 'private', 'protected', 'public',
-      'published', 'read', 'readonly', 'register', 'reintroduce',
-      'requires', 'resident', 'safecall', 'stdcall', 'stored', 'varargs',
-      'virtual', 'write', 'writeonly',
+    DIRECTIVES = %w[
+      absolute abstract assembler at automated cdecl
+      contains deprecated dispid dynamic export
+      external far forward implements local
+      near nodefault on overload override
+      package pascal platform private protected public
+      published read readonly register reintroduce
+      requires resident safecall stdcall stored varargs
+      virtual write writeonly
     ].freeze  # :nodoc:
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident)
@@ -36,12 +36,11 @@ module Scanners
                                        .add(DIRECTIVES, :directive) # :nodoc:
 
     NAME_FOLLOWS = WordList::CaseIgnoring.new(false)
-                                         .add(%w(procedure function .)) # :nodoc:
+                                         .add(%w[procedure function .]) # :nodoc:
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       last_token = ''
 
@@ -117,7 +116,7 @@ module Scanners
             encoder.text_token match, :space
             state = :initial
           else
-            raise "else case \' reached; %p not handled." % peek(1), encoder
+            raise format("else case \' reached; %p not handled.", peek(1)), encoder
           end
 
         else
@@ -129,9 +128,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group state
-      end
+      encoder.end_group state if state == :string
 
       encoder
     end

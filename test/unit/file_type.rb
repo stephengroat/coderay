@@ -1,5 +1,5 @@
 require 'test/unit'
-require File.expand_path('../../lib/assert_warning', __FILE__)
+require File.expand_path('../lib/assert_warning', __dir__)
 
 require 'coderay/helpers/file_type'
 
@@ -22,7 +22,7 @@ class FileTypeTests < Test::Unit::TestCase
 
   def test_block_supersedes_default_warning
     assert_warning 'Block supersedes default value argument; use either.' do
-      FileType.fetch('c', :default) { }
+      FileType.fetch('c', :default) {}
     end
   end
 
@@ -97,7 +97,7 @@ class FileTypeTests < Test::Unit::TestCase
   def test_shebang_empty_file
     require 'tmpdir'
     tmpfile = File.join(Dir.tmpdir, 'bla')
-    File.open(tmpfile, 'w') { } # touch
+    File.open(tmpfile, 'w') {} # touch
     assert_equal nil, FileType[tmpfile, true]
   end
 

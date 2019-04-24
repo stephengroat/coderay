@@ -8,14 +8,14 @@ module Scanners
   class HTML < Scanner
     register_for :html
 
-    KINDS_NOT_LOC = [
-      :comment, :doctype, :preprocessor,
-      :tag, :attribute_name, :operator,
-      :attribute_value, :string,
-      :plain, :entity, :error,
+    KINDS_NOT_LOC = %i[
+      comment doctype preprocessor
+      tag attribute_name operator
+      attribute_value string
+      plain entity error
     ].freeze # :nodoc:
 
-    EVENT_ATTRIBUTES = %w(
+    EVENT_ATTRIBUTES = %w[
       onabort onafterprint onbeforeprint onbeforeunload onblur oncanplay
       oncanplaythrough onchange onclick oncontextmenu oncuechange ondblclick
       ondrag ondragdrop ondragend ondragenter ondragleave ondragover
@@ -28,7 +28,7 @@ module Scanners
       onredo onreset onresize onscroll onseeked onseeking onselect onshow
       onstalled onstorage onsubmit onsuspend ontimeupdate onundo onunload
       onvolumechange onwaiting
-    ).freeze
+    ].freeze
 
     IN_ATTRIBUTE = WordList::CaseIgnoring.new(nil)
                                          .add(EVENT_ATTRIBUTES, :script)
@@ -138,7 +138,7 @@ module Scanners
               in_tag = nil
               encoder.text_token match, :error
             else
-              raise_inspect '[BUG] else-case reached with state %p' % [state], encoder
+              raise_inspect format('[BUG] else-case reached with state %p', state), encoder
             end
 
           when :attribute
@@ -147,7 +147,7 @@ module Scanners
               in_attribute = nil
               state = if in_tag
                 :in_special_tag
-              else
+                      else
                 :initial
                       end
             elsif match = scan(/#{ATTR_NAME}/o)
@@ -160,7 +160,7 @@ module Scanners
             end
 
           when :attribute_equal
-            if match = scan(/=/) #/
+            if match = scan(/=/) # /
               encoder.text_token match, :operator
               state = :attribute_value
             else
@@ -176,9 +176,7 @@ module Scanners
               if in_attribute == :script || in_attribute == :style
                 encoder.begin_group :string
                 encoder.text_token match, :delimiter
-                if scan(/javascript:[ \t]*/)
-                  encoder.text_token matched, :comment
-                end
+                encoder.text_token matched, :comment if scan(/javascript:[ \t]*/)
                 code = scan_until(match == '"' ? /(?="|\z)/ : /(?='|\z)/)
                 if in_attribute == :script
                   scan_java_script encoder, code
@@ -244,11 +242,11 @@ module Scanners
               encoder.text_token closing, :comment if closing
               state = :initial
             else
-              raise 'unknown special tag: %p' % [in_tag]
+              raise format('unknown special tag: %p', in_tag)
             end
 
           else
-            raise_inspect 'Unknown state: %p' % [state], encoder
+            raise_inspect format('Unknown state: %p', state), encoder
 
           end
 

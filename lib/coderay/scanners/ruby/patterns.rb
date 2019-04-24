@@ -1,4 +1,3 @@
-# encoding: utf-8
 module CodeRay
 module Scanners
   module Ruby::Patterns # :nodoc: all
@@ -146,28 +145,28 @@ module Scanners
       )
     /ox.freeze
     KEYWORDS_EXPECTING_VALUE = WordList.new.add(%w[
-      and end in or unless begin
-      defined? ensure redo super until
-      break do next rescue then
-      when case else for retry
-      while elsif if not return
-      yield
-    ])
+                                                  and end in or unless begin
+                                                  defined? ensure redo super until
+                                                  break do next rescue then
+                                                  when case else for retry
+                                                  while elsif if not return
+                                                  yield
+                                                ])
 
     FANCY_STRING_START = / % ( [iIqQrswWx] | (?![a-zA-Z0-9]) ) ([^a-zA-Z0-9]) /x.freeze
-    FANCY_STRING_KIND = Hash.new(:string).merge({
+    FANCY_STRING_KIND = Hash.new(:string).merge(
       'i' => :symbol,
       'I' => :symbol,
       'r' => :regexp,
       's' => :symbol,
       'x' => :shell
-    })
-    FANCY_STRING_INTERPRETED = Hash.new(true).merge({
+    )
+    FANCY_STRING_INTERPRETED = Hash.new(true).merge(
       'i' => false,
       'q' => false,
       's' => false,
       'w' => false
-    })
+    )
   end
 end
 end

@@ -5,9 +5,9 @@ module Scanners
     register_for :json
     file_extension 'json'
 
-    KINDS_NOT_LOC = [
-      :float, :char, :content, :delimiter,
-      :error, :integer, :operator, :value,
+    KINDS_NOT_LOC = %i[
+      float char content delimiter
+      error integer operator value
     ].freeze # :nodoc:
 
     ESCAPE = / [bfnrt\\"\/] /x.freeze # :nodoc:
@@ -24,9 +24,7 @@ module Scanners
     def scan_tokens(encoder, options)
       state = options[:state] || @state
 
-      if [:string, :key].include? state
-        encoder.begin_group state
-      end
+      encoder.begin_group state if %i[string key].include? state
 
       until eos?
 
@@ -70,22 +68,18 @@ module Scanners
             encoder.text_token match, :error unless match.empty?
             state = :initial
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         else
-          raise_inspect 'Unknown state: %p' % [state], encoder
+          raise_inspect format('Unknown state: %p', state), encoder
 
         end
       end
 
-      if options[:keep_state]
-        @state = state
-      end
+      @state = state if options[:keep_state]
 
-      if [:string, :key].include? state
-        encoder.end_group state
-      end
+      encoder.end_group state if %i[string key].include? state
 
       encoder
     end

@@ -46,8 +46,7 @@ module Scanners
 
     protected
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       string_delimiter = nil
       package_name_expected = false
@@ -64,7 +63,7 @@ module Scanners
             encoder.text_token match, :space
             next
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) }mx)
             encoder.text_token match, :comment
             next
 
@@ -147,7 +146,7 @@ module Scanners
             state = :initial
             encoder.text_token match, :error unless match.empty?
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         else
@@ -159,9 +158,7 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group state
-      end
+      encoder.end_group state if state == :string
 
       encoder
     end

@@ -28,9 +28,7 @@ module Scanners
       state, heredocs = options[:state] || @state
       heredocs = heredocs.dup if heredocs.is_a?(Array)
 
-      if state && state.instance_of?(StringState)
-        encoder.begin_group state.type
-      end
+      encoder.begin_group state.type if state && state.instance_of?(StringState)
 
       last_state = nil
 
@@ -101,9 +99,7 @@ module Scanners
               else
                 value_expected = false
                 if kind == :ident
-                  if match[/\A[A-Z]/] && !(match[/[!?]$/] || match?(/\(/))
-                    kind = :constant
-                  end
+                  kind = :constant if match[/\A[A-Z]/] && !(match[/[!?]$/] || match?(/\(/))
                 elsif kind == :keyword
                   state = patterns::KEYWORD_NEW_STATE[match]
                   if patterns::KEYWORDS_EXPECTING_VALUE[match]
@@ -115,8 +111,8 @@ module Scanners
               end
 
             elsif method_call_expected &&
-               match = scan(unicode ? /#{patterns::METHOD_AFTER_DOT}/uo :
-                                      /#{patterns::METHOD_AFTER_DOT}/o)
+                  match = scan(unicode ? /#{patterns::METHOD_AFTER_DOT}/uo :
+                                         /#{patterns::METHOD_AFTER_DOT}/o)
               if method_call_expected == '::' && match[/\A[A-Z]/] && !match?(/\(/)
                 encoder.text_token match, :constant
               else
@@ -213,7 +209,7 @@ module Scanners
               encoder.end_group kind
               heredocs ||= [] # create heredocs if empty
               heredocs << self.class::StringState.new(kind, quote != "'", delim,
-                self[1] ? :indented : :linestart)
+                                                      self[1] ? :indented : :linestart)
               value_expected = false
 
             elsif value_expected && match = scan(/#{patterns::FANCY_STRING_START}/o)
@@ -255,13 +251,14 @@ module Scanners
               end
               unless unicode
                 # check for unicode
-                $DEBUG_BEFORE, $DEBUG = $DEBUG, false
+                $DEBUG_BEFORE = $DEBUG
+                $DEBUG = false
                 begin
                   if check(/./mu).size > 1
                     # seems like we should try again with unicode
                     unicode = true
                   end
-                rescue
+                rescue StandardError
                   # bad unicode char; use getch
                 ensure
                   $DEBUG = $DEBUG_BEFORE
@@ -350,7 +347,7 @@ module Scanners
 
           else
             #:nocov:
-            raise_inspect 'Unknown state: %p' % [state], encoder
+            raise_inspect format('Unknown state: %p', state), encoder
             #:nocov:
           end
 
@@ -424,7 +421,7 @@ module Scanners
               state = :initial
             else
               #:nocov:
-              raise_inspect 'else-case # reached; #%p not handled' % [peek(1)], encoder
+              raise_inspect format('else-case # reached; #%p not handled', peek(1)), encoder
               #:nocov:
             end
 
@@ -434,7 +431,7 @@ module Scanners
 
           else
             #:nocov
-            raise_inspect 'else-case " reached; %p not handled, state = %p' % [match, state], encoder
+            raise_inspect format('else-case " reached; %p not handled, state = %p', match, state), encoder
             #:nocov:
 
           end
@@ -444,9 +441,7 @@ module Scanners
       end
 
       # cleaning up
-      if state.is_a? StringState
-        encoder.end_group state.type
-      end
+      encoder.end_group state.type if state.is_a? StringState
 
       if options[:keep_state]
         if state.is_a?(StringState) && state.heredoc

@@ -1,4 +1,3 @@
-# encoding: utf-8
 module CodeRay
   module Scanners
     # Clojure scanner by Licenser.
@@ -140,8 +139,7 @@ module CodeRay
 
       protected
 
-      def scan_tokens(encoder, options)
-
+      def scan_tokens(encoder, _options)
         state = :initial
         kind = nil
 
@@ -178,7 +176,7 @@ module CodeRay
               state = self[1] ? :regexp : :string
               encoder.begin_group state
               encoder.text_token match, :delimiter
-            elsif (match = scan(/#{NUM}/o)) && (not matched.empty?)
+            elsif (match = scan(/#{NUM}/o)) && !matched.empty?
               encoder.text_token match, match[/[.e\/]/i] ? :float : :integer
             else
               encoder.text_token getch, :error
@@ -192,8 +190,8 @@ module CodeRay
               encoder.end_group state
               state = :initial
             else
-              raise_inspect 'else case " reached; %p not handled.' % peek(1),
-                encoder, state
+              raise_inspect format('else case " reached; %p not handled.', peek(1)),
+                            encoder, state
             end
 
           else
@@ -203,12 +201,9 @@ module CodeRay
 
         end
 
-        if [:string, :regexp].include? state
-          encoder.end_group state
-        end
+        encoder.end_group state if %i[string regexp].include? state
 
         encoder
-
       end
     end
   end

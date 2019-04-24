@@ -35,16 +35,13 @@ module CodeRay
 
     # The PluginHost for this Plugin class.
     def plugin_host(host = nil)
-      if host.is_a? PluginHost
-        const_set :PLUGIN_HOST, host
-      end
+      const_set :PLUGIN_HOST, host if host.is_a? PluginHost
       self::PLUGIN_HOST
     end
 
     def aliases
-      plugin_host.plugin_hash.inject [] do |aliases, (key, _)|
+      plugin_host.plugin_hash.each_with_object [] do |(key, _), aliases|
         aliases << key if plugin_host[key] == self
-        aliases
       end
     end
   end

@@ -56,11 +56,11 @@ module Scanners
             encoder.text_token match, :space
             if match.index "\n"
               import_clause = after_def = false
-              value_expected = true unless value_expected
+              value_expected ||= true
             end
             next
 
-          elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
+          elsif match = scan(%r{ // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) }mx)
             value_expected = true
             after_def = false
             encoder.text_token match, :comment
@@ -101,9 +101,7 @@ module Scanners
             class_name_follows = after_def = false
             value_expected = true
             encoder.text_token match, :operator
-            if !inline_block_stack.empty?
-              inline_block_paren_depth += 1
-            end
+            inline_block_paren_depth += 1 unless inline_block_stack.empty?
 
           # TODO: ~'...', ~"..." and ~/.../ style regexps
           elsif match = scan(/ \.\.<? | \*?\.(?!\d)@? | \.& | \?:? | [,?:(\[] | -[->] | \+\+ |
@@ -193,7 +191,7 @@ module Scanners
             next
 
           elsif (state == :string || state == :multiline_string) &&
-              (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
+                (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
             if string_delimiter[0] == "'" && !(match == '\\\\' || match == "\\'")
               encoder.text_token match, :content
             else
@@ -230,7 +228,7 @@ module Scanners
             state = :initial
 
           else
-            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
+            raise_inspect format('else case " reached; %p not handled.', peek(1)), encoder
 
           end
 
@@ -239,17 +237,15 @@ module Scanners
 
         end
 
-        last_token = match unless [:space, :comment, :doctype].include? kind
+        last_token = match unless %i[space comment doctype].include? kind
 
       end
 
-      if [:multiline_string, :string, :regexp].include? state
+      if %i[multiline_string string regexp].include? state
         encoder.end_group state == :regexp ? :regexp : :string
       end
 
-      if options[:keep_state]
-        @state = state
-      end
+      @state = state if options[:keep_state]
 
       until inline_block_stack.empty?
         state, = *inline_block_stack.pop

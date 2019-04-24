@@ -33,7 +33,7 @@ module Encoders
       super options
     end
 
-    def finish(options)
+    def finish(_options)
       output @tokens.text.scan(NON_EMPTY_LINE).size
     end
   end

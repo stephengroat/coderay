@@ -17,6 +17,7 @@ module Encoders
     }.freeze
 
     protected
+
     def setup(options)
       super
 
@@ -33,21 +34,21 @@ module Encoders
     end
 
     public
+
     def text_token(text, kind)
       token = if kind == :space
         @node
-      else
+              else
         @node.add_element kind.to_s
               end
       text.scan(/(\x20+)|(\t+)|(\n)|[^\x20\t\n]+/) do |space, tab, nl|
-        token << case
-        when space
+        token << if space
           REXML::Text.new(space, true)
-        when tab
+                 elsif tab
           REXML::Text.new(tab, true)
-        when nl
+                 elsif nl
           REXML::Text.new(nl, true)
-        else
+                 else
           REXML::Text.new($&)
                  end
       end
@@ -57,10 +58,8 @@ module Encoders
       @node = @node.add_element kind.to_s
     end
 
-    def end_group(kind)
-      if @node == @root
-        raise 'no token to close!'
-      end
+    def end_group(_kind)
+      raise 'no token to close!' if @node == @root
 
       @node = @node.parent
     end

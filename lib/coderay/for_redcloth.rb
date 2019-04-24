@@ -15,17 +15,15 @@ module CodeRay
       require 'redcloth'
       unless RedCloth::VERSION.to_s >= '4.0.3'
         if defined? gem
-          raise 'CodeRay.for_redcloth needs RedCloth version 4.0.3 or later. ' +
-            "You have #{RedCloth::VERSION}. Please gem install RedCloth."
+          raise 'CodeRay.for_redcloth needs RedCloth version 4.0.3 or later. ' \
+                "You have #{RedCloth::VERSION}. Please gem install RedCloth."
         else
-          $".delete 'redcloth.rb' # sorry, but it works
+          $LOADED_FEATURES.delete 'redcloth.rb' # sorry, but it works
           require 'rubygems'
           return install # retry
         end
       end
-      unless RedCloth::VERSION.to_s >= '4.2.2'
-        warn 'CodeRay.for_redcloth works best with RedCloth version 4.2.2 or later.'
-      end
+      warn 'CodeRay.for_redcloth works best with RedCloth version 4.2.2 or later.' unless RedCloth::VERSION.to_s >= '4.2.2'
       RedCloth::TextileDoc.send :include, ForRedCloth::TextileDoc
       RedCloth::Formatters::HTML.module_eval do
         def unescape(html) # :nodoc:
@@ -43,10 +41,10 @@ module CodeRay
           if !opts[:lang] && RedCloth::VERSION.to_s >= '4.2.0'
             # simulating pre-4.2 behavior
             if opts[:text].sub!(/\A\[(\w+)\]/, '')
-              if CodeRay::Scanners[$1].lang == :text
+              if CodeRay::Scanners[Regexp.last_match(1)].lang == :text
                 opts[:text] = $& + opts[:text]
               else
-                opts[:lang] = $1
+                opts[:lang] = Regexp.last_match(1)
               end
             end
           end
@@ -62,16 +60,19 @@ module CodeRay
             "<code#{pba(opts)}>#{opts[:text]}</code>"
           end
         end
+
         def bc_open(opts) # :nodoc:
           opts[:block] = true
           @in_bc = opts
           opts[:lang] ? '' : "<pre#{pba(opts)}>"
         end
+
         def bc_close(opts) # :nodoc:
           opts = @in_bc
           @in_bc = nil
           opts[:lang] ? '' : "</pre>\n"
         end
+
         def escape_pre(text) # :nodoc:
           if @in_bc ||= nil
             text

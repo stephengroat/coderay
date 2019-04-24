@@ -15,7 +15,6 @@ module Scanners
     protected
 
     def scan_tokens(encoder, options)
-
       line_kind = nil
       state = :initial
       deleted_lines_count = 0
@@ -105,7 +104,7 @@ module Scanners
             deleted_lines_count += 1
             if options[:inline_diff] && deleted_lines_count == 1 && (changed_lines_count = 1 + check(/.*(?:\n\-.*)*/).count("\n")) && changed_lines_count <= 100_000 && match?(/(?>.*(?:\n\-.*){#{changed_lines_count - 1}}(?:\n\+.*){#{changed_lines_count}})$(?!\n\+)/)
               deleted_lines  = Array.new(changed_lines_count) { |i| skip(/\n\-/) if i > 0; scan(/.*/) }
-              inserted_lines = Array.new(changed_lines_count) { |i| skip(/\n\+/)         ; scan(/.*/) }
+              inserted_lines = Array.new(changed_lines_count) { |_i| skip(/\n\+/); scan(/.*/) }
 
               deleted_lines_tokenized  = []
               inserted_lines_tokenized = []
@@ -154,14 +153,10 @@ module Scanners
               encoder.begin_line line_kind = :delete
               encoder.text_token '-', :delete
               if options[:highlight_code]
-                if deleted_lines_count == 1
-                  content_scanner_entry_state = content_scanner.state
-                end
+                content_scanner_entry_state = content_scanner.state if deleted_lines_count == 1
                 content_scanner.tokenize match, :tokens => encoder unless match.empty?
-                if !match?(/\n-/)
-                  if match?(/\n\+/)
-                    content_scanner.state = content_scanner_entry_state || :initial
-                  end
+                unless match?(/\n-/)
+                  content_scanner.state = content_scanner_entry_state || :initial if match?(/\n\+/)
                   content_scanner_entry_state = nil
                 end
               else
@@ -216,7 +211,7 @@ module Scanners
       # does not precede the leftmost one from the left.
       j = -1
       j -= 1 while j >= j_min && a[j] == b[j]
-      return a[0...i], a[i..j], b[i..j], (j < -1) ? a[j + 1..-1] : ''
+      [a[0...i], a[i..j], b[i..j], j < -1 ? a[j + 1..-1] : '']
     end
   end
 end

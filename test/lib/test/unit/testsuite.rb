@@ -20,7 +20,7 @@ module Test
       FINISHED = name + '::FINISHED'
 
       # Creates a new TestSuite with the given name.
-      def initialize(name='Unnamed TestSuite')
+      def initialize(name = 'Unnamed TestSuite')
         @name = name
         @tests = []
       end
@@ -66,8 +66,8 @@ module Test
 
       # It's handy to be able to compare TestSuite instances.
       def ==(other)
-        return false unless(other.kind_of?(self.class))
-        return false unless(@name == other.name)
+        return false unless other.is_a?(self.class)
+        return false unless @name == other.name
 
         @tests == other.tests
       end

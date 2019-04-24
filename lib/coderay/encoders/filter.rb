@@ -18,13 +18,14 @@ module Encoders
     register_for :filter
 
     protected
+
     def setup(options)
       super
 
       @tokens = options[:tokens] || Tokens.new
     end
 
-    def finish(options)
+    def finish(_options)
       output @tokens
     end
 

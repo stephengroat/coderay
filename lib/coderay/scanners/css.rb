@@ -3,12 +3,12 @@ module Scanners
   class CSS < Scanner
     register_for :css
 
-    KINDS_NOT_LOC = [
-      :comment,
-      :class, :pseudo_class, :tag,
-      :id, :directive,
-      :key, :value, :operator, :color, :float, :string,
-      :error, :important, :type,
+    KINDS_NOT_LOC = %i[
+      comment
+      class pseudo_class tag
+      id directive
+      key value operator color float string
+      error important type
     ].freeze # :nodoc:
 
     module RE # :nodoc:
@@ -60,7 +60,7 @@ module Scanners
           encoder.text_token match, :space
 
         elsif case states.last
-          when :initial, :media
+              when :initial, :media
             if match = scan(/(?>#{RE::Ident})(?!\()|\*/ox)
               encoder.text_token match, :tag
               next
@@ -85,7 +85,7 @@ module Scanners
               next
             end
 
-          when :block
+              when :block
             if match = scan(/(?>#{RE::Ident})(?!\()/ox)
               if value_expected
                 encoder.text_token match, :value
@@ -95,21 +95,21 @@ module Scanners
               next
             end
 
-          when :media_before_name
+              when :media_before_name
             if match = scan(RE::Ident)
               encoder.text_token match, :type
               states[-1] = :media_after_name
               next
             end
 
-          when :media_after_name
+              when :media_after_name
             if match = scan(/\{/)
               encoder.text_token match, :operator
               states[-1] = :media
               next
             end
 
-          else
+              else
             #:nocov:
             raise_inspect 'Unknown state', encoder
             #:nocov:
@@ -127,9 +127,7 @@ module Scanners
         elsif match = scan(/\}/)
           value_expected = false
           encoder.text_token match, :operator
-          if states.last == :block || states.last == :media
-            states.pop
-          end
+          states.pop if states.last == :block || states.last == :media
 
         elsif match = scan(/#{RE::String}/o)
           encoder.begin_group :string

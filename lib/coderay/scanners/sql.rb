@@ -4,42 +4,42 @@ module Scanners
   class SQL < Scanner
     register_for :sql
 
-    KEYWORDS = %w(
+    KEYWORDS = %w[
       all and any as before begin between by case check collate
       each else end exists
       for foreign from full group having if in inner is join
       like not of on or order outer over references
       then to union using values when where
       left right distinct
-    ).freeze
+    ].freeze
 
-    OBJECTS = %w(
+    OBJECTS = %w[
       database databases table tables column columns fields index constraint
       constraints transaction function procedure row key view trigger
-    ).freeze
+    ].freeze
 
-    COMMANDS = %w(
+    COMMANDS = %w[
       add alter comment create delete drop grant insert into select update set
       show prompt begin commit rollback replace truncate
-    ).freeze
+    ].freeze
 
-    PREDEFINED_TYPES = %w(
+    PREDEFINED_TYPES = %w[
       char varchar varchar2 enum binary text tinytext mediumtext
       longtext blob tinyblob mediumblob longblob timestamp
       date time datetime year double decimal float int
       integer tinyint mediumint bigint smallint unsigned bit
       bool boolean hex bin oct
-    ).freeze
+    ].freeze
 
-    PREDEFINED_FUNCTIONS = %w(sum cast substring abs pi count min max avg now).freeze
+    PREDEFINED_FUNCTIONS = %w[sum cast substring abs pi count min max avg now].freeze
 
-    DIRECTIVES = %w(
+    DIRECTIVES = %w[
       auto_increment unique default charset initially deferred
       deferrable cascade immediate read write asc desc after
       primary foreign return engine
-    ).freeze
+    ].freeze
 
-    PREDEFINED_CONSTANTS = %w(null true false).freeze
+    PREDEFINED_CONSTANTS = %w[null true false].freeze
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident)
                                        .add(KEYWORDS, :keyword)
@@ -61,8 +61,7 @@ module Scanners
       '`' => / (?: [^\\`] | `` )+ /x
     }.freeze
 
-    def scan_tokens(encoder, options)
-
+    def scan_tokens(encoder, _options)
       state = :initial
       string_type = nil
       string_content = ''
@@ -78,7 +77,7 @@ module Scanners
           elsif match = scan(/(?:--\s?|#).*/)
             encoder.text_token match, :comment
 
-          elsif match = scan(%r( /\* (!)? (?: .*? \*/ | .* ) )mx)
+          elsif match = scan(%r{ /\* (!)? (?: .*? \*/ | .* ) }mx)
             encoder.text_token match, self[1] ? :directive : :comment
 
           elsif match = scan(/ [*\/=<>:;,!&^|()\[\]{}~%] | [-+\.](?!\d) /x)
@@ -143,7 +142,7 @@ module Scanners
             encoder.end_group :string
             state = :initial
           else
-            raise 'else case " reached; %p not handled.' % peek(1), encoder
+            raise format('else case " reached; %p not handled.', peek(1)), encoder
           end
 
         else
@@ -153,12 +152,9 @@ module Scanners
 
       end
 
-      if state == :string
-        encoder.end_group state
-      end
+      encoder.end_group state if state == :string
 
       encoder
-
     end
   end
 end

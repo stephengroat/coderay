@@ -15,7 +15,7 @@ module Encoders
     register_for :comment_filter
 
     DEFAULT_OPTIONS = superclass::DEFAULT_OPTIONS.merge \
-      :exclude => [:comment, :docstring]
+      :exclude => %i[comment docstring]
   end
 end
 end

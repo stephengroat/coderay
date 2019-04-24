@@ -5,7 +5,7 @@ require 'shoulda-context'
 require 'pathname'
 require 'json'
 
-$:.unshift File.expand_path('../../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __dir__)
 require 'coderay'
 
 puts "Running CodeRay #{CodeRay::VERSION} executable tests..."
@@ -15,17 +15,17 @@ class TestCodeRayExecutable < Test::Unit::TestCase
   EXECUTABLE = ROOT_DIR + 'bin' + 'coderay'
   RUBY_COMMAND = 'ruby'.freeze
   EXE_COMMAND =
-    if RUBY_PLATFORM === 'java' && `ruby --ng -e '' 2> /dev/null` && $?.success?
+    format(if RUBY_PLATFORM === 'java' && `ruby --ng -e '' 2> /dev/null` && $CHILD_STATUS.success?
       # use Nailgun
       "#{RUBY_COMMAND}--ng -I%s %s"
-    else
+           else
       "#{RUBY_COMMAND} -I%s %s"
-    end % [ROOT_DIR + 'lib', EXECUTABLE]
+    end, ROOT_DIR + 'lib', EXECUTABLE)
 
   def coderay(args, options = {})
     command = if options[:fake_tty]
       "#{EXE_COMMAND} #{args} --tty"
-    else
+              else
       "#{EXE_COMMAND} #{args}"
               end
 
@@ -37,7 +37,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
         io.close_write
         io.read
       end
-    else
+             else
       `#{command} 2>&1`
              end
 
@@ -174,7 +174,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
 
     should 'respect the file extension and highlight the input as Python' do
       target = coderay(command)
-      assert_equal %w(keyword class keyword), target[pre, 1].scan(tag_class).flatten
+      assert_equal %w[keyword class keyword], target[pre, 1].scan(tag_class).flatten
     end
   end
 
@@ -189,7 +189,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
 
     should 'ignore the file extension and highlight the input as Ruby' do
       target = coderay(command)
-      assert_equal %w(keyword class), target[pre, 1].scan(tag_class).flatten
+      assert_equal %w[keyword class], target[pre, 1].scan(tag_class).flatten
     end
   end
 

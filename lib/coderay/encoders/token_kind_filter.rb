@@ -30,6 +30,7 @@ module Encoders
     }.freeze
 
     protected
+
     def setup(options)
       super
 
@@ -40,13 +41,13 @@ module Encoders
       @include = Array(@include) unless @include == :all
     end
 
-    def include_text_token?(text, kind)
+    def include_text_token?(_text, kind)
       include_group? kind
     end
 
     def include_group?(kind)
        (@include == :all || @include.include?(kind)) &&
-      !(@exclude == :all || @exclude.include?(kind))
+         !(@exclude == :all || @exclude.include?(kind))
     end
 
     public
