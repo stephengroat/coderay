@@ -60,7 +60,7 @@ module Scanners
               # TODO: Improve highlighting inside of attribute selectors.
               encoder.text_token match[0, 1], :operator
               encoder.text_token match[1..-2], :attribute_name if match.size > 2
-              encoder.text_token match[-1, 1], :operator if match[-1] == ?]
+              encoder.text_token match[-1, 1], :operator if match[-1] == ']'
               next
             elsif match = scan(/(\=|@mixin +)#{RE::Ident}/o)
               encoder.text_token match, :function
@@ -165,7 +165,7 @@ module Scanners
           encoder.begin_group :function
           start = match[/^[-\w]+\(/]
           encoder.text_token start, :delimiter
-          if match[-1] == ?)
+          if match[-1] == ')'
             encoder.text_token match[start.size..-2], :content
             encoder.text_token ')', :delimiter
           else

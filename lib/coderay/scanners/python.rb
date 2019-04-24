@@ -162,7 +162,7 @@ module Scanners
             encoder.begin_group string_type
             string_raw = false
             unless modifiers.empty?
-              string_raw = !!modifiers.index(?r)
+              string_raw = !!modifiers.index('r')
               encoder.text_token modifiers, :modifier
               match = string_delimiter
             end

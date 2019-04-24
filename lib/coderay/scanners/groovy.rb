@@ -54,7 +54,7 @@ module Scanners
 
           if match = scan(/ \s+ | \\\n /x)
             encoder.text_token match, :space
-            if match.index ?\n
+            if match.index "\n"
               import_clause = after_def = false
               value_expected = true unless value_expected
             end
@@ -194,7 +194,7 @@ module Scanners
 
           elsif (state == :string || state == :multiline_string) &&
               (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
-            if string_delimiter[0] == ?' && !(match == '\\\\' || match == "\\'")
+            if string_delimiter[0] == "'" && !(match == '\\\\' || match == "\\'")
               encoder.text_token match, :content
             else
               encoder.text_token match, :char

@@ -150,12 +150,12 @@ module Scanners
             elsif match = scan(unicode ? /#{patterns::SYMBOL}/uo :
                                          /#{patterns::SYMBOL}/o)
               case delim = match[1]
-              when ?', ?"
+              when "'", '"'
                 encoder.begin_group :symbol
                 encoder.text_token ':', :symbol
                 match = delim.chr
                 encoder.text_token match, :delimiter
-                state = self.class::StringState.new :symbol, delim == ?", match
+                state = self.class::StringState.new :symbol, delim == '"', match
               else
                 encoder.text_token match, :symbol
                 value_expected = false
@@ -315,12 +315,12 @@ module Scanners
               encoder.text_token match, :method
             elsif match = scan(/#{patterns::SYMBOL}/o)
               case delim = match[1]
-              when ?', ?"
+              when "'", '"'
                 encoder.begin_group :symbol
                 encoder.text_token ':', :symbol
                 match = delim.chr
                 encoder.text_token match, :delimiter
-                state = self.class::StringState.new :symbol, delim == ?", match
+                state = self.class::StringState.new :symbol, delim == '"', match
                 state.next_state = :undef_comma_expected
               else
                 encoder.text_token match, :symbol
@@ -342,9 +342,9 @@ module Scanners
                                    /(#{patterns::METHOD_NAME_OR_SYMBOL})([ \t]+)(#{patterns::METHOD_NAME_OR_SYMBOL})/o)
 
             if match
-              encoder.text_token self[1], (self[1][0] == ?: ? :symbol : :method)
+              encoder.text_token self[1], (self[1][0] == ':' ? :symbol : :method)
               encoder.text_token self[2], :space
-              encoder.text_token self[3], (self[3][0] == ?: ? :symbol : :method)
+              encoder.text_token self[3], (self[3][0] == ':' ? :symbol : :method)
             end
             state = :initial
 

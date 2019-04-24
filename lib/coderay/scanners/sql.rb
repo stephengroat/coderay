@@ -95,7 +95,7 @@ module Scanners
             encoder.text_token match, :delimiter
 
           elsif match = scan(/ @? [A-Za-z_][A-Za-z_0-9\$]* /x)
-            encoder.text_token match, name_expected ? :ident : (match[0] == ?@ ? :variable : IDENT_KIND[match])
+            encoder.text_token match, name_expected ? :ident : (match[0] == '@' ? :variable : IDENT_KIND[match])
             name_expected = false
 
           elsif match = scan(/0[xX][0-9A-Fa-f]+/)

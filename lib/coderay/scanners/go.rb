@@ -60,7 +60,7 @@ module Scanners
         when :initial
 
           if match = scan(/ \s+ | \\\n /x)
-            if in_preproc_line && match != "\\\n" && match.index(?\n)
+            if in_preproc_line && match != "\\\n" && match.index("\n")
               in_preproc_line = false
               case_expected = false
               label_expected = label_expected_before_preproc_line
@@ -96,7 +96,7 @@ module Scanners
 
           elsif match = scan(/L?"/)
             encoder.begin_group :string
-            if match[0] == ?L
+            if match[0] == 'L'
               encoder.text_token 'L', :modifier
               match = '"'
             end
@@ -179,7 +179,7 @@ module Scanners
 
           elsif match = scan(/\s+/)
             encoder.text_token match, :space
-            state = :initial if match.index ?\n
+            state = :initial if match.index "\n"
 
           else
             state = :initial

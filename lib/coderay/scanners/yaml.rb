@@ -25,7 +25,7 @@ module Scanners
 
         elsif match = scan(/\n+/)
           encoder.text_token match, :space
-          state = :initial if match.index(?\n)
+          state = :initial if match.index("\n")
 
         elsif match = scan(/#.*/)
           encoder.text_token match, :comment

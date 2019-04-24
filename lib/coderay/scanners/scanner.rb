@@ -91,7 +91,7 @@ module CodeRay
         end
 
         def to_unix(code)
-          code.index(?\r) ? code.gsub(/\r\n?/, "\n") : code
+          code.index("\r") ? code.gsub(/\r\n?/, "\n") : code
         end
 
         def guess_encoding(s)
@@ -206,7 +206,7 @@ module CodeRay
       def column(pos = self.pos)
         return 1 if pos <= 0
 
-        pos - (binary_string.rindex(?\n, pos - 1) || -1)
+        pos - (binary_string.rindex("\n", pos - 1) || -1)
       end
 
       # The string in binary encoding.

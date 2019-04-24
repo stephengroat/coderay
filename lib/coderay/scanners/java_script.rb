@@ -74,7 +74,7 @@ module Scanners
         when :initial
 
           if match = scan(/ \s+ | \\\n /x)
-            value_expected = true if !value_expected && match.index(?\n)
+            value_expected = true if !value_expected && match.index("\n")
             encoder.text_token match, :space
 
           elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .*() ) !mx)
@@ -102,7 +102,7 @@ module Scanners
           elsif match = scan(/ [-+*=<>?:;,!&^|(\[{~%]+ | \.(?!\d) /x)
             value_expected = true
             last_operator = match[-1]
-            key_expected = (last_operator == ?{) || (last_operator == ?,)
+            key_expected = (last_operator == '{') || (last_operator == ',')
             function_expected = false
             encoder.text_token match, :operator
 
@@ -115,7 +115,7 @@ module Scanners
             value_expected = (kind == :keyword) && KEYWORDS_EXPECTING_VALUE[match]
             # TODO: labels
             if kind == :ident
-              if match.index(?$) # $ allowed inside an identifier
+              if match.index('$') # $ allowed inside an identifier
                 kind = :predefined
               elsif function_expected
                 kind = :function
