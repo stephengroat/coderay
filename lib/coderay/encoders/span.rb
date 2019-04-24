@@ -13,8 +13,8 @@ module Encoders
     register_for :span
     
     DEFAULT_OPTIONS = HTML::DEFAULT_OPTIONS.merge \
-      :css          => :style,
-      :wrap         => :span,
+      :css => :style,
+      :wrap => :span,
       :line_numbers => false
     
   end
