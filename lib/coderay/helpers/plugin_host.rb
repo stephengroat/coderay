@@ -92,7 +92,7 @@ module CodeRay
       for from, to in hash
         from = validate_id from
         to   = validate_id to
-        plugin_hash[from] = to unless plugin_hash.has_key? from
+        plugin_hash[from] = to unless plugin_hash.key? from
       end
     end
 
@@ -111,6 +111,7 @@ module CodeRay
       if id
         id = validate_id id
         raise "The default plugin can't be named \"default\"." if id == :default
+
         plugin_hash[:default] = id
       else
         load :default
@@ -172,14 +173,14 @@ module CodeRay
         begin
           require path
         rescue LoadError => boom
-          if h.has_key?(:default)
+          if h.key?(:default)
             h[:default]
           else
             raise PluginNotFound, '%p could not load plugin %p: %s' % [self, id, boom]
           end
         else
           # Plugin should have registered by now
-          if h.has_key? id
+          if h.key? id
             h[id]
           else
             raise PluginNotFound, "No #{self.name} plugin for #{id.inspect} found in #{path}."

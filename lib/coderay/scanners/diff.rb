@@ -53,16 +53,19 @@ module Scanners
               end
             end
             next unless match = scan(/.+/)
+
             encoder.text_token match, :plain
           elsif match = scan(/Index: |Property changes on: /)
             encoder.begin_line line_kind = :head
             encoder.text_token match, :head
             next unless match = scan(/.+/)
+
             encoder.text_token match, :plain
           elsif match = scan(/Added: /)
             encoder.begin_line line_kind = :head
             encoder.text_token match, :head
             next unless match = scan(/.+/)
+
             encoder.text_token match, :plain
             state = :added
           elsif match = scan(/\\ .*/)
@@ -80,6 +83,7 @@ module Scanners
             encoder.text_token match[-2, 2], :change
             encoder.end_group :change unless line_kind
             next unless match = scan(/.+/)
+
             if options[:highlight_code]
               content_scanner.tokenize match, :tokens => encoder
             else
@@ -90,6 +94,7 @@ module Scanners
             encoder.begin_line line_kind = :insert
             encoder.text_token match, :insert
             next unless match = scan(/.+/)
+
             if options[:highlight_code]
               content_scanner.tokenize match, :tokens => encoder
             else
@@ -183,6 +188,7 @@ module Scanners
             encoder.begin_line line_kind = :insert
             encoder.text_token match, :insert
             next unless match = scan(/.+/)
+
             encoder.text_token match, :plain
           else
             state = :initial

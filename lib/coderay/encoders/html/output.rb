@@ -56,16 +56,20 @@ module Encoders
 
       def wrap!(element, *args)
         return self if not element or element == wrapped_in
+
         case element
         when :div
           raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? nil
+
           wrap_in! DIV
         when :span
           raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? nil
+
           wrap_in! SPAN
         when :page
           wrap! :div if wrapped_in? nil
           raise "Can't wrap %p in %p" % [wrapped_in, element] unless wrapped_in? :div
+
           wrap_in! Output.page_template_for_css(@css)
           if args.first.is_a?(Hash) && title = args.first[:title]
             apply_title! title

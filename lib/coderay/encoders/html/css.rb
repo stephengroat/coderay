@@ -21,6 +21,7 @@ module Encoders
       def get_style_for_css_classes(css_classes)
         cl = @styles[css_classes.first]
         return '' unless cl
+
         style = ''
         1.upto css_classes.size do |offset|
           break if style = cl[css_classes[offset .. -1]]
@@ -47,6 +48,7 @@ module Encoders
       def parse(stylesheet)
         stylesheet.scan CSS_CLASS_PATTERN do |selectors, style, error|
           raise "CSS parse error: '#{error.inspect}' not recognized" if error
+
           for selector in selectors.split(',')
             classes = selector.scan(/[-\w]+/)
             cl = classes.pop

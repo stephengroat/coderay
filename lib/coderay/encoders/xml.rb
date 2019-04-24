@@ -61,6 +61,7 @@ module Encoders
       if @node == @root
         raise 'no token to close!'
       end
+
       @node = @node.parent
     end
   end

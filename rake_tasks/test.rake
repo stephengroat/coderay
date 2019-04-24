@@ -43,6 +43,7 @@ Please rename or remove it and run again to use the GitHub repository:
   namespace :scanner do
     Dir['./test/scanners/*'].each do |scanner|
       next unless File.directory? scanner
+
       lang = File.basename(scanner)
       desc "run all scanner tests for #{lang}"
       task lang => :update_scanner_suite do

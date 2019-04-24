@@ -79,6 +79,7 @@ module Test
           add_failure(e.message, e.backtrace)
         rescue Exception
           raise if PASSTHROUGH_EXCEPTIONS.include? $!.class
+
           add_error($!)
         ensure
           begin
@@ -87,6 +88,7 @@ module Test
             add_failure(e.message, e.backtrace)
           rescue Exception
             raise if PASSTHROUGH_EXCEPTIONS.include? $!.class
+
             add_error($!)
           end
         end
@@ -152,6 +154,7 @@ module Test
       def ==(other)
         return false unless(other.kind_of?(self.class))
         return false unless(@method_name == other.method_name)
+
         self.class == other.class
       end
     end

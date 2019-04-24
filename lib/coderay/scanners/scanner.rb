@@ -197,6 +197,7 @@ module CodeRay
       # for debugging only.
       def line(pos = self.pos)
         return 1 if pos <= 0
+
         binary_string[0...pos].count("\n") + 1
       end
 
@@ -204,6 +205,7 @@ module CodeRay
       # See also: #line.
       def column(pos = self.pos)
         return 1 if pos <= 0
+
         pos - (binary_string.rindex(?\n, pos - 1) || -1)
       end
 

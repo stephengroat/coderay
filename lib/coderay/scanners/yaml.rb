@@ -123,6 +123,7 @@ module Scanners
 
         else
           raise if eos?
+
           encoder.text_token getch, :error
 
         end

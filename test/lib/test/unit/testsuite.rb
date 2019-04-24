@@ -68,6 +68,7 @@ module Test
       def ==(other)
         return false unless(other.kind_of?(self.class))
         return false unless(@name == other.name)
+
         @tests == other.tests
       end
     end

@@ -168,6 +168,7 @@ module CodeRay
           if item.is_a? Array
             raise ArgumentError, 'Two-element array tokens are no longer supported.'
           end
+
           if content
             token content, item
             content = nil

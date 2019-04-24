@@ -50,13 +50,15 @@ module Test
         def remove_listener(channel_name, listener_key)
           channel = channels[channel_name]
           return nil unless (channel)
+
           key = listener_key
           if (listener_key.instance_of?(Proc))
             key = ProcWrapper.new(listener_key)
           end
-          if (channel.has_key?(key))
+          if (channel.key?(key))
             return channel.delete(key)
           end
+
           return nil
         end
 
@@ -73,6 +75,7 @@ module Test
         def notify_listeners(channel_name, *arguments)
           channel = channels[channel_name]
           return 0 unless (channel)
+
           listeners = channel.values
           listeners.each { |listener| listener.call(*arguments) }
           return listeners.size

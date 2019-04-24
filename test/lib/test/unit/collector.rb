@@ -22,6 +22,7 @@ module Test
 
       def include?(test)
         return true if(@filters.empty?)
+
         @filters.each do |filter|
           result = filter[test]
           if(result.nil?)

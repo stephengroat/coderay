@@ -3,6 +3,7 @@ namespace :generate do
   task :scanner do
     raise 'I need a scanner name; use NAME=lang' unless scanner_class_name = ENV['NAME']
     raise "Invalid lang: #{scanner_class_name}; use NAME=lang." unless /\A\w+\z/ === scanner_class_name
+
     require 'active_support/all'
     lang = scanner_class_name.underscore
     class_name = scanner_class_name.camelize

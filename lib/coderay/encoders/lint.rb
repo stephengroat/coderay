@@ -20,7 +20,7 @@ module Encoders
 
     def text_token(text, kind)
       raise EmptyToken,       'empty token for %p' % [kind] if text.empty?
-      raise UnknownTokenKind, 'unknown token kind %p (text was %p)' % [kind, text] unless TokenKinds.has_key? kind
+      raise UnknownTokenKind, 'unknown token kind %p (text was %p)' % [kind, text] unless TokenKinds.key? kind
     end
 
     def begin_group(kind)
@@ -29,6 +29,7 @@ module Encoders
 
     def end_group(kind)
       raise IncorrectTokenGroupNesting, 'We are inside %s, not %p (end_group)' % [@opened.reverse.map(&:inspect).join(' < '), kind] if @opened.last != kind
+
       @opened.pop
     end
 
@@ -38,6 +39,7 @@ module Encoders
 
     def end_line(kind)
       raise IncorrectTokenGroupNesting, 'We are inside %s, not %p (end_line)' % [@opened.reverse.map(&:inspect).join(' < '), kind] if @opened.last != kind
+
       @opened.pop
     end
 

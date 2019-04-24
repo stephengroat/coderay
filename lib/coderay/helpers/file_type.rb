@@ -54,6 +54,7 @@ module CodeRay
         else
           return yield if block_given?
           return default if default
+
           raise UnknownFileType, 'Could not determine type of %p.' % filename
         end
       end
@@ -62,6 +63,7 @@ module CodeRay
 
       def type_from_shebang(filename)
         return unless File.exist? filename
+
         File.open filename, 'r' do |f|
           if first_line = f.gets
             if type = first_line[TypeFromShebang]

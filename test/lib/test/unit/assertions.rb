@@ -85,6 +85,7 @@ EOT
       def _check_exception_class(args) # :nodoc:
         args.partition do |klass|
           next if klass.instance_of?(Module)
+
           assert(Exception >= klass, "Should expect a class of exception, #{klass}")
           true
         end
@@ -395,6 +396,7 @@ EOT
             if UncaughtThrow[error.class] !~ error.message
               raise error
             end
+
             full_message = build_message(message, "<?> expected to be thrown but\n<?> was thrown.", expected_symbol, $1.intern)
             flunk(full_message)
           end
@@ -419,6 +421,7 @@ EOT
             if UncaughtThrow[error.class] !~ error.message
               raise error
             end
+
             full_message = build_message(message, "<?> was thrown when nothing was expected", $1.intern)
             flunk(full_message)
           end
@@ -549,6 +552,7 @@ EOT
 
           def result(parameters)
             raise "The number of parameters does not match the number of substitutions." if(parameters.size != count)
+
             params = parameters.dup
             @parts.collect{|e| e == '?' ? params.shift : e.gsub(/\\\?/m, '?')}.join('')
           end
