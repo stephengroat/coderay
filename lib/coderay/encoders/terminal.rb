@@ -1,26 +1,26 @@
 module CodeRay
   module Encoders
-    
+
     # Outputs code highlighted for a color terminal.
-    # 
+    #
     # Note: This encoder is in beta. It currently doesn't use the Styles.
-    # 
+    #
     # Alias: +term+
-    # 
+    #
     # == Authors & License
-    # 
+    #
     # By Rob Aldred (http://robaldred.co.uk)
-    # 
+    #
     # Based on idea by Nathan Weizenbaum (http://nex-3.com)
-    # 
+    #
     # MIT License (http://www.opensource.org/licenses/mit-license.php)
     class Terminal < Encoder
-      
+
       register_for :terminal
-      
+
       TOKEN_COLORS = {
         :debug => "\e[1;37;44m",
-        
+
         :annotation => "\e[34m",
         :attribute_name => "\e[35m",
         :attribute_value => "\e[31m",
@@ -103,7 +103,7 @@ module CodeRay
         :type => "\e[1;34m",
         :value => "\e[36m",
         :variable => "\e[34m",
-        
+
         :insert => {
           :self => "\e[42m",
           :insert => "\e[1;32;42m",
@@ -123,25 +123,25 @@ module CodeRay
           :filename => "\e[37;45m"
         },
       }
-      
+
       TOKEN_COLORS[:keyword] = TOKEN_COLORS[:reserved]
       TOKEN_COLORS[:method] = TOKEN_COLORS[:function]
       TOKEN_COLORS[:escape] = TOKEN_COLORS[:delimiter]
-      
+
     protected
-      
+
       def setup(options)
         super
         @opened = []
         @color_scopes = [TOKEN_COLORS]
       end
-      
+
     public
-      
+
       def text_token(text, kind)
         if color = @color_scopes.last[kind]
           color = color[:self] if color.is_a? Hash
-          
+
           @out << color
           @out << (text.index("\n") ? text.gsub("\n", "\e[0m\n" + color) : text)
           @out << "\e[0m"
@@ -152,13 +152,13 @@ module CodeRay
           @out << text
         end
       end
-      
+
       def begin_group(kind)
         @opened << kind
         @out << open_token(kind)
       end
       alias begin_line begin_group
-      
+
       def end_group(kind)
         if @opened.pop
           @color_scopes.pop
@@ -168,14 +168,14 @@ module CodeRay
           end
         end
       end
-      
+
       def end_line(kind)
         @out << (@line_filler ||= "\t" * 100)
         end_group kind
       end
-      
+
     private
-      
+
       def open_token(kind)
         if color = @color_scopes.last[kind]
           if color.is_a? Hash

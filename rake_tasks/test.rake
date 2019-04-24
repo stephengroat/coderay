@@ -4,18 +4,18 @@ namespace :test do
     ruby './test/functional/suite.rb'
     ruby './test/functional/for_redcloth.rb' unless (''.chop! rescue true)
   end
-  
+
   desc 'run unit tests'
   task :units do
     ruby './test/unit/suite.rb'
   end
-  
+
   scanner_suite = 'test/scanners/suite.rb'
   desc 'run all scanner tests'
   task :scanners => :update_scanner_suite do
     ruby scanner_suite
   end
-  
+
   desc 'update scanner test suite from GitHub'
   task :update_scanner_suite do
     if File.exist? scanner_suite
@@ -39,7 +39,7 @@ Please rename or remove it and run again to use the GitHub repository:
       sh 'git clone https://github.com/rubychan/coderay-scanner-tests.git test/scanners/'
     end unless ENV['SKIP_UPDATE_SCANNER_SUITE']
   end
-  
+
   namespace :scanner do
     Dir['./test/scanners/*'].each do |scanner|
       next unless File.directory? scanner
@@ -50,7 +50,7 @@ Please rename or remove it and run again to use the GitHub repository:
       end
     end
   end
-  
+
   desc 'clean test output files'
   task :clean do
     for file in Dir['test/scanners/**/*.actual.*']
@@ -66,7 +66,7 @@ Please rename or remove it and run again to use the GitHub repository:
       rm file
     end
   end
-  
+
   desc 'test the CodeRay executable'
   task :exe do
     if RUBY_VERSION >= '1.8.7'

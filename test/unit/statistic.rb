@@ -2,7 +2,7 @@ require 'test/unit'
 require 'coderay'
 
 class StatisticEncoderTest < Test::Unit::TestCase
-  
+
   def test_creation
     assert CodeRay::Encoders::Statistic < CodeRay::Encoders::Encoder
     stats = nil
@@ -11,7 +11,7 @@ class StatisticEncoderTest < Test::Unit::TestCase
     end
     assert_kind_of CodeRay::Encoders::Encoder, stats
   end
-  
+
   TEST_INPUT = CodeRay::Tokens[
     ['10', :integer],
     ['(\\)', :operator],
@@ -50,10 +50,10 @@ Token Types (7):
   operator                     1    9.09 %     3.0
 
   DEBUG
-  
+
   def test_filtering_text_tokens
     assert_equal TEST_OUTPUT, CodeRay::Encoders::Statistic.new.encode_tokens(TEST_INPUT)
     assert_equal TEST_OUTPUT, TEST_INPUT.statistic
   end
-  
+
 end

@@ -26,7 +26,7 @@ This is CodeRay #{CodeRay::VERSION}, a syntax highlighting tool for selected lan
 
 usage:
   coderay [-language] [input] [-format] [output]
-  
+
 defaults:
   language   detect from input file name or shebang; fall back to plain text
   input      STDIN
@@ -56,7 +56,7 @@ def commands
   general:
     highlight   code highlighting (default command, optional)
     stylesheet  print the CSS stylesheet with the given name (aliases: style, css)
-  
+
   about:
     list [of]   list all available plugins (or just the scanners|encoders|styles|filetypes)
     commands    print this list
@@ -68,16 +68,16 @@ end
 def print_list_of(plugin_host)
   plugins = plugin_host.all_plugins.map do |plugin|
     info = "  #{plugin.plugin_id}: #{plugin.title}"
-    
+
     aliases = (plugin.aliases - [:default]).map { |key| "-#{key}" }.sort_by { |key| key.size }
     if plugin.respond_to?(:file_extension) || !aliases.empty?
       additional_info = []
       additional_info << aliases.join(', ') unless aliases.empty?
       info << " (#{additional_info.join('; ')})"
     end
-    
+
     info << '  <-- default' if plugin.aliases.include? :default
-    
+
     info
   end
   puts plugins.sort
@@ -119,25 +119,25 @@ when 'highlight', nil
       puts "Unknown parameter order: #{args.join ' '}, expected: [-language] [input] [-format] [output]"
       exit 1
     end
-    
+
     if input_file
       input_lang ||= CodeRay::FileType.fetch input_file, :text, true
     end
-    
+
     if output_file
       output_format ||= CodeRay::FileType[output_file] || :plain
     else
       output_format ||= :terminal
     end
-    
+
     output_format = :page if output_format.to_s == 'html'
-    
+
     if input_file
       input = File.read input_file
     else
       input = $stdin.read
     end
-    
+
     begin
       file =
         if output_file
@@ -168,20 +168,20 @@ when 'li', 'list'
     puts 'input languages (Scanners):'
     print_list_of CodeRay::Scanners
   end
-  
+
   if [nil, 'e', 'en', 'enc', 'encoder', 'encoders'].include? arg
     puts 'output formats (Encoders):'
     print_list_of CodeRay::Encoders
   end
-  
+
   if [nil, 'st', 'style', 'styles'].include? arg
     puts 'CSS themes for HTML output (Styles):'
     print_list_of CodeRay::Styles
   end
-  
+
   if [nil, 'f', 'ft', 'file', 'filetype', 'filetypes'].include? arg
     puts 'recognized file types:'
-    
+
     filetypes = Hash.new { |h, k| h[k] = [] }
     CodeRay::FileType::TypeFromExt.inject filetypes do |types, (ext, type)|
       types[type.to_s] << ".#{ext}"
@@ -191,7 +191,7 @@ when 'li', 'list'
       types[type.to_s] << name
       types
     end
-    
+
     filetypes.sort.each do |type, exts|
       puts "  #{type}: #{exts.sort_by { |ext| ext.size }.join(', ')}"
     end

@@ -1,13 +1,13 @@
 module CodeRay
 module Scanners
-  
+
   # Scanner for Java.
   class Java < Scanner
-    
+
     register_for :java
-    
+
     autoload :BuiltinTypes, CodeRay.coderay_path('scanners', 'java', 'builtin_types')
-    
+
     # http://java.sun.com/docs/books/tutorial/java/nutsandbolts/_keywords.html
     KEYWORDS = %w[
       assert break case catch continue default do else
@@ -26,7 +26,7 @@ module Scanners
       abstract extends final implements native private protected public
       static strictfp synchronized throws transient volatile
     ] # :nodoc:
-    
+
     IDENT_KIND = WordList.new(:ident).
       add(KEYWORDS, :keyword).
       add(RESERVED, :reserved).
@@ -36,7 +36,7 @@ module Scanners
       add(BuiltinTypes::List, :predefined_type).
       add(BuiltinTypes::List.select { |builtin| builtin[/(Error|Exception)$/] }, :exception).
       add(DIRECTIVES, :directive) # :nodoc:
-    
+
     ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
     STRING_CONTENT_PATTERN = {
@@ -45,9 +45,9 @@ module Scanners
       '/' => /[^\\\/]+/,
     } # :nodoc:
     IDENT = RUBY_VERSION < '1.9' ? /[a-zA-Z_][A-Za-z_0-9]*/ : Regexp.new('[[[:alpha:]]_][[[:alnum:]]_]*') # :nodoc:
-    
+
   protected
-    
+
     def scan_tokens(encoder, options)
 
       state = :initial
@@ -65,14 +65,14 @@ module Scanners
           if match = scan(/ \s+ | \\\n /x)
             encoder.text_token match, :space
             next
-          
+
           elsif match = scan(%r! // [^\n\\]* (?: \\. [^\n\\]* )* | /\* (?: .*? \*/ | .* ) !mx)
             encoder.text_token match, :comment
             next
-          
+
           elsif package_name_expected && match = scan(/ #{IDENT} (?: \. #{IDENT} )* /ox)
             encoder.text_token match, package_name_expected
-          
+
           elsif match = scan(/ #{IDENT} | \[\] /ox)
             kind = IDENT_KIND[match]
             if last_token_dot
@@ -91,18 +91,18 @@ module Scanners
               end
             end
             encoder.text_token match, kind
-          
+
           elsif match = scan(/ \.(?!\d) | [,?:()\[\]}] | -- | \+\+ | && | \|\| | \*\*=? | [-+*\/%^~&|<>=!]=? | <<<?=? | >>>?=? /x)
             encoder.text_token match, :operator
-          
+
           elsif match = scan(/;/)
             package_name_expected = false
             encoder.text_token match, :operator
-          
+
           elsif match = scan(/\{/)
             class_name_follows = false
             encoder.text_token match, :operator
-          
+
           elsif check(/[\d.]/)
             if match = scan(/0[xX][0-9A-Fa-f]+/)
               encoder.text_token match, :hex
@@ -156,9 +156,9 @@ module Scanners
           raise_inspect 'Unknown state', encoder
 
         end
-        
+
         last_token_dot = match == '.'
-        
+
       end
 
       if state == :string

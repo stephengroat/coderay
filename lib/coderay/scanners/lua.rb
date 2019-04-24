@@ -9,21 +9,21 @@ module Scanners
   # {the Lua manual}[http://www.lua.org/manual/5.2/manual.html],
   # which is what this scanner tries to conform to.
   class Lua < Scanner
-    
+
     register_for :lua
     file_extension 'lua'
     title 'Lua'
-    
+
     # Keywords used in Lua.
     KEYWORDS = %w[and break do else elseif end
       for function goto if in
       local not or repeat return
       then until while
     ]
-    
+
     # Constants set by the Lua core.
     PREDEFINED_CONSTANTS = %w[false true nil]
-    
+
     # The expressions contained in this array are parts of Lua’s `basic'
     # library. Although it’s not entirely necessary to load that library,
     # it is highly recommended and one would have to provide own implementations
@@ -41,55 +41,55 @@ module Scanners
       rawequal rawget rawlen rawset select setmetatable
       tonumber tostring type xpcall
     ]
-    
+
     # Automatic token kind selection for normal words.
     IDENT_KIND = CodeRay::WordList.new(:ident).
       add(KEYWORDS, :keyword).
       add(PREDEFINED_CONSTANTS, :predefined_constant).
       add(PREDEFINED_EXPRESSIONS, :predefined)
-    
+
     protected
-    
+
     # Scanner initialization.
     def setup
       @state = :initial
       @brace_depth = 0
     end
-    
+
     # CodeRay entry hook. Starts parsing.
     def scan_tokens(encoder, options)
       state = options[:state] || @state
       brace_depth = @brace_depth
       num_equals = nil
-      
+
       until eos?
         case state
-        
+
         when :initial
           if match = scan(/\-\-\[\=*\[/) #--[[ long (possibly multiline) comment ]]
             num_equals = match.count("=") # Number must match for comment end
             encoder.begin_group(:comment)
             encoder.text_token(match, :delimiter)
             state = :long_comment
-          
+
           elsif match = scan(/--.*$/) # --Lua comment
             encoder.text_token(match, :comment)
-          
+
           elsif match = scan(/\[=*\[/) # [[ long (possibly multiline) string ]]
             num_equals = match.count("=") # Number must match for string end
             encoder.begin_group(:string)
             encoder.text_token(match, :delimiter)
             state = :long_string
-          
+
           elsif match = scan(/::\s*[a-zA-Z_][a-zA-Z0-9_]+\s*::/) # ::goto_label::
             encoder.text_token(match, :label)
-          
+
           elsif match = scan(/_[A-Z]+/) # _UPPERCASE are names reserved for Lua
             encoder.text_token(match, :predefined)
-          
+
           elsif match = scan(/[a-zA-Z_][a-zA-Z0-9_]*/) # Normal letters (or letters followed by digits)
             kind = IDENT_KIND[match]
-            
+
             # Extra highlighting for entities following certain keywords
             if kind == :keyword and match == "function"
               state = :function_expected
@@ -98,15 +98,15 @@ module Scanners
             elsif kind == :keyword and match == "local"
               state = :local_var_expected
             end
-            
+
             encoder.text_token(match, kind)
-          
+
           elsif match = scan(/\{/) # Opening table brace {
             encoder.begin_group(:map)
             encoder.text_token(match, brace_depth >= 1 ? :inline_delimiter : :delimiter)
             brace_depth += 1
             state        = :map
-          
+
           elsif match = scan(/\}/) # Closing table brace }
             if brace_depth == 1
               brace_depth = 0
@@ -120,36 +120,36 @@ module Scanners
               encoder.end_group(:map)
               state = :map
             end
-          
+
           elsif match = scan(/["']/) # String delimiters " and '
             encoder.begin_group(:string)
             encoder.text_token(match, :delimiter)
             start_delim = match
             state       = :string
-          
+
                             # ↓Prefix                hex number ←|→ decimal number
           elsif match = scan(/-? (?:0x\h* \. \h+ (?:p[+\-]?\d+)? | \d*\.\d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :float)
-          
+
                             # ↓Prefix         hex number ←|→ decimal number
           elsif match = scan(/-? (?:0x\h+ (?:p[+\-]?\d+)? | \d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :integer)
-          
+
           elsif match = scan(/[\+\-\*\/%^\#=~<>\(\)\[\]:;,] | \.(?!\d)/x) # Operators
             encoder.text_token(match, :operator)
-          
+
           elsif match = scan(/\s+/) # Space
             encoder.text_token(match, :space)
-          
+
           else # Invalid stuff. Note that Lua doesn’t accept multibyte chars outside of strings, hence these are also errors.
             encoder.text_token(getch, :error)
           end
-          
+
           # It may be that we’re scanning a full-blown subexpression of a table
           # (tables can contain full expressions in parts).
           # If this is the case, return to :map scanning state.
           state = :map if state == :initial && brace_depth >= 1
-        
+
         when :function_expected
           if match = scan(/\(.*?\)/m) # x = function() # "Anonymous" function without explicit name
             encoder.text_token(match, :operator)
@@ -165,7 +165,7 @@ module Scanners
             encoder.text_token(getch, :error)
             state = :initial
           end
-        
+
         when :goto_label_expected
           if match = scan(/[a-zA-Z_][a-zA-Z0-9_]*/)
             encoder.text_token(match, :label)
@@ -175,7 +175,7 @@ module Scanners
           else
             encoder.text_token(getch, :error)
           end
-        
+
         when :local_var_expected
           if match = scan(/function/) # local function ...
             encoder.text_token(match, :keyword)
@@ -198,11 +198,11 @@ module Scanners
           else
             encoder.text_token(getch, :error)
           end
-        
+
         when :long_comment
           if match = scan(/.*?(?=\]={#{num_equals}}\])/m)
             encoder.text_token(match, :content)
-            
+
             delim = scan(/\]={#{num_equals}}\]/)
             encoder.text_token(delim, :delimiter)
           else # No terminator found till EOF
@@ -211,11 +211,11 @@ module Scanners
           end
           encoder.end_group(:comment)
           state = :initial
-        
+
         when :long_string
           if match = scan(/.*?(?=\]={#{num_equals}}\])/m) # Long strings do not interpret any escape sequences
             encoder.text_token(match, :content)
-            
+
             delim = scan(/\]={#{num_equals}}\]/)
             encoder.text_token(delim, :delimiter)
           else # No terminator found till EOF
@@ -224,7 +224,7 @@ module Scanners
           end
           encoder.end_group(:string)
           state = :initial
-        
+
         when :string
           if match = scan(/[^\\#{start_delim}\n]+/) # Everything except \ and the start delimiter character is string content (newlines are only allowed if preceeded by \ or \z)
             encoder.text_token(match, :content)
@@ -241,7 +241,7 @@ module Scanners
           else
             encoder.text_token(getch, :error)
           end
-        
+
         when :map
           if match = scan(/[,;]/)
             encoder.text_token(match, :operator)
@@ -261,20 +261,20 @@ module Scanners
         else
           raise
         end
-        
+
       end
-      
+
       if options[:keep_state]
         @state = state
       end
-      
+
       encoder.end_group :string if [:string].include? state
       brace_depth.times { encoder.end_group :map }
-      
+
       encoder
     end
-    
+
   end
-  
+
 end
 end

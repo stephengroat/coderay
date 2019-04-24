@@ -1,22 +1,22 @@
 module CodeRay
 module Scanners
-  
+
   # HTML Scanner
-  # 
+  #
   # Alias: +xhtml+
-  # 
+  #
   # See also: Scanners::XML
   class HTML < Scanner
-    
+
     register_for :html
-    
+
     KINDS_NOT_LOC = [
       :comment, :doctype, :preprocessor,
       :tag, :attribute_name, :operator,
       :attribute_value, :string,
       :plain, :entity, :error,
     ] # :nodoc:
-    
+
     EVENT_ATTRIBUTES = %w(
       onabort onafterprint onbeforeprint onbeforeunload onblur oncanplay
       oncanplaythrough onchange onclick oncontextmenu oncuechange ondblclick
@@ -31,11 +31,11 @@ module Scanners
       onstalled onstorage onsubmit onsuspend ontimeupdate onundo onunload
       onvolumechange onwaiting
     )
-    
+
     IN_ATTRIBUTE = WordList::CaseIgnoring.new(nil).
       add(EVENT_ATTRIBUTES, :script).
       add(['style'], :style)
-    
+
     ATTR_NAME = /[\w.:-]+/ # :nodoc:
     TAG_END = /\/?>/ # :nodoc:
     HEX = /[0-9a-fA-F]/ # :nodoc:
@@ -53,57 +53,57 @@ module Scanners
       )
       ;
     /ox # :nodoc:
-    
+
     PLAIN_STRING_CONTENT = {
       "'" => /[^&'>\n]+/,
       '"' => /[^&">\n]+/,
     } # :nodoc:
-    
+
     def reset
       super
       @state = :initial
       @plain_string_content = nil
     end
-    
+
   protected
-    
+
     def setup
       @state = :initial
       @plain_string_content = nil
       @in_tag = nil
     end
-    
+
     def scan_java_script(encoder, code)
       if code && !code.empty?
         @java_script_scanner ||= Scanners::JavaScript.new '', :keep_tokens => true
         @java_script_scanner.tokenize code, :tokens => encoder
       end
     end
-    
+
     def scan_css(encoder, code, state = [:initial])
       if code && !code.empty?
         @css_scanner ||= Scanners::CSS.new '', :keep_tokens => true
         @css_scanner.tokenize code, :tokens => encoder, :state => state
       end
     end
-    
+
     def scan_tokens(encoder, options)
       state = options[:state] || @state
       plain_string_content = @plain_string_content
       in_tag = @in_tag
       in_attribute = nil
-      
+
       encoder.begin_group :string if state == :attribute_value_string
-      
+
       until eos?
-        
+
         if state != :in_special_tag && match = scan(/\s+/m)
           encoder.text_token match, :space
-          
+
         else
-          
+
           case state
-          
+
           when :initial
             if match = scan(/<!\[CDATA\[/)
               encoder.text_token match, :inline_delimiter
@@ -142,7 +142,7 @@ module Scanners
             else
               raise_inspect '[BUG] else-case reached with state %p' % [state], encoder
             end
-            
+
           when :attribute
             if match = scan(/#{TAG_END}/o)
               encoder.text_token match, :tag
@@ -160,7 +160,7 @@ module Scanners
               in_tag = nil
               encoder.text_token getch, :error
             end
-            
+
           when :attribute_equal
             if match = scan(/=/) #/
               encoder.text_token match, :operator
@@ -169,7 +169,7 @@ module Scanners
               state = :attribute
               next
             end
-            
+
           when :attribute_value
             if match = scan(/#{ATTR_NAME}/o)
               encoder.text_token match, :attribute_value
@@ -204,7 +204,7 @@ module Scanners
             else
               encoder.text_token getch, :error
             end
-            
+
           when :attribute_value_string
             if match = scan(plain_string_content)
               encoder.text_token match, :content
@@ -221,7 +221,7 @@ module Scanners
               state = :initial
               encoder.text_token match, :error
             end
-            
+
           when :in_special_tag
             case in_tag
             when 'script', 'style'
@@ -248,28 +248,28 @@ module Scanners
             else
               raise 'unknown special tag: %p' % [in_tag]
             end
-            
+
           else
             raise_inspect 'Unknown state: %p' % [state], encoder
-            
+
           end
-          
+
         end
-        
+
       end
-      
+
       if options[:keep_state]
         @state = state
         @plain_string_content = plain_string_content
         @in_tag = in_tag
       end
-      
+
       encoder.end_group :string if state == :attribute_value_string
-      
+
       encoder
     end
-    
+
   end
-  
+
 end
 end

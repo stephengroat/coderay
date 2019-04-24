@@ -1,12 +1,12 @@
 module CodeRay
 module Scanners
-  
+
   # Scanner for C.
   class C < Scanner
 
     register_for :c
     file_extension 'c'
-    
+
     KEYWORDS = [
       'asm', 'break', 'case', 'continue', 'default', 'do',
       'else', 'enum', 'for', 'goto', 'if', 'return',
@@ -38,9 +38,9 @@ module Scanners
 
     ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
-    
+
   protected
-    
+
     def scan_tokens(encoder, options)
 
       state = :initial
@@ -114,7 +114,7 @@ module Scanners
 
           elsif match = scan(/\$/)
             encoder.text_token match, :ident
-          
+
           elsif match = scan(/0[xX][0-9A-Fa-f]+/)
             label_expected = false
             encoder.text_token match, :hex

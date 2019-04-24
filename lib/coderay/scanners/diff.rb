@@ -1,23 +1,23 @@
 module CodeRay
 module Scanners
-  
+
   # Scanner for output of the diff command.
-  # 
+  #
   # Alias: +patch+
   class Diff < Scanner
-    
+
     register_for :diff
     title 'diff output'
-    
+
     DEFAULT_OPTIONS = {
       :highlight_code => true,
       :inline_diff => true,
     }
-    
+
   protected
-    
+
     def scan_tokens(encoder, options)
-      
+
       line_kind = nil
       state = :initial
       deleted_lines_count = 0
@@ -26,9 +26,9 @@ module Scanners
       end
       content_scanner = scanners[:plain]
       content_scanner_entry_state = nil
-      
+
       until eos?
-        
+
         if match = scan(/\n/)
           deleted_lines_count = 0 unless line_kind == :delete
           if line_kind
@@ -38,9 +38,9 @@ module Scanners
           encoder.text_token match, :space
           next
         end
-        
+
         case state
-        
+
         when :initial
           if match = scan(/--- |\+\+\+ |=+|_+/)
             encoder.begin_line line_kind = :head
@@ -103,7 +103,7 @@ module Scanners
             if options[:inline_diff] && deleted_lines_count == 1 && (changed_lines_count = 1 + check(/.*(?:\n\-.*)*/).count("\n")) && changed_lines_count <= 100_000 && match?(/(?>.*(?:\n\-.*){#{changed_lines_count - 1}}(?:\n\+.*){#{changed_lines_count}})$(?!\n\+)/)
               deleted_lines  = Array.new(changed_lines_count) { |i| skip(/\n\-/) if i > 0; scan(/.*/) }
               inserted_lines = Array.new(changed_lines_count) { |i| skip(/\n\+/)         ; scan(/.*/) }
-              
+
               deleted_lines_tokenized  = []
               inserted_lines_tokenized = []
               for deleted_line, inserted_line in deleted_lines.zip(inserted_lines)
@@ -113,7 +113,7 @@ module Scanners
                 content_scanner.state = content_scanner_entry_state || :initial
                 inserted_lines_tokenized << content_scanner.tokenize([pre, inserted_part, post], :tokens => Tokens.new)
               end
-              
+
               for pre, deleted_part, post in deleted_lines_tokenized
                 encoder.begin_line :delete
                 encoder.text_token '-', :delete
@@ -127,7 +127,7 @@ module Scanners
                 encoder.end_line :delete
                 encoder.text_token "\n", :space
               end
-              
+
               for pre, inserted_part, post in inserted_lines_tokenized
                 encoder.begin_line :insert
                 encoder.text_token '+', :insert
@@ -144,9 +144,9 @@ module Scanners
                   encoder.text_token "\n", :space
                 end
               end
-              
+
               line_kind = :insert
-              
+
             elsif match = scan(/.*/)
               encoder.begin_line line_kind = :delete
               encoder.text_token '-', :delete
@@ -179,7 +179,7 @@ module Scanners
           else
             raise_inspect 'else case rached'
           end
-        
+
         when :added
           if match = scan(/   \+/)
             encoder.begin_line line_kind = :insert
@@ -191,16 +191,16 @@ module Scanners
             next
           end
         end
-        
+
       end
-      
+
       encoder.end_line line_kind if line_kind
-      
+
       encoder
     end
-    
+
   private
-    
+
     def diff(a, b)
       # i will be the index of the leftmost difference from the left.
       i_max = [a.size, b.size].min
@@ -214,8 +214,8 @@ module Scanners
       j -= 1 while j >= j_min && a[j] == b[j]
       return a[0...i], a[i..j], b[i..j], (j < -1) ? a[j+1..-1] : ''
     end
-    
+
   end
-  
+
 end
 end

@@ -2,7 +2,7 @@ require 'test/unit'
 require 'coderay'
 
 class TokenKindFilterTest < Test::Unit::TestCase
-  
+
   def test_creation
     assert CodeRay::Encoders::TokenKindFilter < CodeRay::Encoders::Encoder
     assert CodeRay::Encoders::TokenKindFilter < CodeRay::Encoders::Filter
@@ -12,7 +12,7 @@ class TokenKindFilterTest < Test::Unit::TestCase
     end
     assert_instance_of CodeRay::Encoders::TokenKindFilter, filter
   end
-  
+
   def test_filtering_text_tokens
     tokens = CodeRay::Tokens.new
     for i in 1..10
@@ -26,7 +26,7 @@ class TokenKindFilterTest < Test::Unit::TestCase
     assert_equal 0, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :exclude => :all).count
     assert_equal 0, tokens.token_kind_filter(:exclude => :all).count
   end
-  
+
   def test_filtering_block_tokens
     tokens = CodeRay::Tokens.new
     10.times do |i|
@@ -46,5 +46,5 @@ class TokenKindFilterTest < Test::Unit::TestCase
     assert_equal 32, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :exclude => :index).count
     assert_equal 32, tokens.token_kind_filter(:exclude => :index).count
   end
-  
+
 end

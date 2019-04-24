@@ -1,37 +1,37 @@
 module CodeRay
 module Scanners
-  
+
   # Scanner for YAML.
   #
   # Based on the YAML scanner from Syntax by Jamis Buck.
   class YAML < Scanner
-    
+
     register_for :yaml
     file_extension 'yml'
-    
+
     KINDS_NOT_LOC = :all
-    
+
   protected
-    
+
     def scan_tokens(encoder, options)
-      
+
       state = :initial
       key_indent = string_indent = 0
-      
+
       until eos?
-        
+
         key_indent = nil if bol?
-        
+
         if match = scan(/ +[\t ]*/)
           encoder.text_token match, :space
-          
+
         elsif match = scan(/\n+/)
           encoder.text_token match, :space
           state = :initial if match.index(?\n)
-          
+
         elsif match = scan(/#.*/)
           encoder.text_token match, :comment
-          
+
         elsif bol? and case
           when match = scan(/---|\.\.\./)
             encoder.begin_group :head
@@ -42,7 +42,7 @@ module Scanners
             encoder.text_token match, :doctype
             next
           end
-        
+
         elsif state == :value and case
           when !check(/(?:"[^"]*")(?=: |:$)/) && match = scan(/"/)
             encoder.begin_group :string
@@ -66,7 +66,7 @@ module Scanners
             encoder.end_group :string
             next
           end
-          
+
         elsif case
           when match = scan(/[-:](?= |$)/)
             state = :value if state == :colon && (match == ':' || match == '-')
@@ -122,19 +122,19 @@ module Scanners
             encoder.text_token match, :error
             next
           end
-          
+
         else
           raise if eos?
           encoder.text_token getch, :error
-          
+
         end
-        
+
       end
-      
+
       encoder
     end
-    
+
   end
-  
+
 end
 end

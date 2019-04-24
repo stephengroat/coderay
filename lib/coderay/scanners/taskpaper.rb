@@ -1,13 +1,13 @@
 module CodeRay
 module Scanners
-  
+
   class Taskpaper < Scanner
-    
+
     register_for :taskpaper
     file_extension 'taskpaper'
-    
+
   protected
-    
+
     def scan_tokens(encoder, options)
       until eos?
         if match = scan(/\S.*:.*$/)                  # project
@@ -26,11 +26,11 @@ module Scanners
           encoder.text_token getch, :error
         end
       end
-      
+
       encoder
     end
-    
+
   end
-  
+
 end
 end

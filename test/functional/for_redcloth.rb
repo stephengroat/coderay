@@ -13,7 +13,7 @@ rescue LoadError
 end
 
 class BasicTest < Test::Unit::TestCase
-  
+
   def test_for_redcloth
     require 'coderay/for_redcloth'
     assert_equal "<p><span lang=\"ruby\" class=\"CodeRay\">puts <span style=\"background-color:hsla(0,100%,50%,0.05)\"><span style=\"color:#710\">&quot;</span><span style=\"color:#D20\">Hello, World!</span><span style=\"color:#710\">&quot;</span></span></span></p>",
@@ -25,7 +25,7 @@ class BasicTest < Test::Unit::TestCase
       BLOCKCODE
       RedCloth.new('bc[ruby]. puts "Hello, World!"').to_html
   end
-  
+
   def test_for_redcloth_no_lang
     require 'coderay/for_redcloth'
     assert_equal "<p><code>puts \"Hello, World!\"</code></p>",
@@ -35,7 +35,7 @@ class BasicTest < Test::Unit::TestCase
       BLOCKCODE
       RedCloth.new('bc. puts "Hello, World!"').to_html
   end
-  
+
   def test_for_redcloth_style
     require 'coderay/for_redcloth'
     assert_equal <<-BLOCKCODE.chomp,
@@ -43,7 +43,7 @@ class BasicTest < Test::Unit::TestCase
       BLOCKCODE
       RedCloth.new('bc{color: red}. puts "Hello, World!"').to_html
   end
-  
+
   def test_for_redcloth_escapes
     require 'coderay/for_redcloth'
     assert_equal '<p><span lang="ruby" class="CodeRay">&gt;</span></p>',
@@ -55,13 +55,13 @@ class BasicTest < Test::Unit::TestCase
       BLOCKCODE
       RedCloth.new('bc[ruby]. &').to_html
   end
-  
+
   def test_for_redcloth_escapes2
     require 'coderay/for_redcloth'
     assert_equal "<p><span lang=\"c\" class=\"CodeRay\"><span style=\"color:#579\">#include</span> <span style=\"color:#B44;font-weight:bold\">&lt;test.h&gt;</span></span></p>",
       RedCloth.new('@[c]#include <test.h>@').to_html
   end
-  
+
   # See http://jgarber.lighthouseapp.com/projects/13054/tickets/124-code-markup-does-not-allow-brackets.
   def test_for_redcloth_false_positive
     require 'coderay/for_redcloth'
@@ -74,5 +74,5 @@ class BasicTest < Test::Unit::TestCase
 <pre><code>[project]_dff.skjd</code></pre>
     BLOCKCODE
   end
-  
+
 end if defined? RedCloth

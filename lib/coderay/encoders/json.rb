@@ -1,8 +1,8 @@
 module CodeRay
 module Encoders
-  
+
   # A simple JSON Encoder.
-  # 
+  #
   # Example:
   #  CodeRay.scan('puts "Hello world!"', :ruby).json
   # yields
@@ -16,7 +16,7 @@ module Encoders
   #    {"type"=>"block", "action"=>"close", "kind"=>"string"},
   #  ]
   class JSON < Encoder
-    
+
     begin
       require 'json'
     rescue LoadError
@@ -30,54 +30,54 @@ module Encoders
         raise
       end
     end
-    
+
     register_for :json
     FILE_EXTENSION = 'json'
-    
+
   protected
     def setup(options)
       super
-      
+
       @first = true
       @out << '['
     end
-    
+
     def finish(options)
       @out << ']'
     end
-    
+
     def append(data)
       if @first
         @first = false
       else
         @out << ','
       end
-      
+
       @out << data.to_json
     end
-    
+
   public
     def text_token(text, kind)
       append :type => 'text', :text => text, :kind => kind
     end
-    
+
     def begin_group(kind)
       append :type => 'block', :action => 'open', :kind => kind
     end
-    
+
     def end_group(kind)
       append :type => 'block', :action => 'close', :kind => kind
     end
-    
+
     def begin_line(kind)
       append :type => 'block', :action => 'begin_line', :kind => kind
     end
-    
+
     def end_line(kind)
       append :type => 'block', :action => 'end_line', :kind => kind
     end
-    
+
   end
-  
+
 end
 end

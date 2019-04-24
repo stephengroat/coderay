@@ -2,7 +2,7 @@ require 'test/unit'
 require 'coderay'
 
 class JSONEncoderTest < Test::Unit::TestCase
-  
+
   def test_json_output
     old_load_paths = $:.dup
     begin
@@ -24,5 +24,5 @@ class JSONEncoderTest < Test::Unit::TestCase
       end
     end
   end
-  
+
 end

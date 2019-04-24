@@ -6,17 +6,17 @@ namespace :generate do
     require 'active_support/all'
     lang = scanner_class_name.underscore
     class_name = scanner_class_name.camelize
-    
+
     def scanner_file_for_lang(lang)
       File.join(LIB_ROOT, 'coderay', 'scanners', lang + '.rb')
     end
-    
+
     scanner_file = scanner_file_for_lang lang
     if File.exist? scanner_file
       print "#{scanner_file} already exists. Overwrite? [y|N] "
       exit unless $stdin.gets.chomp.downcase == 'y'
     end
-    
+
     base_lang = ENV.fetch('BASE', 'json')
     base_scanner_file = scanner_file_for_lang(base_lang)
     puts "Reading base scanner #{base_scanner_file}..."
@@ -29,7 +29,7 @@ namespace :generate do
         sub(/register_for :\w+/, "register_for :#{lang}").
         sub(/file_extension '\S+'/, "file_extension '#{ENV.fetch('EXT', lang).split(',').first}'")
     end
-    
+
     test_dir = File.join(ROOT, 'test', 'scanners', lang)
     unless File.exist? test_dir
       puts "Creating test folder #{test_dir}..."
@@ -43,7 +43,7 @@ namespace :generate do
         file.write base_suite.sub(/class Ruby/, "class #{class_name}")
       end
     end
-    
+
     if extensions = ENV['EXT']
       file_type_file = File.join(LIB_ROOT, 'coderay', 'helpers', 'filetype.rb')
       puts "Not automated. Remember to add your extensions to #{file_type_file}:"
@@ -51,7 +51,7 @@ namespace :generate do
         puts "    '#{ext}' => :#{lang},"
       end
     end
-    
+
     if alternative_ids = ENV['ALT'] && alternative_ids != lang
       map_file = File.join(LIB_ROOT, 'coderay', 'scanners', '_map.rb')
       puts "Not automated. Remember to add your alternative plugin ids to #{map_file}:"
@@ -59,7 +59,7 @@ namespace :generate do
         puts "  :#{id} => :#{lang},"
       end
     end
-    
+
     print 'Add to git? [Y|n] '
     answer = $stdin.gets.chomp.downcase
     if answer.empty? || answer == 'y'

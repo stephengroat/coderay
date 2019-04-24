@@ -1,18 +1,18 @@
 # encoding: utf-8
 module CodeRay
   module Scanners
-    
+
     # Clojure scanner by Licenser.
     class Clojure < Scanner
-      
+
       register_for :clojure
       file_extension 'clj'
-      
+
       SPECIAL_FORMS = %w[
         def if do let quote var fn loop recur throw try catch monitor-enter monitor-exit .
-        new 
+        new
       ]  # :nodoc:
-      
+
       CORE_FORMS = %w[
         + - -> ->> .. / * <= < = == >= > accessor aclone add-classpath add-watch
         agent agent-error agent-errors aget alength alias all-ns alter alter-meta!
@@ -72,26 +72,26 @@ module CodeRay
         use val vals var-get var-set var? vary-meta vec vector vector-of vector?
         when when-first when-let when-not while with-bindings with-bindings*
         with-in-str with-local-vars with-meta with-open with-out-str
-        with-precision xml-seq zero? zipmap 
+        with-precision xml-seq zero? zipmap
       ]  # :nodoc:
-      
+
       PREDEFINED_CONSTANTS = %w[
         true false nil *1 *2 *3 *agent* *clojure-version* *command-line-args*
         *compile-files* *compile-path* *e *err* *file* *flush-on-newline*
         *in* *ns* *out* *print-dup* *print-length* *print-level* *print-meta*
         *print-readably* *read-eval* *warn-on-reflection*
       ]  # :nodoc:
-      
+
       IDENT_KIND = WordList.new(:ident).
         add(SPECIAL_FORMS, :keyword).
         add(CORE_FORMS, :keyword).
         add(PREDEFINED_CONSTANTS, :predefined_constant)
-      
+
       KEYWORD_NEXT_TOKEN_KIND = WordList.new(nil).
         add(%w[ def defn defn- definline defmacro defmulti defmethod defstruct defonce declare ], :function).
         add(%w[ ns ], :namespace).
         add(%w[ defprotocol defrecord ], :class)
-      
+
       BASIC_IDENTIFIER = /[a-zA-Z$%*\/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!\/_?<>\-\#]*/
       IDENTIFIER = /(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:\/#{BASIC_IDENTIFIER})?\.?)|\.\.?/
       SYMBOL = /::?#{IDENTIFIER}/o
@@ -139,16 +139,16 @@ module CodeRay
       NUM8 = /#{PREFIX8}#{COMPLEX8}/
       NUM2 = /#{PREFIX2}#{COMPLEX2}/
       NUM = /#{NUM10}|#{NUM16}|#{NUM8}|#{NUM2}/
-      
+
     protected
-      
+
       def scan_tokens(encoder, options)
-        
+
         state = :initial
         kind = nil
-        
+
         until eos?
-          
+
           case state
           when :initial
             if match = scan(/ \s+ | \\\n | , /x)
@@ -185,7 +185,7 @@ module CodeRay
             else
               encoder.text_token getch, :error
             end
-            
+
           when :string, :regexp
             if match = scan(/[^"\\]+|\\.?/)
               encoder.text_token match, :content
@@ -197,20 +197,20 @@ module CodeRay
               raise_inspect "else case \" reached; %p not handled." % peek(1),
                 encoder, state
             end
-            
+
           else
             raise 'else case reached'
-            
+
           end
-          
+
         end
-        
+
         if [:string, :regexp].include? state
           encoder.end_group state
         end
-        
+
         encoder
-        
+
       end
     end
   end
