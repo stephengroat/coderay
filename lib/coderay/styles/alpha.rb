@@ -9,7 +9,7 @@ module Styles
     border_color = 'silver'
     normal_color = 'black'
 
-    CSS_MAIN_STYLES = <<-MAIN  # :nodoc:
+    CSS_MAIN_STYLES = <<-MAIN.freeze  # :nodoc:
 .CodeRay {
   background-color: #{code_background};
   border: 1px solid #{border_color};
@@ -48,7 +48,7 @@ table.CodeRay td { padding: 2px 4px; vertical-align: top; }
 .CodeRay .code { width: 100%; }
     MAIN
 
-    TOKEN_COLORS = <<-'TOKENS'
+    TOKEN_COLORS = <<-'TOKENS'.freeze
 .debug { color: white !important; background: blue !important; }
 
 .annotation { color:#007 }

@@ -44,7 +44,7 @@ module Encoders
         \s* \} \s*
       |
         ( [^\n]+ )           # $3 = error
-      /mx
+      /mx.freeze
       def parse(stylesheet)
         stylesheet.scan CSS_CLASS_PATTERN do |selectors, style, error|
           raise "CSS parse error: '#{error.inspect}' not recognized" if error

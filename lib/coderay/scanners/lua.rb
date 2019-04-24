@@ -17,10 +17,10 @@ module Scanners
       for function goto if in
       local not or repeat return
       then until while
-    ]
+    ].freeze
 
     # Constants set by the Lua core.
-    PREDEFINED_CONSTANTS = %w[false true nil]
+    PREDEFINED_CONSTANTS = %w[false true nil].freeze
 
     # The expressions contained in this array are parts of Lua's `basic'
     # library. Although it's not entirely necessary to load that library,
@@ -38,7 +38,7 @@ module Scanners
       ipairs load loadfile next pairs pcall print
       rawequal rawget rawlen rawset select setmetatable
       tonumber tostring type xpcall
-    ]
+    ].freeze
 
     # Automatic token kind selection for normal words.
     IDENT_KIND = CodeRay::WordList.new(:ident)

@@ -9,7 +9,7 @@ module CodeRay
       SPECIAL_FORMS = %w[
         def if do let quote var fn loop recur throw try catch monitor-enter monitor-exit .
         new
-      ]  # :nodoc:
+      ].freeze  # :nodoc:
 
       CORE_FORMS = %w[
         + - -> ->> .. / * <= < = == >= > accessor aclone add-classpath add-watch
@@ -71,14 +71,14 @@ module CodeRay
         when when-first when-let when-not while with-bindings with-bindings*
         with-in-str with-local-vars with-meta with-open with-out-str
         with-precision xml-seq zero? zipmap
-      ]  # :nodoc:
+      ].freeze  # :nodoc:
 
       PREDEFINED_CONSTANTS = %w[
         true false nil *1 *2 *3 *agent* *clojure-version* *command-line-args*
         *compile-files* *compile-path* *e *err* *file* *flush-on-newline*
         *in* *ns* *out* *print-dup* *print-length* *print-level* *print-meta*
         *print-readably* *read-eval* *warn-on-reflection*
-      ]  # :nodoc:
+      ].freeze  # :nodoc:
 
       IDENT_KIND = WordList.new(:ident)
                            .add(SPECIAL_FORMS, :keyword)
@@ -90,53 +90,53 @@ module CodeRay
                                         .add(%w[ns], :namespace)
                                         .add(%w[defprotocol defrecord], :class)
 
-      BASIC_IDENTIFIER = /[a-zA-Z$%*\/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!\/_?<>\-\#]*/
-      IDENTIFIER = /(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:\/#{BASIC_IDENTIFIER})?\.?)|\.\.?/
-      SYMBOL = /::?#{IDENTIFIER}/o
-      DIGIT = /\d/
+      BASIC_IDENTIFIER = /[a-zA-Z$%*\/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!\/_?<>\-\#]*/.freeze
+      IDENTIFIER = /(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:\/#{BASIC_IDENTIFIER})?\.?)|\.\.?/.freeze
+      SYMBOL = /::?#{IDENTIFIER}/o.freeze
+      DIGIT = /\d/.freeze
       DIGIT10 = DIGIT
-      DIGIT16 = /[0-9a-f]/i
-      DIGIT8 = /[0-7]/
-      DIGIT2 = /[01]/
-      RADIX16 = /\#x/i
-      RADIX8 = /\#o/i
-      RADIX2 = /\#b/i
-      RADIX10 = /\#d/i
-      EXACTNESS = /#i|#e/i
-      SIGN = /[\+-]?/
-      EXP_MARK = /[esfdl]/i
-      EXP = /#{EXP_MARK}#{SIGN}#{DIGIT}+/
-      SUFFIX = /#{EXP}?/
-      PREFIX10 = /#{RADIX10}?#{EXACTNESS}?|#{EXACTNESS}?#{RADIX10}?/
-      PREFIX16 = /#{RADIX16}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX16}/
-      PREFIX8 = /#{RADIX8}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX8}/
-      PREFIX2 = /#{RADIX2}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX2}/
-      UINT10 = /#{DIGIT10}+#*/
-      UINT16 = /#{DIGIT16}+#*/
-      UINT8 = /#{DIGIT8}+#*/
-      UINT2 = /#{DIGIT2}+#*/
-      DECIMAL = /#{DIGIT10}+#+\.#*#{SUFFIX}|#{DIGIT10}+\.#{DIGIT10}*#*#{SUFFIX}|\.#{DIGIT10}+#*#{SUFFIX}|#{UINT10}#{EXP}/
-      UREAL10 = /#{UINT10}\/#{UINT10}|#{DECIMAL}|#{UINT10}/
-      UREAL16 = /#{UINT16}\/#{UINT16}|#{UINT16}/
-      UREAL8 = /#{UINT8}\/#{UINT8}|#{UINT8}/
-      UREAL2 = /#{UINT2}\/#{UINT2}|#{UINT2}/
-      REAL10 = /#{SIGN}#{UREAL10}/
-      REAL16 = /#{SIGN}#{UREAL16}/
-      REAL8 = /#{SIGN}#{UREAL8}/
-      REAL2 = /#{SIGN}#{UREAL2}/
-      IMAG10 = /i|#{UREAL10}i/
-      IMAG16 = /i|#{UREAL16}i/
-      IMAG8 = /i|#{UREAL8}i/
-      IMAG2 = /i|#{UREAL2}i/
-      COMPLEX10 = /#{REAL10}@#{REAL10}|#{REAL10}\+#{IMAG10}|#{REAL10}-#{IMAG10}|\+#{IMAG10}|-#{IMAG10}|#{REAL10}/
-      COMPLEX16 = /#{REAL16}@#{REAL16}|#{REAL16}\+#{IMAG16}|#{REAL16}-#{IMAG16}|\+#{IMAG16}|-#{IMAG16}|#{REAL16}/
-      COMPLEX8 = /#{REAL8}@#{REAL8}|#{REAL8}\+#{IMAG8}|#{REAL8}-#{IMAG8}|\+#{IMAG8}|-#{IMAG8}|#{REAL8}/
-      COMPLEX2 = /#{REAL2}@#{REAL2}|#{REAL2}\+#{IMAG2}|#{REAL2}-#{IMAG2}|\+#{IMAG2}|-#{IMAG2}|#{REAL2}/
-      NUM10 = /#{PREFIX10}?#{COMPLEX10}/
-      NUM16 = /#{PREFIX16}#{COMPLEX16}/
-      NUM8 = /#{PREFIX8}#{COMPLEX8}/
-      NUM2 = /#{PREFIX2}#{COMPLEX2}/
-      NUM = /#{NUM10}|#{NUM16}|#{NUM8}|#{NUM2}/
+      DIGIT16 = /[0-9a-f]/i.freeze
+      DIGIT8 = /[0-7]/.freeze
+      DIGIT2 = /[01]/.freeze
+      RADIX16 = /\#x/i.freeze
+      RADIX8 = /\#o/i.freeze
+      RADIX2 = /\#b/i.freeze
+      RADIX10 = /\#d/i.freeze
+      EXACTNESS = /#i|#e/i.freeze
+      SIGN = /[\+-]?/.freeze
+      EXP_MARK = /[esfdl]/i.freeze
+      EXP = /#{EXP_MARK}#{SIGN}#{DIGIT}+/.freeze
+      SUFFIX = /#{EXP}?/.freeze
+      PREFIX10 = /#{RADIX10}?#{EXACTNESS}?|#{EXACTNESS}?#{RADIX10}?/.freeze
+      PREFIX16 = /#{RADIX16}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX16}/.freeze
+      PREFIX8 = /#{RADIX8}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX8}/.freeze
+      PREFIX2 = /#{RADIX2}#{EXACTNESS}?|#{EXACTNESS}?#{RADIX2}/.freeze
+      UINT10 = /#{DIGIT10}+#*/.freeze
+      UINT16 = /#{DIGIT16}+#*/.freeze
+      UINT8 = /#{DIGIT8}+#*/.freeze
+      UINT2 = /#{DIGIT2}+#*/.freeze
+      DECIMAL = /#{DIGIT10}+#+\.#*#{SUFFIX}|#{DIGIT10}+\.#{DIGIT10}*#*#{SUFFIX}|\.#{DIGIT10}+#*#{SUFFIX}|#{UINT10}#{EXP}/.freeze
+      UREAL10 = /#{UINT10}\/#{UINT10}|#{DECIMAL}|#{UINT10}/.freeze
+      UREAL16 = /#{UINT16}\/#{UINT16}|#{UINT16}/.freeze
+      UREAL8 = /#{UINT8}\/#{UINT8}|#{UINT8}/.freeze
+      UREAL2 = /#{UINT2}\/#{UINT2}|#{UINT2}/.freeze
+      REAL10 = /#{SIGN}#{UREAL10}/.freeze
+      REAL16 = /#{SIGN}#{UREAL16}/.freeze
+      REAL8 = /#{SIGN}#{UREAL8}/.freeze
+      REAL2 = /#{SIGN}#{UREAL2}/.freeze
+      IMAG10 = /i|#{UREAL10}i/.freeze
+      IMAG16 = /i|#{UREAL16}i/.freeze
+      IMAG8 = /i|#{UREAL8}i/.freeze
+      IMAG2 = /i|#{UREAL2}i/.freeze
+      COMPLEX10 = /#{REAL10}@#{REAL10}|#{REAL10}\+#{IMAG10}|#{REAL10}-#{IMAG10}|\+#{IMAG10}|-#{IMAG10}|#{REAL10}/.freeze
+      COMPLEX16 = /#{REAL16}@#{REAL16}|#{REAL16}\+#{IMAG16}|#{REAL16}-#{IMAG16}|\+#{IMAG16}|-#{IMAG16}|#{REAL16}/.freeze
+      COMPLEX8 = /#{REAL8}@#{REAL8}|#{REAL8}\+#{IMAG8}|#{REAL8}-#{IMAG8}|\+#{IMAG8}|-#{IMAG8}|#{REAL8}/.freeze
+      COMPLEX2 = /#{REAL2}@#{REAL2}|#{REAL2}\+#{IMAG2}|#{REAL2}-#{IMAG2}|\+#{IMAG2}|-#{IMAG2}|#{REAL2}/.freeze
+      NUM10 = /#{PREFIX10}?#{COMPLEX10}/.freeze
+      NUM16 = /#{PREFIX16}#{COMPLEX16}/.freeze
+      NUM8 = /#{PREFIX8}#{COMPLEX8}/.freeze
+      NUM2 = /#{PREFIX2}#{COMPLEX2}/.freeze
+      NUM = /#{NUM10}|#{NUM16}|#{NUM8}|#{NUM2}/.freeze
 
       protected
 

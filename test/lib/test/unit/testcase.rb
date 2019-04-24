@@ -31,7 +31,7 @@ module Test
       # These exceptions are not caught by #run.
 
       PASSTHROUGH_EXCEPTIONS = [NoMemoryError, SignalException, Interrupt,
-                                SystemExit]
+                                SystemExit].freeze
 
       # Creates a new instance of the fixture for running the
       # test represented by test_method_name.

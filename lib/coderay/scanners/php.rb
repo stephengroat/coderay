@@ -31,16 +31,16 @@ module Scanners
         goto if implements interface instanceof namespace new or private protected public static switch
         throw try use var while xor
         cfunction old_function
-      ]
+      ].freeze
 
-      TYPES = %w[int integer float double bool boolean string array object resource]
+      TYPES = %w[int integer float double bool boolean string array object resource].freeze
 
       LANGUAGE_CONSTRUCTS = %w[
         die echo empty exit eval include include_once isset list
         require require_once return print unset
-      ]
+      ].freeze
 
-      CLASSES = %w[Directory stdClass __PHP_Incomplete_Class exception php_user_filter Closure]
+      CLASSES = %w[Directory stdClass __PHP_Incomplete_Class exception php_user_filter Closure].freeze
 
       # according to http://php.net/quickref.php on 2009-04-21;
       # all functions with _ excluded (module functions) and selected additional functions
@@ -131,13 +131,13 @@ module Scanners
         pcntl_signal pcntl_signal_dispatch pcntl_sigprocmask pcntl_sigtimedwait
         pcntl_sigwaitinfo pcntl_wait pcntl_waitpid pcntl_wexitstatus pcntl_wifexited
         pcntl_wifsignaled pcntl_wifstopped pcntl_wstopsig pcntl_wtermsig
-      ]
+      ].freeze
       # TODO: more built-in PHP functions?
 
       EXCEPTIONS = %w[
         E_ERROR E_WARNING E_PARSE E_NOTICE E_CORE_ERROR E_CORE_WARNING E_COMPILE_ERROR E_COMPILE_WARNING
         E_USER_ERROR E_USER_WARNING E_USER_NOTICE E_DEPRECATED E_USER_DEPRECATED E_ALL E_STRICT
-      ]
+      ].freeze
 
       CONSTANTS = %w[
         null true false self parent
@@ -170,13 +170,13 @@ module Scanners
         LOG_USER LOG_MAIL LOG_DAEMON LOG_AUTH LOG_SYSLOG LOG_LPR LOG_NEWS LOG_UUCP LOG_CRON LOG_AUTHPRIV LOG_LOCAL0
         LOG_LOCAL1 LOG_LOCAL2 LOG_LOCAL3 LOG_LOCAL4 LOG_LOCAL5 LOG_LOCAL6 LOG_LOCAL7 LOG_PID LOG_CONS LOG_ODELAY
         LOG_NDELAY LOG_NOWAIT LOG_PERROR
-      ]
+      ].freeze
 
       PREDEFINED = %w[
         $GLOBALS $_SERVER $_GET $_POST $_FILES $_REQUEST $_SESSION $_ENV
         $_COOKIE $php_errormsg $HTTP_RAW_POST_DATA $http_response_header
         $argc $argv
-      ]
+      ].freeze
 
       IDENT_KIND = WordList::CaseIgnoring.new(:ident)
                                          .add(KEYWORDS, :keyword)
@@ -197,17 +197,17 @@ module Scanners
         <script\s+[^>]*?language\s*=\s*'php'[^>]*?> |
         <\?php\d? |
         <\?(?!xml)
-      /xi
+      /xi.freeze
 
       PHP_END = %r!
         </script> |
         \?>
-      !xi
+      !xi.freeze
 
-      HTML_INDICATOR = /<!DOCTYPE html|<(?:html|body|div|p)[> ]/i
+      HTML_INDICATOR = /<!DOCTYPE html|<(?:html|body|div|p)[> ]/i.freeze
 
       IDENTIFIER = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : Regexp.new('[a-z_\x7f-\xFF][a-z0-9_\x7f-\xFF]*', true)
-      VARIABLE = /\$#{IDENTIFIER}/
+      VARIABLE = /\$#{IDENTIFIER}/.freeze
 
       OPERATOR = /
         \.(?!\d)=? |      # dot that is not decimal point, string concatenation
@@ -221,7 +221,7 @@ module Scanners
         =& |              # reference assignment
         [=!]=?=? | <> |   # comparison and assignment
         <<=? | >>=? | [<>]=?  # comparison and shift
-      /x
+      /x.freeze
     end
 
     protected

@@ -11,7 +11,7 @@ module Test
     class Failure
       attr_reader :test_name, :location, :message
 
-      SINGLE_CHARACTER = 'F'
+      SINGLE_CHARACTER = 'F'.freeze
 
       # Creates a new Failure with the given location and
       # message.

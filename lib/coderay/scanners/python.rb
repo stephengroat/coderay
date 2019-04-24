@@ -14,11 +14,11 @@ module Scanners
       'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not',
       'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield',
       'nonlocal', # new in Python 3
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     OLD_KEYWORDS = [
       'exec', 'print', # gone in Python 3
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_METHODS_AND_TYPES = %w[
       __import__ abs all any apply basestring bin bool buffer
@@ -30,7 +30,7 @@ module Scanners
       raw_input reduce reload repr reversed round set setattr slice
       sorted staticmethod str sum super tuple type unichr unicode
       vars xrange zip
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_EXCEPTIONS = %w[
       ArithmeticError AssertionError AttributeError
@@ -45,12 +45,12 @@ module Scanners
       TypeError UnboundLocalError UnicodeDecodeError
       UnicodeEncodeError UnicodeError UnicodeTranslateError
       UnicodeWarning UserWarning ValueError Warning ZeroDivisionError
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_VARIABLES_AND_CONSTANTS = [
       'False', 'True', 'None', # "keywords" since Python 3
       'self', 'Ellipsis', 'NotImplemented',
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
                          .add(KEYWORDS, :keyword)
@@ -59,9 +59,9 @@ module Scanners
                          .add(PREDEFINED_VARIABLES_AND_CONSTANTS, :predefined_constant)
                          .add(PREDEFINED_EXCEPTIONS, :exception) # :nodoc:
 
-    NAME = / [[:alpha:]_] \w* /x # :nodoc:
-    ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} | N\{[-\w ]+\} /x # :nodoc:
+    NAME = / [[:alpha:]_] \w* /x.freeze # :nodoc:
+    ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} | N\{[-\w ]+\} /x.freeze # :nodoc:
 
     OPERATOR = /
       \.\.\. |          # ellipsis
@@ -71,7 +71,7 @@ module Scanners
       [-+*\/%&|^]=? |   # ordinary math and binary logic
       [~`] |            # binary complement and inspection
       <<=? | >>=? | [<>=]=? | !=  # comparison and assignment
-    /x # :nodoc:
+    /x.freeze # :nodoc:
 
     STRING_DELIMITER_REGEXP = Hash.new { |h, delimiter|
       h[delimiter] = Regexp.union delimiter # :nodoc:
@@ -90,11 +90,11 @@ module Scanners
       #{NAME}
       (?: \. #{NAME} )*
       | \*
-    /x  # :nodoc:
+    /x.freeze  # :nodoc:
 
     DOCSTRING_COMING = /
       [ \t]* u?r? ("""|''')
-    /x  # :nodoc:
+    /x.freeze  # :nodoc:
 
     protected
 

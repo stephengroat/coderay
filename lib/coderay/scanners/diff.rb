@@ -10,7 +10,7 @@ module Scanners
     DEFAULT_OPTIONS = {
       :highlight_code => true,
       :inline_diff => true
-    }
+    }.freeze
 
     protected
 

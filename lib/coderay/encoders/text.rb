@@ -14,11 +14,11 @@ module Encoders
   class Text < Encoder
     register_for :text
 
-    FILE_EXTENSION = 'txt'
+    FILE_EXTENSION = 'txt'.freeze
 
     DEFAULT_OPTIONS = {
       :separator => nil
-    }
+    }.freeze
 
     def text_token(text, kind)
       super

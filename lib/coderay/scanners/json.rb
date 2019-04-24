@@ -8,11 +8,11 @@ module Scanners
     KINDS_NOT_LOC = [
       :float, :char, :content, :delimiter,
       :error, :integer, :operator, :value,
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
-    ESCAPE = / [bfnrt\\"\/] /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x # :nodoc:
-    KEY = / (?> (?: [^\\"]+ | \\. )* ) " \s* : /x
+    ESCAPE = / [bfnrt\\"\/] /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x.freeze # :nodoc:
+    KEY = / (?> (?: [^\\"]+ | \\. )* ) " \s* : /x.freeze
 
     protected
 

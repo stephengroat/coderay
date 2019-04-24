@@ -3,7 +3,7 @@ require 'rubocop/rake_task'
 
 $:.unshift File.dirname(__FILE__) unless $:.include? '.'
 
-ROOT = '.'
+ROOT = '.'.freeze
 LIB_ROOT = File.join ROOT, 'lib'
 
 RuboCop::RakeTask.new

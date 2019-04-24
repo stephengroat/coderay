@@ -9,7 +9,7 @@ module Scanners
       when END case else for retry
       while alias class elsif if not return
       undef yield
-    ]
+    ].freeze
 
     # See http://murfy.de/ruby-constants.
     PREDEFINED_CONSTANTS = %w[
@@ -21,7 +21,7 @@ module Scanners
       RUBY_COPYRIGHT RUBY_DESCRIPTION RUBY_ENGINE RUBY_PATCHLEVEL
       RUBY_PLATFORM RUBY_RELEASE_DATE RUBY_REVISION RUBY_VERSION
       __FILE__ __LINE__ __ENCODING__
-    ]
+    ].freeze
 
     IDENT_KIND = WordList.new(:ident)
                          .add(KEYWORDS, :keyword)
@@ -35,7 +35,7 @@ module Scanners
 
     IDENT = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : /[^\W\d]\w*/
 
-    METHOD_NAME = / #{IDENT} [?!]? /ox
+    METHOD_NAME = / #{IDENT} [?!]? /ox.freeze
     METHOD_NAME_OPERATOR = /
       \*\*?           # multiplication and power
       | [-+~]@?       # plus, minus, tilde with and without at sign
@@ -45,34 +45,33 @@ module Scanners
       | <=?>? | >=?   # comparison, rocket operator
       | ===? | =~     # simple equality, case equality, match
       | ![~=@]?       # negation with and without at sign, not-equal and not-match
-    /ox
-    METHOD_SUFFIX = / (?: [?!] | = (?![~>]|=(?!>)) ) /x
-    METHOD_NAME_EX = / #{IDENT} #{METHOD_SUFFIX}? | #{METHOD_NAME_OPERATOR} /ox
-    METHOD_AFTER_DOT = / #{IDENT} [?!]? | #{METHOD_NAME_OPERATOR} /ox
-    INSTANCE_VARIABLE = / @ #{IDENT} /ox
-    CLASS_VARIABLE = / @@ #{IDENT} /ox
-    OBJECT_VARIABLE = / @@? #{IDENT} /ox
-    GLOBAL_VARIABLE = / \$ (?: #{IDENT} | [1-9]\d* | 0\w* | [~&+`'=\/,;_.<>!@$?*":\\] | -[a-zA-Z_0-9] ) /ox
-    PREFIX_VARIABLE = / #{GLOBAL_VARIABLE} | #{OBJECT_VARIABLE} /ox
-    VARIABLE = / @?@? #{IDENT} | #{GLOBAL_VARIABLE} /ox
+    /ox.freeze
+    METHOD_SUFFIX = / (?: [?!] | = (?![~>]|=(?!>)) ) /x.freeze
+    METHOD_NAME_EX = / #{IDENT} #{METHOD_SUFFIX}? | #{METHOD_NAME_OPERATOR} /ox.freeze
+    METHOD_AFTER_DOT = / #{IDENT} [?!]? | #{METHOD_NAME_OPERATOR} /ox.freeze
+    INSTANCE_VARIABLE = / @ #{IDENT} /ox.freeze
+    CLASS_VARIABLE = / @@ #{IDENT} /ox.freeze
+    OBJECT_VARIABLE = / @@? #{IDENT} /ox.freeze
+    GLOBAL_VARIABLE = / \$ (?: #{IDENT} | [1-9]\d* | 0\w* | [~&+`'=\/,;_.<>!@$?*":\\] | -[a-zA-Z_0-9] ) /ox.freeze
+    PREFIX_VARIABLE = / #{GLOBAL_VARIABLE} | #{OBJECT_VARIABLE} /ox.freeze
+    VARIABLE = / @?@? #{IDENT} | #{GLOBAL_VARIABLE} /ox.freeze
 
-    QUOTE_TO_TYPE = {
+    QUOTE_TO_TYPE = Hash.new(:string).update(
       '`' => :shell,
       '/' => :regexp
-    }
-    QUOTE_TO_TYPE.default = :string
+    ).freeze
 
-    REGEXP_MODIFIERS = /[mousenix]*/
+    REGEXP_MODIFIERS = /[mousenix]*/.freeze
 
-    DECIMAL = /\d+(?:_\d+)*/
-    OCTAL = /0_?[0-7]+(?:_[0-7]+)*/
-    HEXADECIMAL = /0x[0-9A-Fa-f]+(?:_[0-9A-Fa-f]+)*/
-    BINARY = /0b[01]+(?:_[01]+)*/
+    DECIMAL = /\d+(?:_\d+)*/.freeze
+    OCTAL = /0_?[0-7]+(?:_[0-7]+)*/.freeze
+    HEXADECIMAL = /0x[0-9A-Fa-f]+(?:_[0-9A-Fa-f]+)*/.freeze
+    BINARY = /0b[01]+(?:_[01]+)*/.freeze
 
-    EXPONENT = / [eE] [+-]? #{DECIMAL} /ox
-    FLOAT_SUFFIX = / #{EXPONENT} | \. #{DECIMAL} #{EXPONENT}? /ox
-    FLOAT_OR_INT = / #{DECIMAL} (?: #{FLOAT_SUFFIX} () )? /ox
-    NUMERIC = / (?: (?=0) (?: #{OCTAL} | #{HEXADECIMAL} | #{BINARY} ) | #{FLOAT_OR_INT} ) /ox
+    EXPONENT = / [eE] [+-]? #{DECIMAL} /ox.freeze
+    FLOAT_SUFFIX = / #{EXPONENT} | \. #{DECIMAL} #{EXPONENT}? /ox.freeze
+    FLOAT_OR_INT = / #{DECIMAL} (?: #{FLOAT_SUFFIX} () )? /ox.freeze
+    NUMERIC = / (?: (?=0) (?: #{OCTAL} | #{HEXADECIMAL} | #{BINARY} ) | #{FLOAT_OR_INT} ) /ox.freeze
 
     SYMBOL = /
       :
@@ -81,25 +80,25 @@ module Scanners
       | #{PREFIX_VARIABLE}
       | ['"]
       )
-    /ox
-    METHOD_NAME_OR_SYMBOL = / #{METHOD_NAME_EX} | #{SYMBOL} /ox
+    /ox.freeze
+    METHOD_NAME_OR_SYMBOL = / #{METHOD_NAME_EX} | #{SYMBOL} /ox.freeze
 
     SIMPLE_ESCAPE = /
         [abefnrstv]
       |  [0-7]{1,3}
       | x[0-9A-Fa-f]{1,2}
       | .
-    /mx
+    /mx.freeze
 
     CONTROL_META_ESCAPE = /
       (?: M-|C-|c )
       (?: \\ (?: M-|C-|c ) )*
       (?: [^\\] | \\ #{SIMPLE_ESCAPE} )?
-    /mox
+    /mox.freeze
 
     ESCAPE = /
       #{CONTROL_META_ESCAPE} | #{SIMPLE_ESCAPE}
-    /mox
+    /mox.freeze
 
     CHARACTER = /
       \?
@@ -107,7 +106,7 @@ module Scanners
         [^\s\\]
       | \\ #{ESCAPE}
       )
-    /mox
+    /mox.freeze
 
     # NOTE: This is not completely correct, but
     # nobody needs heredoc delimiters ending with \n.
@@ -119,21 +118,21 @@ module Scanners
         ( ["'`\/] )        # $3 = quote, type
         ( [^\n]*? ) \3     # $4 = delim
       )
-    /mx
+    /mx.freeze
 
     RUBYDOC = /
       =begin (?!\S)
       .*?
       (?: \Z | ^=end (?!\S) [^\n]* )
-    /mx
+    /mx.freeze
 
     DATA = /
       __END__$
       .*?
       (?: \Z | (?=^\#CODE) )
-    /mx
+    /mx.freeze
 
-    RUBYDOC_OR_DATA = / #{RUBYDOC} | #{DATA} /xo
+    RUBYDOC_OR_DATA = / #{RUBYDOC} | #{DATA} /xo.freeze
 
     # Checks for a valid value to follow. This enables
     # value_expected in method calls without parentheses.
@@ -145,7 +144,7 @@ module Scanners
       | [-+] \d
       | #{CHARACTER}
       )
-    /ox
+    /ox.freeze
     KEYWORDS_EXPECTING_VALUE = WordList.new.add(%w[
       and end in or unless begin
       defined? ensure redo super until
@@ -155,7 +154,7 @@ module Scanners
       yield
     ])
 
-    FANCY_STRING_START = / % ( [iIqQrswWx] | (?![a-zA-Z0-9]) ) ([^a-zA-Z0-9]) /x
+    FANCY_STRING_START = / % ( [iIqQrswWx] | (?![a-zA-Z0-9]) ) ([^a-zA-Z0-9]) /x.freeze
     FANCY_STRING_KIND = Hash.new(:string).merge({
       'i' => :symbol,
       'I' => :symbol,

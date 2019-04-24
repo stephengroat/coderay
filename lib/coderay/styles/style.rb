@@ -7,7 +7,7 @@ module CodeRay
       extend Plugin
       plugin_host Styles
 
-      DEFAULT_OPTIONS = { } # :nodoc:
+      DEFAULT_OPTIONS = { }.freeze # :nodoc:
     end
   end
 end

@@ -8,7 +8,7 @@ module Encoders
   class YAML < Encoder
     register_for :yaml
 
-    FILE_EXTENSION = 'yaml'
+    FILE_EXTENSION = 'yaml'.freeze
 
     protected
     def setup(options)

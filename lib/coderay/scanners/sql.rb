@@ -11,17 +11,17 @@ module Scanners
       like not of on or order outer over references
       then to union using values when where
       left right distinct
-    )
+    ).freeze
 
     OBJECTS = %w(
       database databases table tables column columns fields index constraint
       constraints transaction function procedure row key view trigger
-    )
+    ).freeze
 
     COMMANDS = %w(
       add alter comment create delete drop grant insert into select update set
       show prompt begin commit rollback replace truncate
-    )
+    ).freeze
 
     PREDEFINED_TYPES = %w(
       char varchar varchar2 enum binary text tinytext mediumtext
@@ -29,17 +29,17 @@ module Scanners
       date time datetime year double decimal float int
       integer tinyint mediumint bigint smallint unsigned bit
       bool boolean hex bin oct
-    )
+    ).freeze
 
-    PREDEFINED_FUNCTIONS = %w(sum cast substring abs pi count min max avg now)
+    PREDEFINED_FUNCTIONS = %w(sum cast substring abs pi count min max avg now).freeze
 
     DIRECTIVES = %w(
       auto_increment unique default charset initially deferred
       deferrable cascade immediate read write asc desc after
       primary foreign return engine
-    )
+    ).freeze
 
-    PREDEFINED_CONSTANTS = %w(null true false)
+    PREDEFINED_CONSTANTS = %w(null true false).freeze
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident)
                                        .add(KEYWORDS, :keyword)
@@ -50,16 +50,16 @@ module Scanners
                                        .add(PREDEFINED_FUNCTIONS, :predefined)
                                        .add(DIRECTIVES, :directive)
 
-    ESCAPE = / [rbfntv\n\\\/'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | . /mx
-    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x
+    ESCAPE = / [rbfntv\n\\\/'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | . /mx.freeze
+    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze
 
-    STRING_PREFIXES = /[xnb]|_\w+/i
+    STRING_PREFIXES = /[xnb]|_\w+/i.freeze
 
     STRING_CONTENT_PATTERN = {
       '"' => / (?: [^\\"] | "" )+ /x,
       "'" => / (?: [^\\'] | '' )+ /x,
       '`' => / (?: [^\\`] | `` )+ /x
-    }
+    }.freeze
 
     def scan_tokens(encoder, options)
 

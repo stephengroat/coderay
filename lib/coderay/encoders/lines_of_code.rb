@@ -16,7 +16,7 @@ module Encoders
   class LinesOfCode < TokenKindFilter
     register_for :lines_of_code
 
-    NON_EMPTY_LINE = /^\s*\S.*$/
+    NON_EMPTY_LINE = /^\s*\S.*$/.freeze
 
     protected
 

@@ -13,7 +13,7 @@ module Scanners
       :tag, :attribute_name, :operator,
       :attribute_value, :string,
       :plain, :entity, :error,
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     EVENT_ATTRIBUTES = %w(
       onabort onafterprint onbeforeprint onbeforeunload onblur oncanplay
@@ -28,15 +28,15 @@ module Scanners
       onredo onreset onresize onscroll onseeked onseeking onselect onshow
       onstalled onstorage onsubmit onsuspend ontimeupdate onundo onunload
       onvolumechange onwaiting
-    )
+    ).freeze
 
     IN_ATTRIBUTE = WordList::CaseIgnoring.new(nil)
                                          .add(EVENT_ATTRIBUTES, :script)
                                          .add(['style'], :style)
 
-    ATTR_NAME = /[\w.:-]+/ # :nodoc:
-    TAG_END = /\/?>/ # :nodoc:
-    HEX = /[0-9a-fA-F]/ # :nodoc:
+    ATTR_NAME = /[\w.:-]+/.freeze # :nodoc:
+    TAG_END = /\/?>/.freeze # :nodoc:
+    HEX = /[0-9a-fA-F]/.freeze # :nodoc:
     ENTITY = /
       &
       (?:
@@ -50,12 +50,12 @@ module Scanners
         )
       )
       ;
-    /ox # :nodoc:
+    /ox.freeze # :nodoc:
 
     PLAIN_STRING_CONTENT = {
       "'" => /[^&'>\n]+/,
       '"' => /[^&">\n]+/
-    } # :nodoc:
+    }.freeze # :nodoc:
 
     def reset
       super

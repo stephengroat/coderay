@@ -18,7 +18,7 @@ module Scanners
       'resourcestring', 'set', 'shl', 'shr', 'string', 'then', 'threadvar',
       'to', 'try', 'type', 'unit', 'until', 'uses', 'var', 'while', 'with',
       'xor', 'on',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     DIRECTIVES = [
       'absolute', 'abstract', 'assembler', 'at', 'automated', 'cdecl',
@@ -29,7 +29,7 @@ module Scanners
       'published', 'read', 'readonly', 'register', 'reintroduce',
       'requires', 'resident', 'safecall', 'stdcall', 'stored', 'varargs',
       'virtual', 'write', 'writeonly',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident)
                                        .add(KEYWORDS, :keyword)

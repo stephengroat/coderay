@@ -12,12 +12,12 @@ module Scanners
       break case catch continue default delete do else
       finally for function if in instanceof new
       return switch throw try typeof var void while with
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
     PREDEFINED_CONSTANTS = %w[
       false null true undefined NaN Infinity
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
-    MAGIC_VARIABLES = %w[this arguments] # :nodoc: arguments was introduced in JavaScript 1.4
+    MAGIC_VARIABLES = %w[this arguments].freeze # :nodoc: arguments was introduced in JavaScript 1.4
 
     KEYWORDS_EXPECTING_VALUE = WordList.new.add %w[
       case delete in instanceof new return throw typeof with
@@ -29,7 +29,7 @@ module Scanners
       final float goto implements import int interface long native package
       private protected public short static super synchronized throws transient
       volatile
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
                          .add(RESERVED_WORDS, :reserved)
@@ -37,18 +37,18 @@ module Scanners
                          .add(MAGIC_VARIABLES, :local_variable)
                          .add(KEYWORDS, :keyword) # :nodoc:
 
-    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
-    REGEXP_ESCAPE = / [bBdDsSwW] /x # :nodoc:
+    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze # :nodoc:
+    REGEXP_ESCAPE = / [bBdDsSwW] /x.freeze # :nodoc:
     STRING_CONTENT_PATTERN = {
       "'" => /[^\\']+/,
       '"' => /[^\\"]+/,
       '/' => /[^\\\/]+/
-    }  # :nodoc:
+    }.freeze  # :nodoc:
     KEY_CHECK_PATTERN = {
       "'" => / (?> [^\\']* (?: \\. [^\\']* )* ) ' \s* : /mx,
       '"' => / (?> [^\\"]* (?: \\. [^\\"]* )* ) " \s* : /mx
-    }  # :nodoc:
+    }.freeze  # :nodoc:
 
     protected
 

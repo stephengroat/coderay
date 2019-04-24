@@ -12,10 +12,10 @@ module Scanners
       finally for if instanceof import new package
       return switch throw try typeof while
       debugger export
-    ] # :nodoc:
-    RESERVED = %w[const goto] # :nodoc:
-    CONSTANTS = %w[false null true] # :nodoc:
-    MAGIC_VARIABLES = %w[this super] # :nodoc:
+    ].freeze # :nodoc:
+    RESERVED = %w[const goto].freeze # :nodoc:
+    CONSTANTS = %w[false null true].freeze # :nodoc:
+    MAGIC_VARIABLES = %w[this super].freeze # :nodoc:
     TYPES = %w[
       boolean byte char class double enum float int interface long
       short void var
@@ -23,7 +23,7 @@ module Scanners
     DIRECTIVES = %w[
       abstract extends final implements native private protected public
       static strictfp synchronized throws transient volatile
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
                          .add(KEYWORDS, :keyword)
@@ -35,13 +35,13 @@ module Scanners
                          .add(BuiltinTypes::List.select { |builtin| builtin[/(Error|Exception)$/] }, :exception)
                          .add(DIRECTIVES, :directive) # :nodoc:
 
-    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
+    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze # :nodoc:
     STRING_CONTENT_PATTERN = {
       "'" => /[^\\']+/,
       '"' => /[^\\"]+/,
       '/' => /[^\\\/]+/
-    } # :nodoc:
+    }.freeze # :nodoc:
     IDENT = RUBY_VERSION < '1.9' ? /[a-zA-Z_][A-Za-z_0-9]*/ : Regexp.new('[[[:alpha:]]_][[[:alnum:]]_]*') # :nodoc:
 
     protected

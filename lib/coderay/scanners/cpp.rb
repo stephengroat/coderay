@@ -18,26 +18,26 @@ module Scanners
       'sizeof', 'static_assert', 'static_cast', 'struct', 'switch',
       'template', 'throw', 'try', 'typedef', 'typeid', 'typename', 'union',
       'while', 'xor', 'xor_eq',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_TYPES = [
       'bool', 'char', 'char16_t', 'char32_t', 'double', 'float',
       'int', 'long', 'short', 'signed', 'unsigned',
       'wchar_t', 'string',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
     PREDEFINED_CONSTANTS = [
       'false', 'true',
       'EOF', 'NULL', 'nullptr'
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
     PREDEFINED_VARIABLES = [
       'this',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
     DIRECTIVES = [
       'alignas', 'alignof', 'auto', 'const', 'constexpr', 'decltype', 'explicit',
       'extern', 'final', 'friend', 'inline', 'mutable', 'noexcept', 'operator',
       'override', 'private', 'protected', 'public', 'register', 'static',
       'thread_local', 'using', 'virtual', 'void', 'volatile',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
                          .add(KEYWORDS, :keyword)
@@ -46,8 +46,8 @@ module Scanners
                          .add(DIRECTIVES, :directive)
                          .add(PREDEFINED_CONSTANTS, :predefined_constant) # :nodoc:
 
-    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
+    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze # :nodoc:
 
     protected
 

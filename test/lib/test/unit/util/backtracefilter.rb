@@ -2,9 +2,9 @@ module Test
   module Unit
     module Util
       module BacktraceFilter
-        TESTUNIT_FILE_SEPARATORS = %r{[\\/:]}
+        TESTUNIT_FILE_SEPARATORS = %r{[\\/:]}.freeze
         TESTUNIT_PREFIX = __FILE__.split(TESTUNIT_FILE_SEPARATORS)[0..-3]
-        TESTUNIT_RB_FILE = /\.rb\Z/
+        TESTUNIT_RB_FILE = /\.rb\Z/.freeze
 
         def filter_backtrace(backtrace, prefix=nil)
           return ['No backtrace'] unless(backtrace)

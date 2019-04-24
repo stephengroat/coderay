@@ -66,6 +66,7 @@ module CodeRay
         :keyword => "\e[32m",
         :label => "\e[1;33m",
         :local_variable => "\e[33m",
+        :method => "\e[1;34m",
         :namespace => "\e[1;35m",
         :octal => "\e[1;34m",
         :predefined => "\e[36m",
@@ -120,11 +121,7 @@ module CodeRay
           :self => "\e[45m",
           :filename => "\e[37;45m"
         }
-      }
-
-      TOKEN_COLORS[:keyword] = TOKEN_COLORS[:reserved]
-      TOKEN_COLORS[:method] = TOKEN_COLORS[:function]
-      TOKEN_COLORS[:escape] = TOKEN_COLORS[:delimiter]
+      }.freeze
 
       protected
 

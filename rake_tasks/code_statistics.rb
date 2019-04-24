@@ -2,7 +2,7 @@
 #
 # Improved by murphy
 class CodeStatistics
-  TEST_TYPES = /\btest/i
+  TEST_TYPES = /\btest/i.freeze
 
   # Create a new Code Statistic.
   #
@@ -41,7 +41,7 @@ class CodeStatistics
 
   private
 
-  DEFAULT_FILE_PATTERN = /\.rb$/
+  DEFAULT_FILE_PATTERN = /\.rb$/.freeze
 
   def calculate_statistics
     @pairs.inject({}) do |stats, (name, path, pattern, is_ruby_code)|

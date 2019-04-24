@@ -27,7 +27,7 @@ module Encoders
     DEFAULT_OPTIONS = {
       :exclude => [],
       :include => :all
-    }
+    }.freeze
 
     protected
     def setup(options)

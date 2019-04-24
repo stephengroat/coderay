@@ -24,7 +24,7 @@ class StatisticEncoderTest < Test::Unit::TestCase
     ['[]', :method],
     [:end_line, :test],
   ].flatten
-  TEST_OUTPUT = <<-'DEBUG'
+  TEST_OUTPUT = <<-'DEBUG'.freeze
 
 Code Statistics
 

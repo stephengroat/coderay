@@ -29,7 +29,7 @@ class BasicTest < Test::Unit::TestCase
     end
   end
   
-  RUBY_TEST_CODE = 'puts "Hello, World!"'
+  RUBY_TEST_CODE = 'puts "Hello, World!"'.freeze
   
   RUBY_TEST_TOKENS = [
     ['puts', :ident],
@@ -168,7 +168,7 @@ more code  # and another comment, in-line.
   end
   
   class Milk < CodeRay::Encoders::Encoder
-    FILE_EXTENSION = 'cocoa'
+    FILE_EXTENSION = 'cocoa'.freeze
   end
   
   class HoneyBee < CodeRay::Encoders::Encoder

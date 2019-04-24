@@ -31,7 +31,7 @@ puts "Hello world!"
   end
 
   class ScannerMockup
-    KINDS_NOT_LOC = [:space]
+    KINDS_NOT_LOC = [:space].freeze
   end
 
   def test_filtering_block_tokens

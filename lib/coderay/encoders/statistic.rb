@@ -19,7 +19,7 @@ module Encoders
       @real_token_count = 0
     end
 
-    STATS = <<-STATS  # :nodoc:
+    STATS = <<-STATS.freeze  # :nodoc:
 
 Code Statistics
 
@@ -33,7 +33,7 @@ Token Types (%d):
 %s
     STATS
 
-    TOKEN_TYPES_ROW = <<-TKR  # :nodoc:
+    TOKEN_TYPES_ROW = <<-TKR.freeze  # :nodoc:
   %-20s  %8d  %6.2f %%   %5.1f
     TKR
 

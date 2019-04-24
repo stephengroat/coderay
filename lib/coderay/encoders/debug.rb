@@ -13,7 +13,7 @@ module Encoders
   class Debug < Encoder
     register_for :debug
 
-    FILE_EXTENSION = 'raydebug'
+    FILE_EXTENSION = 'raydebug'.freeze
 
     def text_token(text, kind)
       if kind == :space

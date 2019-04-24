@@ -41,14 +41,14 @@ module Test
           require 'test/unit/ui/tk/testrunner'
           Test::Unit::UI::Tk::TestRunner
         end
-      }
+      }.freeze
 
       OUTPUT_LEVELS = [
         [:silent, UI::SILENT],
         [:progress, UI::PROGRESS_ONLY],
         [:normal, UI::NORMAL],
         [:verbose, UI::VERBOSE],
-      ]
+      ].freeze
 
       COLLECTORS = {
         :objectspace => proc do |r|
@@ -67,7 +67,7 @@ module Test
           $:.push(r.base) if r.base
           c.collect(*(r.to_run.empty? ? ['.'] : r.to_run))
         end
-      }
+      }.freeze
 
       attr_reader :suite
       attr_accessor :output_level, :filters, :to_run, :pattern, :exclude, :base, :workdir

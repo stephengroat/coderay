@@ -34,7 +34,7 @@ module CodeRay
       end
 
       # Subclasses are to store their default options in this constant.
-      DEFAULT_OPTIONS = { }
+      DEFAULT_OPTIONS = { }.freeze
 
       # The options you gave the Encoder at creating.
       attr_accessor :options, :scanner

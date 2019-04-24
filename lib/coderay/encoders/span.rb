@@ -6,7 +6,7 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Span < HTML
-    FILE_EXTENSION = 'span.html'
+    FILE_EXTENSION = 'span.html'.freeze
 
     register_for :span
 

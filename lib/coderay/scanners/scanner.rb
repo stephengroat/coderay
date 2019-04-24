@@ -35,9 +35,9 @@ module CodeRay
       # The default options for all scanner classes.
       #
       # Define @default_options for subclasses.
-      DEFAULT_OPTIONS = { }
+      DEFAULT_OPTIONS = { }.freeze
 
-      KINDS_NOT_LOC = [:comment, :doctype, :docstring]
+      KINDS_NOT_LOC = [:comment, :doctype, :docstring].freeze
 
       attr_accessor :state
 
@@ -266,7 +266,7 @@ module CodeRay
         @binary_string = nil if defined? @binary_string
       end
 
-      SCAN_ERROR_MESSAGE = <<-MESSAGE
+      SCAN_ERROR_MESSAGE = <<-MESSAGE.freeze
 
 
 ***ERROR in %s: %s (after %s tokens)
@@ -294,7 +294,7 @@ surrounding code:
           binary_string[pos, ambit]
       end
 
-      SCANNER_STATE_INFO = <<-INFO
+      SCANNER_STATE_INFO = <<-INFO.freeze
 current line: %d  column: %d  pos: %d
 matched: %p  state: %p
 bol?: %p,  eos?: %p

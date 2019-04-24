@@ -16,7 +16,7 @@ module Test
 
       attr_reader(:test_name, :exception)
 
-      SINGLE_CHARACTER = 'E'
+      SINGLE_CHARACTER = 'E'.freeze
 
       # Creates a new Error with the given test_name and
       # exception.

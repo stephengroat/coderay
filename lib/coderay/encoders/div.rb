@@ -6,7 +6,7 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Div < HTML
-    FILE_EXTENSION = 'div.html'
+    FILE_EXTENSION = 'div.html'.freeze
 
     register_for :div
 

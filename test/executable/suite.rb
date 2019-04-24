@@ -13,7 +13,7 @@ puts "Running CodeRay #{CodeRay::VERSION} executable tests..."
 class TestCodeRayExecutable < Test::Unit::TestCase
   ROOT_DIR = Pathname.new(File.dirname(__FILE__)) + '..' + '..'
   EXECUTABLE = ROOT_DIR + 'bin' + 'coderay'
-  RUBY_COMMAND = 'ruby'
+  RUBY_COMMAND = 'ruby'.freeze
   EXE_COMMAND =
     if RUBY_PLATFORM === 'java' && `ruby --ng -e '' 2> /dev/null` && $?.success?
       # use Nailgun

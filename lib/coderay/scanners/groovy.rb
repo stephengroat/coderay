@@ -9,19 +9,19 @@ module Scanners
     # TODO: check list of keywords
     GROOVY_KEYWORDS = %w[
       as assert def in
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
     KEYWORDS_EXPECTING_VALUE = WordList.new.add %w[
       case instanceof new return throw typeof while as assert in
     ]  # :nodoc:
-    GROOVY_MAGIC_VARIABLES = %w[it] # :nodoc:
+    GROOVY_MAGIC_VARIABLES = %w[it].freeze # :nodoc:
 
     IDENT_KIND = Java::IDENT_KIND.dup
                                  .add(GROOVY_KEYWORDS, :keyword)
                                  .add(GROOVY_MAGIC_VARIABLES, :local_variable) # :nodoc:
 
-    ESCAPE = / [bfnrtv$\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x # :nodoc: no 4-byte unicode chars? U[a-fA-F0-9]{8}
-    REGEXP_ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | \d | [bBdDsSwW\/] /x # :nodoc:
+    ESCAPE = / [bfnrtv$\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x.freeze # :nodoc: no 4-byte unicode chars? U[a-fA-F0-9]{8}
+    REGEXP_ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | \d | [bBdDsSwW\/] /x.freeze # :nodoc:
 
     # TODO: interpretation inside ', ", /
     STRING_CONTENT_PATTERN = {
@@ -30,7 +30,7 @@ module Scanners
       "'''" => /(?>[^\\']+|'(?!''))+/,
       '"""' => /(?>[^\\$"]+|"(?!""))+/,
       '/' => /[^\\$\/\n]+/
-    } # :nodoc:
+    }.freeze # :nodoc:
 
     protected
 

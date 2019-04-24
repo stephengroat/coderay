@@ -6,7 +6,7 @@ module Encoders
   class XML < Encoder
     register_for :xml
 
-    FILE_EXTENSION = 'xml'
+    FILE_EXTENSION = 'xml'.freeze
 
     autoload :REXML, 'rexml/document'
 
@@ -14,7 +14,7 @@ module Encoders
       :tab_width => 8,
       :pretty => -1,
       :transitive => false
-    }
+    }.freeze
 
     protected
     def setup(options)

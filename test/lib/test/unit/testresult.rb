@@ -14,8 +14,8 @@ module Test
     class TestResult
       include Util::Observable
 
-      CHANGED = 'CHANGED'
-      FAULT = 'FAULT'
+      CHANGED = 'CHANGED'.freeze
+      FAULT = 'FAULT'.freeze
 
       attr_reader(:run_count, :assertion_count)
 

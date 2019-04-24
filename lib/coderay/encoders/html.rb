@@ -96,7 +96,7 @@ module Encoders
   class HTML < Encoder
     register_for :html
 
-    FILE_EXTENSION = 'snippet.html'
+    FILE_EXTENSION = 'snippet.html'.freeze
 
     DEFAULT_OPTIONS = {
       :tab_width => 8,
@@ -115,7 +115,7 @@ module Encoders
       :highlight_lines => nil,
 
       :hint => false
-    }
+    }.freeze
 
     autoload :Output,    CodeRay.coderay_path('encoders', 'html', 'output')
     autoload :CSS,       CodeRay.coderay_path('encoders', 'html', 'css')
@@ -139,7 +139,7 @@ module Encoders
     end
 
     HTML_ESCAPE = make_html_escape_hash
-    HTML_ESCAPE_PATTERN = /[\t"&><\0-\x8\xB-\x1F]/
+    HTML_ESCAPE_PATTERN = /[\t"&><\0-\x8\xB-\x1F]/.freeze
 
     TOKEN_KIND_TO_INFO = Hash.new do |h, kind|
       h[kind] = kind.to_s.gsub(/_/, ' ').gsub(/\b\w/) { $&.capitalize }

@@ -30,7 +30,7 @@ module Encoders
     end
 
     register_for :json
-    FILE_EXTENSION = 'json'
+    FILE_EXTENSION = 'json'.freeze
 
     protected
     def setup(options)

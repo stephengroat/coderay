@@ -9,38 +9,38 @@ module Scanners
       :id, :directive,
       :key, :value, :operator, :color, :float, :string,
       :error, :important, :type,
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     module RE # :nodoc:
-      Hex = /[0-9a-fA-F]/
-      Unicode = /\\#{Hex}{1,6}\b/ # differs from standard because it allows uppercase hex too
-      Escape = /#{Unicode}|\\[^\n0-9a-fA-F]/
-      NMChar = /[-_a-zA-Z0-9]/
-      NMStart = /[_a-zA-Z]/
-      String1 = /"(?:[^\n\\"]+|\\\n|#{Escape})*"?/  # TODO: buggy regexp
-      String2 = /'(?:[^\n\\']+|\\\n|#{Escape})*'?/  # TODO: buggy regexp
-      String = /#{String1}|#{String2}/
+      Hex = /[0-9a-fA-F]/.freeze
+      Unicode = /\\#{Hex}{1,6}\b/.freeze # differs from standard because it allows uppercase hex too
+      Escape = /#{Unicode}|\\[^\n0-9a-fA-F]/.freeze
+      NMChar = /[-_a-zA-Z0-9]/.freeze
+      NMStart = /[_a-zA-Z]/.freeze
+      String1 = /"(?:[^\n\\"]+|\\\n|#{Escape})*"?/.freeze  # TODO: buggy regexp
+      String2 = /'(?:[^\n\\']+|\\\n|#{Escape})*'?/.freeze  # TODO: buggy regexp
+      String = /#{String1}|#{String2}/.freeze
 
-      HexColor = /#(?:#{Hex}{6}|#{Hex}{3})/
+      HexColor = /#(?:#{Hex}{6}|#{Hex}{3})/.freeze
 
-      Num = /-?(?:[0-9]*\.[0-9]+|[0-9]+)n?/
-      Name = /#{NMChar}+/
-      Ident = /-?#{NMStart}#{NMChar}*/
-      AtKeyword = /@#{Ident}/
-      Percentage = /#{Num}%/
+      Num = /-?(?:[0-9]*\.[0-9]+|[0-9]+)n?/.freeze
+      Name = /#{NMChar}+/.freeze
+      Ident = /-?#{NMStart}#{NMChar}*/.freeze
+      AtKeyword = /@#{Ident}/.freeze
+      Percentage = /#{Num}%/.freeze
 
       reldimensions = %w[em ex px]
       absdimensions = %w[in cm mm pt pc]
       Unit = Regexp.union(*(reldimensions + absdimensions + %w[s dpi dppx deg]))
 
-      Dimension = /#{Num}#{Unit}/
+      Dimension = /#{Num}#{Unit}/.freeze
 
-      Function = /(?:url|alpha|attr|counters?)\((?:[^)\n]|\\\))*\)?/
+      Function = /(?:url|alpha|attr|counters?)\((?:[^)\n]|\\\))*\)?/.freeze
 
-      Id = /(?!#{HexColor}\b(?!-))##{Name}/
-      Class = /\.#{Name}/
-      PseudoClass = /::?#{Ident}/
-      AttributeSelector = /\[[^\]]*\]?/
+      Id = /(?!#{HexColor}\b(?!-))##{Name}/.freeze
+      Class = /\.#{Name}/.freeze
+      PseudoClass = /::?#{Ident}/.freeze
+      AttributeSelector = /\[[^\]]*\]?/.freeze
     end
 
     protected

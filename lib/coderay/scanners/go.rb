@@ -11,7 +11,7 @@ module Scanners
       'chan', 'else', 'goto', 'package', 'switch',
       'const', 'fallthrough', 'if', 'range', 'type',
       'continue', 'for', 'import', 'return', 'var',
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     # http://golang.org/ref/spec#Types
     PREDEFINED_TYPES = [
@@ -22,17 +22,17 @@ module Scanners
       'complex64', 'complex128',
       'byte', 'rune', 'string', 'error',
       'uint', 'int', 'uintptr',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_CONSTANTS = [
       'nil', 'iota',
       'true', 'false',
-    ]  # :nodoc:
+    ].freeze  # :nodoc:
 
     PREDEFINED_FUNCTIONS = %w[
       append cap close complex copy delete imag len
       make new panic print println real recover
-    ] # :nodoc:
+    ].freeze # :nodoc:
 
     IDENT_KIND = WordList.new(:ident)
                          .add(KEYWORDS, :keyword)
@@ -40,8 +40,8 @@ module Scanners
                          .add(PREDEFINED_CONSTANTS, :predefined_constant)
                          .add(PREDEFINED_FUNCTIONS, :predefined) # :nodoc:
 
-    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
-    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
+    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze # :nodoc:
 
     protected
 

@@ -369,7 +369,7 @@ EOT
       end
 
       UncaughtThrow = {NameError => /^uncaught throw \`(.+)\'$/,
-                       ThreadError => /^uncaught throw \`(.+)\' in thread /} #`
+                       ThreadError => /^uncaught throw \`(.+)\' in thread /}.freeze #`
 
       ##
       # Passes if the block throws +expected_symbol+

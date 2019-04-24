@@ -126,13 +126,11 @@ module CodeRay
       'xhtml' => :html,
       'xml' => :xml,
       'yaml' => :yaml,
-      'yml' => :yaml
-    }
-    for cpp_alias in %w[cc cpp cp cxx c++ C hh hpp h++ cu]
-      TypeFromExt[cpp_alias] = :cpp
-    end
+      'yml' => :yaml,
+'cc' => :cpp, 'cpp' => :cpp, 'cp' => :cpp, 'cxx' => :cpp, 'c++' => :cpp, 'C' => :cpp, 'hh'  => :cpp,'hpp'  => :cpp,'h++'  => :cpp,'cu' => :cpp,
+    }.freeze
 
-    TypeFromShebang = /\b(?:ruby|perl|python|sh)\b/
+    TypeFromShebang = /\b(?:ruby|perl|python|sh)\b/.freeze
 
     TypeFromName = {
       'Capfile' => :ruby,
@@ -142,6 +140,6 @@ module CodeRay
       'Guardfile' => :ruby,
       'Vagrantfile' => :ruby,
       'Appraisals' => :ruby
-    }
+    }.freeze
   end
 end

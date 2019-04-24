@@ -8,16 +8,16 @@ class WordListTest < Test::Unit::TestCase
   RESERVED_WORDS = %w[
     asm break case continue default do else
     ...
-  ]
+  ].freeze
 
   PREDEFINED_TYPES = %w[
     int long short char void
     ...
-  ]
+  ].freeze
 
   PREDEFINED_CONSTANTS = %w[
     EOF NULL ...
-  ]
+  ].freeze
 
   # make a WordList
   IDENT_KIND = WordList.new(:ident)

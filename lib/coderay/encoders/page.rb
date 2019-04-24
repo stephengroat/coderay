@@ -7,7 +7,7 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Page < HTML
-    FILE_EXTENSION = 'html'
+    FILE_EXTENSION = 'html'.freeze
 
     register_for :page
 

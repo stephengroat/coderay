@@ -20,11 +20,11 @@ module Scanners
         )*
       ))
       ((?: -?%> )?)
-    /x  # :nodoc:
+    /x.freeze  # :nodoc:
 
     START_OF_ERB = /
       <%(?!%)
-    /x  # :nodoc:
+    /x.freeze  # :nodoc:
 
     protected
 

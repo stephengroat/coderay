@@ -410,7 +410,7 @@ module Scanners
       XPathConstants XPathException XPathExpression XPathExpressionException XPathFactory
       XPathFactoryConfigurationException XPathFunction XPathFunctionException XPathFunctionResolver
       XPathVariableResolver ZipEntry ZipException ZipFile ZipInputStream ZipOutputStream ZoneView
-    ]
+    ].freeze
     #:nocov:
   end
 end
