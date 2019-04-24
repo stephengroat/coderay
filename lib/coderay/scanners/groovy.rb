@@ -13,7 +13,7 @@ module Scanners
     KEYWORDS_EXPECTING_VALUE = WordList.new.add %w[
       case instanceof new return throw typeof while as assert in
     ]  # :nodoc:
-    GROOVY_MAGIC_VARIABLES = %w[ it ] # :nodoc:
+    GROOVY_MAGIC_VARIABLES = %w[it] # :nodoc:
 
     IDENT_KIND = Java::IDENT_KIND.dup.
       add(GROOVY_KEYWORDS, :keyword).

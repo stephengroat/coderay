@@ -31,7 +31,7 @@ module Scanners
       bool boolean hex bin oct
     )
 
-    PREDEFINED_FUNCTIONS = %w( sum cast substring abs pi count min max avg now )
+    PREDEFINED_FUNCTIONS = %w(sum cast substring abs pi count min max avg now)
 
     DIRECTIVES = %w(
       auto_increment unique default charset initially deferred
@@ -39,7 +39,7 @@ module Scanners
       primary foreign return engine
     )
 
-    PREDEFINED_CONSTANTS = %w( null true false )
+    PREDEFINED_CONSTANTS = %w(null true false)
 
     IDENT_KIND = WordList::CaseIgnoring.new(:ident).
       add(KEYWORDS, :keyword).

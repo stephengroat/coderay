@@ -28,10 +28,10 @@ module Scanners
       add(PREDEFINED_CONSTANTS, :predefined_constant)
 
     KEYWORD_NEW_STATE = WordList.new(:initial).
-      add(%w[ def ], :def_expected).
-      add(%w[ undef ], :undef_expected).
-      add(%w[ alias ], :alias_expected).
-      add(%w[ class module ], :module_expected)
+      add(%w[def], :def_expected).
+      add(%w[undef], :undef_expected).
+      add(%w[alias], :alias_expected).
+      add(%w[class module], :module_expected)
 
     IDENT = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : /[^\W\d]\w*/
 

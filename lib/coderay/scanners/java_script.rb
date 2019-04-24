@@ -17,7 +17,7 @@ module Scanners
       false null true undefined NaN Infinity
     ]  # :nodoc:
 
-    MAGIC_VARIABLES = %w[ this arguments ] # :nodoc: arguments was introduced in JavaScript 1.4
+    MAGIC_VARIABLES = %w[this arguments] # :nodoc: arguments was introduced in JavaScript 1.4
 
     KEYWORDS_EXPECTING_VALUE = WordList.new.add %w[
       case delete in instanceof new return throw typeof with

@@ -33,14 +33,14 @@ module Scanners
         cfunction old_function
       ]
 
-      TYPES = %w[ int integer float double bool boolean string array object resource ]
+      TYPES = %w[int integer float double bool boolean string array object resource]
 
       LANGUAGE_CONSTRUCTS = %w[
         die echo empty exit eval include include_once isset list
         require require_once return print unset
       ]
 
-      CLASSES = %w[ Directory stdClass __PHP_Incomplete_Class exception php_user_filter Closure ]
+      CLASSES = %w[Directory stdClass __PHP_Incomplete_Class exception php_user_filter Closure]
 
       # according to http://php.net/quickref.php on 2009-04-21;
       # all functions with _ excluded (module functions) and selected additional functions

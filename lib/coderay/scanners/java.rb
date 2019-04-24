@@ -13,9 +13,9 @@ module Scanners
       return switch throw try typeof while
       debugger export
     ] # :nodoc:
-    RESERVED = %w[ const goto ] # :nodoc:
-    CONSTANTS = %w[ false null true ] # :nodoc:
-    MAGIC_VARIABLES = %w[ this super ] # :nodoc:
+    RESERVED = %w[const goto] # :nodoc:
+    CONSTANTS = %w[false null true] # :nodoc:
+    MAGIC_VARIABLES = %w[this super] # :nodoc:
     TYPES = %w[
       boolean byte char class double enum float int interface long
       short void var

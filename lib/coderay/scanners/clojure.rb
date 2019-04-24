@@ -86,9 +86,9 @@ module CodeRay
         add(PREDEFINED_CONSTANTS, :predefined_constant)
 
       KEYWORD_NEXT_TOKEN_KIND = WordList.new(nil).
-        add(%w[ def defn defn- definline defmacro defmulti defmethod defstruct defonce declare ], :function).
-        add(%w[ ns ], :namespace).
-        add(%w[ defprotocol defrecord ], :class)
+        add(%w[def defn defn- definline defmacro defmulti defmethod defstruct defonce declare], :function).
+        add(%w[ns], :namespace).
+        add(%w[defprotocol defrecord], :class)
 
       BASIC_IDENTIFIER = /[a-zA-Z$%*\/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!\/_?<>\-\#]*/
       IDENTIFIER = /(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:\/#{BASIC_IDENTIFIER})?\.?)|\.\.?/
