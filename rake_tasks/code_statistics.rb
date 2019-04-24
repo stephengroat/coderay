@@ -155,7 +155,7 @@ class CodeStatistics
     code = calculate_code
     tests = calculate_tests
 
-    puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{sprintf("%.2f", tests.to_f/code)}]"
+    puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{sprintf("%.2f", tests.to_f / code)}]"
     puts ''
   end
 end

@@ -127,7 +127,7 @@ module CodeRay
       'xml' => :xml,
       'yaml' => :yaml,
       'yml' => :yaml,
-'cc' => :cpp, 'cpp' => :cpp, 'cp' => :cpp, 'cxx' => :cpp, 'c++' => :cpp, 'C' => :cpp, 'hh'  => :cpp,'hpp'  => :cpp,'h++'  => :cpp,'cu' => :cpp,
+      'cc' => :cpp, 'cpp' => :cpp, 'cp' => :cpp, 'cxx' => :cpp, 'c++' => :cpp, 'C' => :cpp, 'hh' => :cpp, 'hpp' => :cpp, 'h++' => :cpp, 'cu' => :cpp
     }.freeze
 
     TypeFromShebang = /\b(?:ruby|perl|python|sh)\b/.freeze

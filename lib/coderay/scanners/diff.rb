@@ -216,7 +216,7 @@ module Scanners
       # does not precede the leftmost one from the left.
       j = -1
       j -= 1 while j >= j_min && a[j] == b[j]
-      return a[0...i], a[i..j], b[i..j], (j < -1) ? a[j+1..-1] : ''
+      return a[0...i], a[i..j], b[i..j], (j < -1) ? a[j + 1..-1] : ''
     end
   end
 end
