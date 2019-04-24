@@ -4,7 +4,7 @@ module CodeRay
 module Scanners
   # Scanner for the Lua[http://lua.org] programming lanuage.
   #
-  # The language’s complete syntax is defined in
+  # The language's complete syntax is defined in
   # {the Lua manual}[http://www.lua.org/manual/5.2/manual.html],
   # which is what this scanner tries to conform to.
   class Lua < Scanner
@@ -22,10 +22,10 @@ module Scanners
     # Constants set by the Lua core.
     PREDEFINED_CONSTANTS = %w[false true nil]
 
-    # The expressions contained in this array are parts of Lua’s `basic'
-    # library. Although it’s not entirely necessary to load that library,
+    # The expressions contained in this array are parts of Lua's `basic'
+    # library. Although it's not entirely necessary to load that library,
     # it is highly recommended and one would have to provide own implementations
-    # of some of these expressions if one does not do so. They however aren’t
+    # of some of these expressions if one does not do so. They however aren't
     # keywords, neither are they constants, but nearly predefined, so they
     # get tagged as `predefined' rather than anything else.
     #
@@ -125,11 +125,11 @@ module Scanners
             start_delim = match
             state       = :string
 
-                            # ↓Prefix                hex number ←|→ decimal number
+                            # Prefix                hex number <-|-> decimal number
           elsif match = scan(/-? (?:0x\h* \. \h+ (?:p[+\-]?\d+)? | \d*\.\d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :float)
 
-                            # ↓Prefix         hex number ←|→ decimal number
+                            # Prefix         hex number <-|-> decimal number
           elsif match = scan(/-? (?:0x\h+ (?:p[+\-]?\d+)? | \d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
             encoder.text_token(match, :integer)
 
@@ -139,11 +139,11 @@ module Scanners
           elsif match = scan(/\s+/) # Space
             encoder.text_token(match, :space)
 
-          else # Invalid stuff. Note that Lua doesn’t accept multibyte chars outside of strings, hence these are also errors.
+          else # Invalid stuff. Note that Lua doesn't accept multibyte chars outside of strings, hence these are also errors.
             encoder.text_token(getch, :error)
           end
 
-          # It may be that we’re scanning a full-blown subexpression of a table
+          # It may be that we're scanning a full-blown subexpression of a table
           # (tables can contain full expressions in parts).
           # If this is the case, return to :map scanning state.
           state = :map if state == :initial && brace_depth >= 1
@@ -251,7 +251,7 @@ module Scanners
           elsif match = scan(/\s+/m)
             encoder.text_token(match, :space)
           else
-            # Note this clause doesn’t advance the scan pointer, it’s a kind of
+            # Note this clause doesn't advance the scan pointer, it's a kind of
             # "retry with other options" (the :initial state then of course
             # advances the pointer).
             state = :initial
