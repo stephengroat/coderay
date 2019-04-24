@@ -50,7 +50,7 @@ module Encoders
       end
 
       def apply_title!(title)
-        self.sub!(/(<title>)(<\/title>)/) { $1 + title + $2 }
+        sub!(/(<title>)(<\/title>)/) { $1 + title + $2 }
         self
       end
 

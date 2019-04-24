@@ -540,7 +540,7 @@ EOT
         class Template
           def self.create(string)
             parts = (string ? string.scan(/(?=[^\\])\?|(?:\\\?|[^\?])+/m) : [])
-            self.new(parts)
+            new(parts)
           end
 
           attr_reader :count

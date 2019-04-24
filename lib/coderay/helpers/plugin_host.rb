@@ -183,7 +183,7 @@ module CodeRay
           if h.key? id
             h[id]
           else
-            raise PluginNotFound, "No #{self.name} plugin for #{id.inspect} found in #{path}."
+            raise PluginNotFound, "No #{name} plugin for #{id.inspect} found in #{path}."
           end
         end
       end

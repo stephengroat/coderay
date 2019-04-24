@@ -51,7 +51,7 @@ module CodeRay
           return code if code.empty?
 
           if code.respond_to? :encoding
-            code = encode_with_encoding code, self.encoding
+            code = encode_with_encoding code, encoding
           else
             code = to_unix code
           end
