@@ -1,7 +1,7 @@
 module CodeRay
 module Scanners
   
-  module Java::BuiltinTypes  # :nodoc:
+  module Java::BuiltinTypes # :nodoc:
     
     #:nocov:
     List = %w[

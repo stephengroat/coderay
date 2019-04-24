@@ -2,7 +2,7 @@ module CodeRay
 module Encoders
 
   class HTML
-    class CSS  # :nodoc:
+    class CSS # :nodoc:
 
       attr :stylesheet
 

@@ -15,11 +15,11 @@ module Scanners
       'del', 'elif', 'else', 'except', 'finally', 'for',
       'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not',
       'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield',
-      'nonlocal',  # new in Python 3
-    ]  # :nodoc:
+      'nonlocal', # new in Python 3
+    ] # :nodoc:
     
     OLD_KEYWORDS = [
-      'exec', 'print',  # gone in Python 3
+      'exec', 'print', # gone in Python 3
     ]  # :nodoc:
     
     PREDEFINED_METHODS_AND_TYPES = %w[
@@ -50,20 +50,20 @@ module Scanners
     ]  # :nodoc:
     
     PREDEFINED_VARIABLES_AND_CONSTANTS = [
-      'False', 'True', 'None',  # "keywords" since Python 3
+      'False', 'True', 'None', # "keywords" since Python 3
       'self', 'Ellipsis', 'NotImplemented',
-    ]  # :nodoc:
+    ] # :nodoc:
     
     IDENT_KIND = WordList.new(:ident).
       add(KEYWORDS, :keyword).
       add(OLD_KEYWORDS, :old_keyword).
       add(PREDEFINED_METHODS_AND_TYPES, :predefined).
       add(PREDEFINED_VARIABLES_AND_CONSTANTS, :predefined_constant).
-      add(PREDEFINED_EXCEPTIONS, :exception)  # :nodoc:
+      add(PREDEFINED_EXCEPTIONS, :exception) # :nodoc:
     
-    NAME = / [[:alpha:]_] \w* /x  # :nodoc:
-    ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x  # :nodoc:
-    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} | N\{[-\w ]+\} /x  # :nodoc:
+    NAME = / [[:alpha:]_] \w* /x # :nodoc:
+    ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} | N\{[-\w ]+\} /x # :nodoc:
     
     OPERATOR = /
       \.\.\. |          # ellipsis
@@ -73,20 +73,20 @@ module Scanners
       [-+*\/%&|^]=? |   # ordinary math and binary logic
       [~`] |            # binary complement and inspection
       <<=? | >>=? | [<>=]=? | !=  # comparison and assignment
-    /x  # :nodoc:
+    /x # :nodoc:
     
     STRING_DELIMITER_REGEXP = Hash.new { |h, delimiter|
-      h[delimiter] = Regexp.union delimiter  # :nodoc:
+      h[delimiter] = Regexp.union delimiter # :nodoc:
     }
     
     STRING_CONTENT_REGEXP = Hash.new { |h, delimiter|
-      h[delimiter] = / [^\\\n]+? (?= \\ | $ | #{Regexp.escape(delimiter)} ) /x  # :nodoc:
+      h[delimiter] = / [^\\\n]+? (?= \\ | $ | #{Regexp.escape(delimiter)} ) /x # :nodoc:
     }
     
     DEF_NEW_STATE = WordList.new(:initial).
       add(%w(def), :def_expected).
       add(%w(import from), :include_expected).
-      add(%w(class), :class_expected)  # :nodoc:
+      add(%w(class), :class_expected) # :nodoc:
     
     DESCRIPTOR = /
       #{NAME}

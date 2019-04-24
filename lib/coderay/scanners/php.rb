@@ -25,7 +25,7 @@ module Scanners
       @html_scanner.reset
     end
     
-    module Words  # :nodoc:
+    module Words # :nodoc:
       
       # according to http://www.php.net/manual/en/reserved.keywords.php
       KEYWORDS = %w[
@@ -194,7 +194,7 @@ module Scanners
         add(PREDEFINED, :predefined)
     end
     
-    module RE  # :nodoc:
+    module RE # :nodoc:
       
       PHP_START = /
         <script\s+[^>]*?language\s*=\s*"php"[^>]*?> |
@@ -233,10 +233,10 @@ module Scanners
     
     def scan_tokens encoder, options
       
-      if check(RE::PHP_START) ||  # starts with <?
+      if check(RE::PHP_START) || # starts with <?
        (match?(/\s*<\S/) && check(/.{1,1000}#{RE::PHP_START}/om)) || # starts with tag and contains <?
        check(/.{0,1000}#{RE::HTML_INDICATOR}/om) ||
-       check(/.{1,100}#{RE::PHP_START}/om)  # PHP start after max 100 chars
+       check(/.{1,100}#{RE::PHP_START}/om) # PHP start after max 100 chars
         # is HTML with embedded PHP, so start with HTML
         states = [:initial]
       else
@@ -255,7 +255,7 @@ module Scanners
         
         case states.last
         
-        when :initial  # HTML
+        when :initial # HTML
           if match = scan(RE::PHP_START)
             encoder.text_token match, :inline_delimiter
             label_expected = true
@@ -290,7 +290,7 @@ module Scanners
                 when 'case', 'default'
                   case_expected = true
                 end
-              elsif match == 'b' && check(/['"]/)  # binary string literal
+              elsif match == 'b' && check(/['"]/) # binary string literal
                 modifier = match
                 next
               end

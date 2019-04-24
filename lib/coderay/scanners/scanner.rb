@@ -233,7 +233,7 @@ module CodeRay
       #
       # Use reset for initialization that has to be done once per
       # scan.
-      def setup  # :doc:
+      def setup # :doc:
       end
       
       def set_string_from_source source
@@ -257,7 +257,7 @@ module CodeRay
       #
       # Subclasses must implement this method; it must return +tokens+
       # and must only use Tokens#<< for storing scanned tokens!
-      def scan_tokens tokens, options  # :doc:
+      def scan_tokens tokens, options # :doc:
         raise NotImplementedError, "#{self.class}#scan_tokens not implemented."
       end
       

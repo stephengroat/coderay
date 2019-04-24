@@ -28,8 +28,8 @@ module CodeRay
       # That means you can get filetypes from files that don't exist.
       def [] filename, read_shebang = false
         name = File.basename filename
-        ext = File.extname(name).sub(/^\./, '')  # from last dot, delete the leading dot
-        ext2 = filename.to_s[/\.(.*)/, 1]  # from first dot
+        ext = File.extname(name).sub(/^\./, '') # from last dot, delete the leading dot
+        ext2 = filename.to_s[/\.(.*)/, 1] # from first dot
         
         type =
           TypeFromExt[ext] ||
@@ -117,12 +117,12 @@ module CodeRay
       'rhtml' => :erb,
       'rjs' => :ruby,
       'rpdf' => :ruby,
-      'ru' => :ruby,  # config.ru
+      'ru' => :ruby, # config.ru
       'rxml' => :ruby,
       'sass' => :sass,
       'sql' => :sql,
       'taskpaper' => :taskpaper,
-      'template' => :json,  # AWS CloudFormation template
+      'template' => :json, # AWS CloudFormation template
       'tmproj' => :xml,
       'xaml' => :xml,
       'xhtml' => :html,

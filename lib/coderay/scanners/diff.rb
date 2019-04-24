@@ -109,7 +109,7 @@ module Scanners
               for deleted_line, inserted_line in deleted_lines.zip(inserted_lines)
                 pre, deleted_part, inserted_part, post = diff deleted_line, inserted_line
                 content_scanner_entry_state = content_scanner.state
-                deleted_lines_tokenized  << content_scanner.tokenize([pre, deleted_part, post], :tokens => Tokens.new)
+                deleted_lines_tokenized << content_scanner.tokenize([pre, deleted_part, post], :tokens => Tokens.new)
                 content_scanner.state = content_scanner_entry_state || :initial
                 inserted_lines_tokenized << content_scanner.tokenize([pre, inserted_part, post], :tokens => Tokens.new)
               end

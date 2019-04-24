@@ -3,7 +3,7 @@ module Encoders
   
   class HTML
     
-    module Numbering  # :nodoc:
+    module Numbering # :nodoc:
       
       def self.number! output, mode = :table, options = {}
         return self unless mode
@@ -38,7 +38,7 @@ module Encoders
             highlight_lines = highlight_lines.to_set
             proc do |line|
               if highlight_lines.include? line
-                "<strong class=\"highlighted\">#{anchoring[line]}</strong>"  # highlighted line numbers in bold
+                "<strong class=\"highlighted\">#{anchoring[line]}</strong>" # highlighted line numbers in bold
               else
                 anchoring[line]
               end
@@ -47,7 +47,7 @@ module Encoders
             raise ArgumentError, ":bolding can't be 0." if bold_every == 0
             proc do |line|
               if line % bold_every == 0
-                "<strong>#{anchoring[line]}</strong>"  # every bold_every-th number in bold
+                "<strong>#{anchoring[line]}</strong>" # every bold_every-th number in bold
               else
                 anchoring[line]
               end

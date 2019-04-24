@@ -66,7 +66,7 @@ module Scanners
         case state
         
         when :initial
-          if match = scan(/\-\-\[\=*\[/)   #--[[ long (possibly multiline) comment ]]
+          if match = scan(/\-\-\[\=*\[/) #--[[ long (possibly multiline) comment ]]
             num_equals = match.count("=") # Number must match for comment end
             encoder.begin_group(:comment)
             encoder.text_token(match, :delimiter)
@@ -75,7 +75,7 @@ module Scanners
           elsif match = scan(/--.*$/) # --Lua comment
             encoder.text_token(match, :comment)
           
-          elsif match = scan(/\[=*\[/)     # [[ long (possibly multiline) string ]]
+          elsif match = scan(/\[=*\[/) # [[ long (possibly multiline) string ]]
             num_equals = match.count("=") # Number must match for string end
             encoder.begin_group(:string)
             encoder.text_token(match, :delimiter)

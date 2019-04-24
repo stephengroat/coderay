@@ -20,9 +20,9 @@ module CodeRay
           raise 'CodeRay.for_redcloth needs RedCloth version 4.0.3 or later. ' +
             "You have #{RedCloth::VERSION}. Please gem install RedCloth."
         else
-          $".delete 'redcloth.rb'  # sorry, but it works
+          $".delete 'redcloth.rb' # sorry, but it works
           require 'rubygems'
-          return install  # retry
+          return install # retry
         end
       end
       unless RedCloth::VERSION.to_s >= '4.2.2'
@@ -30,7 +30,7 @@ module CodeRay
       end
       RedCloth::TextileDoc.send :include, ForRedCloth::TextileDoc
       RedCloth::Formatters::HTML.module_eval do
-        def unescape(html)  # :nodoc:
+        def unescape(html) # :nodoc:
           replacements = {
             '&amp;' => '&',
             '&quot;' => '"',
@@ -40,7 +40,7 @@ module CodeRay
           html.gsub(/&(?:amp|quot|[gl]t);/) { |entity| replacements[entity] }
         end
         undef code, bc_open, bc_close, escape_pre
-        def code(opts)  # :nodoc:
+        def code(opts) # :nodoc:
           opts[:block] = true
           if !opts[:lang] && RedCloth::VERSION.to_s >= '4.2.0'
             # simulating pre-4.2 behavior
@@ -64,17 +64,17 @@ module CodeRay
             "<code#{pba(opts)}>#{opts[:text]}</code>"
           end
         end
-        def bc_open(opts)  # :nodoc:
+        def bc_open(opts) # :nodoc:
           opts[:block] = true
           @in_bc = opts
           opts[:lang] ? '' : "<pre#{pba(opts)}>"
         end
-        def bc_close(opts)  # :nodoc:
+        def bc_close(opts) # :nodoc:
           opts = @in_bc
           @in_bc = nil
           opts[:lang] ? '' : "</pre>\n"
         end
-        def escape_pre(text)  # :nodoc:
+        def escape_pre(text) # :nodoc:
           if @in_bc ||= nil
             text
           else
@@ -84,7 +84,7 @@ module CodeRay
       end
     end
 
-    module TextileDoc  # :nodoc:
+    module TextileDoc # :nodoc:
       attr_accessor :filter_coderay
     end
     

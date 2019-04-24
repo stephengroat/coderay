@@ -51,7 +51,7 @@ module Scanners
       # def_object_stack = nil
       # def_object_paren_depth = 0
       
-      patterns = Patterns  # avoid constant lookup
+      patterns = Patterns # avoid constant lookup
       
       unicode = string.respond_to?(:encoding) && string.encoding.name == 'UTF-8'
       
@@ -137,7 +137,7 @@ module Scanners
                   inline_block_curly_depth += 1
                 when '}'
                   inline_block_curly_depth -= 1
-                  if inline_block_curly_depth == 0  # closing brace of inline block reached
+                  if inline_block_curly_depth == 0 # closing brace of inline block reached
                     state, inline_block_curly_depth, heredocs = inline_block_stack.pop
                     inline_block_stack = nil if inline_block_stack.empty?
                     heredocs = nil if heredocs && heredocs.empty?
@@ -168,7 +168,7 @@ module Scanners
                 kind = check(self.class::StringState.simple_key_pattern(match)) ? :key : :string
                 encoder.begin_group kind
                 encoder.text_token match, :delimiter
-                state = self.class::StringState.new kind, match == '"', match  # important for streaming
+                state = self.class::StringState.new kind, match == '"', match # important for streaming
               else
                 kind = value_expected == true && scan(/:/) ? :key : :string
                 encoder.begin_group kind
@@ -195,7 +195,7 @@ module Scanners
                 encoder.text_token match, :error
                 method_call_expected = false
               else
-                kind = self[1] ? :float : :integer  # TODO: send :hex/:octal/:binary
+                kind = self[1] ? :float : :integer # TODO: send :hex/:octal/:binary
                 match << 'r' if match !~ /e/i && scan(/r/)
                 match << 'i' if scan(/i/)
                 encoder.text_token match, kind
@@ -213,7 +213,7 @@ module Scanners
               encoder.begin_group kind
               encoder.text_token match, :delimiter
               encoder.end_group kind
-              heredocs ||= []  # create heredocs if empty
+              heredocs ||= [] # create heredocs if empty
               heredocs << self.class::StringState.new(kind, quote != "'", delim,
                 self[1] ? :indented : :linestart)
               value_expected = false
@@ -276,7 +276,7 @@ module Scanners
             end
             
             if last_state
-              state = last_state unless state.is_a?(StringState)  # otherwise, a simple 'def"' results in unclosed tokens
+              state = last_state unless state.is_a?(StringState) # otherwise, a simple 'def"' results in unclosed tokens
               last_state = nil
             end
             
@@ -356,7 +356,7 @@ module Scanners
             #:nocov:
           end
           
-        else  # StringState
+        else # StringState
           
           match = scan_until(state.pattern) || scan_rest
           unless match.empty?
@@ -364,7 +364,7 @@ module Scanners
             break if eos?
           end
           
-          if state.heredoc && self[1]  # end of heredoc
+          if state.heredoc && self[1] # end of heredoc
             match = getch
             match << scan_until(/$/) unless eos?
             encoder.text_token match, :delimiter unless match.empty?

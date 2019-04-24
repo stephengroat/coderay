@@ -32,23 +32,23 @@ module Encoders
     
   public
     
-    def text_token text, kind  # :nodoc:
+    def text_token text, kind # :nodoc:
       @tokens.text_token text, kind
     end
     
-    def begin_group kind  # :nodoc:
+    def begin_group kind # :nodoc:
       @tokens.begin_group kind
     end
     
-    def begin_line kind  # :nodoc:
+    def begin_line kind # :nodoc:
       @tokens.begin_line kind
     end
     
-    def end_group kind  # :nodoc:
+    def end_group kind # :nodoc:
       @tokens.end_group kind
     end
     
-    def end_line kind  # :nodoc:
+    def end_line kind # :nodoc:
       @tokens.end_line kind
     end
     

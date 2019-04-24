@@ -2,7 +2,7 @@
 module CodeRay
 module Scanners
   
-  module Ruby::Patterns  # :nodoc: all
+  module Ruby::Patterns # :nodoc: all
     
     KEYWORDS = %w[
       and def end in or unless begin

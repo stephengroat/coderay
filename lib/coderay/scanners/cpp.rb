@@ -46,10 +46,10 @@ module Scanners
       add(PREDEFINED_TYPES, :predefined_type).
       add(PREDEFINED_VARIABLES, :local_variable).
       add(DIRECTIVES, :directive).
-      add(PREDEFINED_CONSTANTS, :predefined_constant)  # :nodoc:
+      add(PREDEFINED_CONSTANTS, :predefined_constant) # :nodoc:
 
-    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x  # :nodoc:
-    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x  # :nodoc:
+    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
 
   protected
 

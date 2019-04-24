@@ -33,7 +33,7 @@ module CodeRay
     HostNotFound   = Class.new LoadError
     
     PLUGIN_HOSTS = []
-    PLUGIN_HOSTS_BY_ID = {}  # dummy hash
+    PLUGIN_HOSTS_BY_ID = {} # dummy hash
     
     # Loads all plugins using list and load.
     def load_all

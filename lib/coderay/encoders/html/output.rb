@@ -19,11 +19,11 @@ module Encoders
 
         # Raises an exception if an object that doesn't respond to to_str is extended by Output,
         # to prevent users from misuse. Use Module#remove_method to disable.
-        def extended o  # :nodoc:
+        def extended o # :nodoc:
           warn "The Output module is intended to extend instances of String, not #{o.class}." unless o.respond_to? :to_str
         end
 
-        def make_stylesheet css, in_tag = false  # :nodoc:
+        def make_stylesheet css, in_tag = false # :nodoc:
           sheet = css.stylesheet
           sheet = <<-'CSS' if in_tag
 <style type="text/css">
@@ -33,7 +33,7 @@ module Encoders
           sheet
         end
 
-        def page_template_for_css css  # :nodoc:
+        def page_template_for_css css # :nodoc:
           sheet = make_stylesheet css
           PAGE.apply 'CSS', sheet
         end
@@ -89,7 +89,7 @@ module Encoders
 
 #-- don't include the templates in docu
 
-      class Template < String  # :nodoc:
+      class Template < String # :nodoc:
 
         def self.wrap! str, template, target
           target = Regexp.new(Regexp.escape("<%#{target}%>"))

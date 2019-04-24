@@ -11,33 +11,33 @@ module Scanners
       'asm', 'break', 'case', 'continue', 'default', 'do',
       'else', 'enum', 'for', 'goto', 'if', 'return',
       'sizeof', 'struct', 'switch', 'typedef', 'union', 'while',
-      'restrict',  # added in C99
-    ]  # :nodoc:
+      'restrict', # added in C99
+    ] # :nodoc:
 
     PREDEFINED_TYPES = [
       'int', 'long', 'short', 'char',
       'signed', 'unsigned', 'float', 'double',
-      'bool', 'complex',  # added in C99
-    ]  # :nodoc:
+      'bool', 'complex', # added in C99
+    ] # :nodoc:
 
     PREDEFINED_CONSTANTS = [
       'EOF', 'NULL',
-      'true', 'false',  # added in C99
-    ]  # :nodoc:
+      'true', 'false', # added in C99
+    ] # :nodoc:
     DIRECTIVES = [
       'auto', 'extern', 'register', 'static', 'void',
-      'const', 'volatile',  # added in C89
-      'inline',  # added in C99
-    ]  # :nodoc:
+      'const', 'volatile', # added in C89
+      'inline', # added in C99
+    ] # :nodoc:
 
     IDENT_KIND = WordList.new(:ident).
       add(KEYWORDS, :keyword).
       add(PREDEFINED_TYPES, :predefined_type).
       add(DIRECTIVES, :directive).
-      add(PREDEFINED_CONSTANTS, :predefined_constant)  # :nodoc:
+      add(PREDEFINED_CONSTANTS, :predefined_constant) # :nodoc:
 
-    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x  # :nodoc:
-    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x  # :nodoc:
+    ESCAPE = / [rbfntv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
     
   protected
     

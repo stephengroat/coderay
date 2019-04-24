@@ -15,7 +15,7 @@ module Scanners
       :tag, :attribute_name, :operator,
       :attribute_value, :string,
       :plain, :entity, :error,
-    ]  # :nodoc:
+    ] # :nodoc:
     
     EVENT_ATTRIBUTES = %w(
       onabort onafterprint onbeforeprint onbeforeunload onblur oncanplay
@@ -36,9 +36,9 @@ module Scanners
       add(EVENT_ATTRIBUTES, :script).
       add(['style'], :style)
     
-    ATTR_NAME = /[\w.:-]+/  # :nodoc:
-    TAG_END = /\/?>/  # :nodoc:
-    HEX = /[0-9a-fA-F]/  # :nodoc:
+    ATTR_NAME = /[\w.:-]+/ # :nodoc:
+    TAG_END = /\/?>/ # :nodoc:
+    HEX = /[0-9a-fA-F]/ # :nodoc:
     ENTITY = /
       &
       (?:
@@ -52,12 +52,12 @@ module Scanners
         )
       )
       ;
-    /ox  # :nodoc:
+    /ox # :nodoc:
     
     PLAIN_STRING_CONTENT = {
       "'" => /[^&'>\n]+/,
       '"' => /[^&">\n]+/,
-    }  # :nodoc:
+    } # :nodoc:
     
     def reset
       super
@@ -162,7 +162,7 @@ module Scanners
             end
             
           when :attribute_equal
-            if match = scan(/=/)  #/
+            if match = scan(/=/) #/
               encoder.text_token match, :operator
               state = :attribute_value
             else

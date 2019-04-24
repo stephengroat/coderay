@@ -8,9 +8,9 @@ module Encoders
     
     register_for :statistic
     
-    attr_reader :type_stats, :real_token_count  # :nodoc:
+    attr_reader :type_stats, :real_token_count # :nodoc:
     
-    TypeStats = Struct.new :count, :size  # :nodoc:
+    TypeStats = Struct.new :count, :size # :nodoc:
     
   protected
     

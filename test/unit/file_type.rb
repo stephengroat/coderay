@@ -98,7 +98,7 @@ class FileTypeTests < Test::Unit::TestCase
   def test_shebang_empty_file
     require 'tmpdir'
     tmpfile = File.join(Dir.tmpdir, 'bla')
-    File.open(tmpfile, 'w') { }  # touch
+    File.open(tmpfile, 'w') { } # touch
     assert_equal nil, FileType[tmpfile, true]
   end
   

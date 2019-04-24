@@ -19,11 +19,11 @@ module Scanners
       false null true undefined NaN Infinity
     ]  # :nodoc:
     
-    MAGIC_VARIABLES = %w[ this arguments ]  # :nodoc: arguments was introduced in JavaScript 1.4
+    MAGIC_VARIABLES = %w[ this arguments ] # :nodoc: arguments was introduced in JavaScript 1.4
     
     KEYWORDS_EXPECTING_VALUE = WordList.new.add %w[
       case delete in instanceof new return throw typeof with
-    ]  # :nodoc:
+    ] # :nodoc:
     
     # Reserved for future use.
     RESERVED_WORDS = %w[
@@ -31,17 +31,17 @@ module Scanners
       final float goto implements import int interface long native package
       private protected public short static super synchronized throws transient
       volatile
-    ]  # :nodoc:
+    ] # :nodoc:
     
     IDENT_KIND = WordList.new(:ident).
       add(RESERVED_WORDS, :reserved).
       add(PREDEFINED_CONSTANTS, :predefined_constant).
       add(MAGIC_VARIABLES, :local_variable).
-      add(KEYWORDS, :keyword)  # :nodoc:
+      add(KEYWORDS, :keyword) # :nodoc:
     
-    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x  # :nodoc:
-    UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x  # :nodoc:
-    REGEXP_ESCAPE =  / [bBdDsSwW] /x  # :nodoc:
+    ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
+    UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:
+    REGEXP_ESCAPE = / [bBdDsSwW] /x # :nodoc:
     STRING_CONTENT_PATTERN = {
       "'" => /[^\\']+/,
       '"' => /[^\\"]+/,
@@ -117,7 +117,7 @@ module Scanners
             value_expected = (kind == :keyword) && KEYWORDS_EXPECTING_VALUE[match]
             # TODO: labels
             if kind == :ident
-              if match.index(?$)  # $ allowed inside an identifier
+              if match.index(?$) # $ allowed inside an identifier
                 kind = :predefined
               elsif function_expected
                 kind = :function

@@ -11,9 +11,9 @@ module Scanners
       :id, :directive,
       :key, :value, :operator, :color, :float, :string,
       :error, :important, :type,
-    ]  # :nodoc:
+    ] # :nodoc:
     
-    module RE  # :nodoc:
+    module RE # :nodoc:
       Hex = /[0-9a-fA-F]/
       Unicode = /\\#{Hex}{1,6}\b/ # differs from standard because it allows uppercase hex too
       Escape = /#{Unicode}|\\[^\n0-9a-fA-F]/

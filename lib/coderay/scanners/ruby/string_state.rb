@@ -5,14 +5,14 @@ module Scanners
   class Ruby
     
     class StringState < Struct.new :type, :interpreted, :delim, :heredoc,
-      :opening_paren, :paren_depth, :pattern, :next_state  # :nodoc: all
+      :opening_paren, :paren_depth, :pattern, :next_state # :nodoc: all
       
       CLOSING_PAREN = Hash[ *%w[
         ( )
         [ ]
         < >
         { }
-      ] ].each { |k,v| k.freeze; v.freeze }  # debug, if I try to change it with <<
+      ] ].each { |k,v| k.freeze; v.freeze } # debug, if I try to change it with <<
       
       STRING_PATTERN = Hash.new do |h, k|
         delim, interpreted = *k
@@ -65,7 +65,7 @@ module Scanners
         delim_pattern = Regexp.escape(delim)
         delim_pattern = / (?:\A|\n) #{ '(?>[ \t]*)' if indented } #{ Regexp.new delim_pattern } $ /x
         if interpreted
-          / (?= #{delim_pattern}() | \\ | \# [{$@] ) /mx  # $1 set == end of heredoc
+          / (?= #{delim_pattern}() | \\ | \# [{$@] ) /mx # $1 set == end of heredoc
         else
           / (?= #{delim_pattern}() | \\ ) /mx
         end

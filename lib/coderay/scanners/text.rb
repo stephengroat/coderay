@@ -11,7 +11,7 @@ module CodeRay
       register_for :text
       title 'Plain text'
       
-      KINDS_NOT_LOC = [:plain]  # :nodoc:
+      KINDS_NOT_LOC = [:plain] # :nodoc:
       
     protected
       

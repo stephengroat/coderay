@@ -125,7 +125,7 @@ module Scanners
             encoder.text_token match, :content
           elsif match = scan(/["'`]/)
             if string_type == match
-              if peek(1) == string_type  # doubling means escape
+              if peek(1) == string_type # doubling means escape
                 encoder.text_token match + getch, :content
               else
                 encoder.text_token match, :delimiter

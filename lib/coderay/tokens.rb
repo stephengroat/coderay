@@ -96,9 +96,9 @@ module CodeRay
         when nil
           content = item
         when String
-          if size && part_size + content.size > size  # token must be cut
-            if part_size < size  # some part of the token goes into this part
-              content = content.dup  # content may no be safe to change
+          if size && part_size + content.size > size # token must be cut
+            if part_size < size # some part of the token goes into this part
+              content = content.dup # content may no be safe to change
               part << content.slice!(0, size - part_size) << item
             end
             # close all open groups and lines...
