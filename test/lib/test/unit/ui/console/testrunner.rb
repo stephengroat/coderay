@@ -74,7 +74,7 @@ module Test
 
           def started(result)
             @result = result
-            output("Started")
+            output('Started')
           end
 
           def finished(elapsed_time)
@@ -82,24 +82,24 @@ module Test
             output("Finished in #{elapsed_time} seconds.")
             @faults.each_with_index do |fault, index|
               nl
-              output("%3d) %s" % [index + 1, fault.long_display])
+              output('%3d) %s' % [index + 1, fault.long_display])
             end
             nl
             output(@result)
           end
 
           def test_started(name)
-            output_single(name + ": ", VERBOSE)
+            output_single(name + ': ', VERBOSE)
           end
 
           def test_finished(name)
-            output_single(".", PROGRESS_ONLY) unless (@already_outputted)
+            output_single('.', PROGRESS_ONLY) unless (@already_outputted)
             nl(VERBOSE)
             @already_outputted = false
           end
 
           def nl(level=NORMAL)
-            output("", level)
+            output('', level)
           end
 
           def output(something, level=NORMAL)

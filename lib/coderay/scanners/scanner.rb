@@ -96,7 +96,7 @@ module CodeRay
 
         def guess_encoding(s)
           #:nocov:
-          IO.popen("file -b --mime -", "w+") do |file|
+          IO.popen('file -b --mime -', 'w+') do |file|
             file.write s[0, 1024]
             file.close_write
             begin
@@ -167,7 +167,7 @@ module CodeRay
         begin
           scan_tokens @tokens, options
         rescue => e
-          message = "Error in %s#scan_tokens, initial state was: %p" % [self.class, defined?(state) && state]
+          message = 'Error in %s#scan_tokens, initial state was: %p' % [self.class, defined?(state) && state]
           raise_inspect e.message, @tokens, message, 30, e.backtrace
         end
 

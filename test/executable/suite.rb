@@ -32,7 +32,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
     puts command if $DEBUG
 
     if options[:input]
-      output = IO.popen "#{command} 2>&1", "r+" do |io|
+      output = IO.popen "#{command} 2>&1", 'r+' do |io|
         io.write options[:input]
         io.close_write
         io.read
@@ -209,7 +209,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
 
   context 'the LOC counter' do
     source_file = ROOT_DIR + 'test/executable/source_with_comments.rb'
-    command = "-ruby -loc"
+    command = '-ruby -loc'
 
     should 'work' do
       output = coderay(command, :input => <<-CODE)

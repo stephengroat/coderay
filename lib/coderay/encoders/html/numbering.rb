@@ -9,7 +9,7 @@ module Encoders
 
         start = options[:line_number_start]
         unless start.is_a? Integer
-          raise ArgumentError, "Invalid value %p for :line_number_start; Integer expected." % start
+          raise ArgumentError, 'Invalid value %p for :line_number_start; Integer expected.' % start
         end
 
         anchor_prefix = options[:line_number_anchors]

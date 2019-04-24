@@ -17,15 +17,15 @@ class DuoTest < Test::Unit::TestCase
 
   def test_call
     duo = CodeRay::Duo[:python => :yml]
-    yaml = [["def", :keyword],
-            [" ", :space],
-            ["test", :method],
-            [":", :operator],
-            [" ", :space],
+    yaml = [['def', :keyword],
+            [' ', :space],
+            ['test', :method],
+            [':', :operator],
+            [' ', :space],
             [:begin_group, :string],
-            ["\"", :delimiter],
-            ["pass", :content],
-            ["\"", :delimiter],
+            ['"', :delimiter],
+            ['pass', :content],
+            ['"', :delimiter],
             [:end_group, :string]]
 
     assert_equal yaml, YAML.load(duo.call('def test: "pass"'))

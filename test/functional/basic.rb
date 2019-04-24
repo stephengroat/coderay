@@ -160,7 +160,7 @@ more code  # and another comment, in-line.
     for kind, css_class in CodeRay::TokenKinds
       assert_kind_of Symbol, kind
       if css_class != false
-        assert_kind_of String, css_class, "TokenKinds[%p] == %p" % [kind, css_class]
+        assert_kind_of String, css_class, 'TokenKinds[%p] == %p' % [kind, css_class]
       end
     end
     assert_equal 'reserved', CodeRay::TokenKinds[:reserved]

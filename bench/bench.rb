@@ -28,7 +28,7 @@ require 'profile' if ARGV.include? '-p'
 times = []
 n.times do |i|
   time = Benchmark.realtime { encoder.encode(data, lang) }
-  puts "run %d: %5.2f s, %4.0f kB/s" % [i + 1, time, size / time / 1000.0]
+  puts 'run %d: %5.2f s, %4.0f kB/s' % [i + 1, time, size / time / 1000.0]
   times << time
 end
 

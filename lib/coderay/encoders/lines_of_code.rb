@@ -24,7 +24,7 @@ module Encoders
       if scanner
         kinds_not_loc = scanner.class::KINDS_NOT_LOC
       else
-        warn "Tokens have no associated scanner, counting all nonempty lines." if $VERBOSE
+        warn 'Tokens have no associated scanner, counting all nonempty lines.' if $VERBOSE
         kinds_not_loc = CodeRay::Scanners::Scanner::KINDS_NOT_LOC
       end
 

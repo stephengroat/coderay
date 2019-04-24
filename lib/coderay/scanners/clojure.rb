@@ -192,7 +192,7 @@ module CodeRay
               encoder.end_group state
               state = :initial
             else
-              raise_inspect "else case \" reached; %p not handled." % peek(1),
+              raise_inspect 'else case " reached; %p not handled.' % peek(1),
                 encoder, state
             end
 

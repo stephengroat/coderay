@@ -29,7 +29,7 @@ module Test
         #  remove_listener("Channel", listener)
         def add_listener(channel_name, listener_key=NOTHING, &listener) # :yields: value
           unless(block_given?)
-            raise ArgumentError.new("No callback was passed as a listener")
+            raise ArgumentError.new('No callback was passed as a listener')
           end
 
           key = listener_key

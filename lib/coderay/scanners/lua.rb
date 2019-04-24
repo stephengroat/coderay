@@ -65,7 +65,7 @@ module Scanners
 
         when :initial
           if match = scan(/\-\-\[\=*\[/) #--[[ long (possibly multiline) comment ]]
-            num_equals = match.count("=") # Number must match for comment end
+            num_equals = match.count('=') # Number must match for comment end
             encoder.begin_group(:comment)
             encoder.text_token(match, :delimiter)
             state = :long_comment
@@ -74,7 +74,7 @@ module Scanners
             encoder.text_token(match, :comment)
 
           elsif match = scan(/\[=*\[/) # [[ long (possibly multiline) string ]]
-            num_equals = match.count("=") # Number must match for string end
+            num_equals = match.count('=') # Number must match for string end
             encoder.begin_group(:string)
             encoder.text_token(match, :delimiter)
             state = :long_string
@@ -89,11 +89,11 @@ module Scanners
             kind = IDENT_KIND[match]
 
             # Extra highlighting for entities following certain keywords
-            if kind == :keyword and match == "function"
+            if kind == :keyword and match == 'function'
               state = :function_expected
-            elsif kind == :keyword and match == "goto"
+            elsif kind == :keyword and match == 'goto'
               state = :goto_label_expected
-            elsif kind == :keyword and match == "local"
+            elsif kind == :keyword and match == 'local'
               state = :local_var_expected
             end
 

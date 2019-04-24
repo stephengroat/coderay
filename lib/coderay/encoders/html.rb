@@ -265,7 +265,7 @@ module Encoders
 
     def check_options!(options)
       unless [false, nil, :debug, :info, :info_long].include? options[:hint]
-        raise ArgumentError, "Unknown value %p for :hint; expected :info, :info_long, :debug, false, or nil." % [options[:hint]]
+        raise ArgumentError, 'Unknown value %p for :hint; expected :info, :info_long, :debug, false, or nil.' % [options[:hint]]
       end
 
       unless [:class, :style].include? options[:css]

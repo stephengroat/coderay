@@ -24,8 +24,8 @@ module Test
 
       attr_reader :method_name
 
-      STARTED = name + "::STARTED"
-      FINISHED = name + "::FINISHED"
+      STARTED = name + '::STARTED'
+      FINISHED = name + '::FINISHED'
 
       ##
       # These exceptions are not caught by #run.
@@ -60,7 +60,7 @@ module Test
         end
         if (suite.empty?)
           catch(:invalid_test) do
-            suite << new("default_test")
+            suite << new('default_test')
           end
         end
         return suite
@@ -107,7 +107,7 @@ module Test
       end
 
       def default_test
-        flunk("No tests were specified")
+        flunk('No tests were specified')
       end
 
       # Returns whether this individual test passed or

@@ -32,7 +32,7 @@ module Test
         # TestRunners from the command line.
         def start_command_line_test
           if ARGV.empty?
-            puts "You should supply the name of a test suite file to the runner"
+            puts 'You should supply the name of a test suite file to the runner'
             exit
           end
           require ARGV[0].gsub(/.+::/, '')

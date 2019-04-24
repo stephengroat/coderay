@@ -112,7 +112,7 @@ module Scanners
                 else
                   break
                 end
-              when "\n", ",", nil
+              when "\n", ',', nil
                 break
               end
             end

@@ -24,7 +24,7 @@ module Encoders
         require 'json'
       rescue LoadError
         $stderr.puts "The JSON encoder needs the JSON library.\n" \
-          "Please gem install json."
+          'Please gem install json.'
         raise
       end
     end

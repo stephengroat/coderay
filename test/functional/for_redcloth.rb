@@ -15,7 +15,7 @@ end
 class BasicTest < Test::Unit::TestCase
   def test_for_redcloth
     require 'coderay/for_redcloth'
-    assert_equal "<p><span lang=\"ruby\" class=\"CodeRay\">puts <span style=\"background-color:hsla(0,100%,50%,0.05)\"><span style=\"color:#710\">&quot;</span><span style=\"color:#D20\">Hello, World!</span><span style=\"color:#710\">&quot;</span></span></span></p>",
+    assert_equal '<p><span lang="ruby" class="CodeRay">puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello, World!</span><span style="color:#710">&quot;</span></span></span></p>',
       RedCloth.new('@[ruby]puts "Hello, World!"@').to_html
     assert_equal <<-BLOCKCODE.chomp,
 <div lang="ruby" class="CodeRay">
@@ -27,7 +27,7 @@ class BasicTest < Test::Unit::TestCase
 
   def test_for_redcloth_no_lang
     require 'coderay/for_redcloth'
-    assert_equal "<p><code>puts \"Hello, World!\"</code></p>",
+    assert_equal '<p><code>puts "Hello, World!"</code></p>',
       RedCloth.new('@puts "Hello, World!"@').to_html
     assert_equal <<-BLOCKCODE.chomp,
 <pre><code>puts \"Hello, World!\"</code></pre>
@@ -57,7 +57,7 @@ class BasicTest < Test::Unit::TestCase
 
   def test_for_redcloth_escapes2
     require 'coderay/for_redcloth'
-    assert_equal "<p><span lang=\"c\" class=\"CodeRay\"><span style=\"color:#579\">#include</span> <span style=\"color:#B44;font-weight:bold\">&lt;test.h&gt;</span></span></p>",
+    assert_equal '<p><span lang="c" class="CodeRay"><span style="color:#579">#include</span> <span style="color:#B44;font-weight:bold">&lt;test.h&gt;</span></span></p>',
       RedCloth.new('@[c]#include <test.h>@').to_html
   end
 
@@ -67,7 +67,7 @@ class BasicTest < Test::Unit::TestCase
     assert_equal '<p><code>[project]_dff.skjd</code></p>',
       RedCloth.new('@[project]_dff.skjd@').to_html
     # false positive, but expected behavior / known issue
-    assert_equal "<p><span lang=\"ruby\" class=\"CodeRay\">_dff.skjd</span></p>",
+    assert_equal '<p><span lang="ruby" class="CodeRay">_dff.skjd</span></p>',
       RedCloth.new('@[ruby]_dff.skjd@').to_html
     assert_equal <<-BLOCKCODE.chomp, RedCloth.new('bc. [project]_dff.skjd').to_html
 <pre><code>[project]_dff.skjd</code></pre>

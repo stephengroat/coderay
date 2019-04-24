@@ -16,11 +16,11 @@ module Test
     class TestSuite
       attr_reader :name, :tests
 
-      STARTED = name + "::STARTED"
-      FINISHED = name + "::FINISHED"
+      STARTED = name + '::STARTED'
+      FINISHED = name + '::FINISHED'
 
       # Creates a new TestSuite with the given name.
-      def initialize(name="Unnamed TestSuite")
+      def initialize(name='Unnamed TestSuite')
         @name = name
         @tests = []
       end

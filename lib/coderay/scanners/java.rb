@@ -135,7 +135,7 @@ module Scanners
             state = :initial
             string_delimiter = nil
           elsif state == :string && (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
-            if string_delimiter == "'" && !(match == "\\\\" || match == "\\'")
+            if string_delimiter == "'" && !(match == '\\\\' || match == "\\'")
               encoder.text_token match, :content
             else
               encoder.text_token match, :char
@@ -147,7 +147,7 @@ module Scanners
             state = :initial
             encoder.text_token match, :error unless match.empty?
           else
-            raise_inspect "else case \" reached; %p not handled." % peek(1), encoder
+            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
           end
 
         else

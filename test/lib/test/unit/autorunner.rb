@@ -12,7 +12,7 @@ module Test
       end
 
       def self.standalone?
-        return false unless("-e" == $0)
+        return false unless('-e' == $0)
 
         ObjectSpace.each_object(Class) do |klass|
           return false if(klass < TestCase)
@@ -101,47 +101,47 @@ module Test
 
       def options
         @options ||= OptionParser.new do |o|
-          o.banner = "Test::Unit automatic runner."
+          o.banner = 'Test::Unit automatic runner.'
           o.banner << "\nUsage: #{$0} [options] [-- untouched arguments]"
 
           o.on
           o.on('-r', '--runner=RUNNER', RUNNERS,
-               "Use the given RUNNER.",
-               "(" + keyword_display(RUNNERS) + ")") do |r|
+               'Use the given RUNNER.',
+               '(' + keyword_display(RUNNERS) + ')') do |r|
             @runner = r
           end
 
           if(@standalone)
-            o.on('-b', '--basedir=DIR', "Base directory of test suites.") do |b|
+            o.on('-b', '--basedir=DIR', 'Base directory of test suites.') do |b|
               @base = b
             end
 
-            o.on('-w', '--workdir=DIR', "Working directory to run tests.") do |w|
+            o.on('-w', '--workdir=DIR', 'Working directory to run tests.') do |w|
               @workdir = w
             end
 
             o.on('-a', '--add=TORUN', Array,
-                 "Add TORUN to the list of things to run;",
-                 "can be a file or a directory.") do |a|
+                 'Add TORUN to the list of things to run;',
+                 'can be a file or a directory.') do |a|
               @to_run.concat(a)
             end
 
             @pattern = []
             o.on('-p', '--pattern=PATTERN', Regexp,
-                 "Match files to collect against PATTERN.") do |e|
+                 'Match files to collect against PATTERN.') do |e|
               @pattern << e
             end
 
             @exclude = []
             o.on('-x', '--exclude=PATTERN', Regexp,
-                 "Ignore files to collect against PATTERN.") do |e|
+                 'Ignore files to collect against PATTERN.') do |e|
               @exclude << e
             end
           end
 
           o.on('-n', '--name=NAME', String,
-               "Runs tests matching NAME.",
-               "(patterns may be used).") do |n|
+               'Runs tests matching NAME.',
+               '(patterns may be used).') do |n|
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
             case n
             when Regexp
@@ -152,8 +152,8 @@ module Test
           end
 
           o.on('-t', '--testcase=TESTCASE', String,
-               "Runs tests in TestCases matching TESTCASE.",
-               "(patterns may be used).") do |n|
+               'Runs tests in TestCases matching TESTCASE.',
+               '(patterns may be used).') do |n|
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
             case n
             when Regexp
@@ -164,20 +164,20 @@ module Test
           end
 
           o.on('-I', "--load-path=DIR[#{File::PATH_SEPARATOR}DIR...]",
-               "Appends directory list to $LOAD_PATH.") do |dirs|
+               'Appends directory list to $LOAD_PATH.') do |dirs|
             $LOAD_PATH.concat(dirs.split(File::PATH_SEPARATOR))
           end
 
           o.on('-v', '--verbose=[LEVEL]', OUTPUT_LEVELS,
-               "Set the output level (default is verbose).",
-               "(" + keyword_display(OUTPUT_LEVELS) + ")") do |l|
+               'Set the output level (default is verbose).',
+               '(' + keyword_display(OUTPUT_LEVELS) + ')') do |l|
             @output_level = l || UI::VERBOSE
           end
 
           o.on('--',
-               "Stop processing options so that the",
-               "remaining options will be passed to the",
-               "test."){o.terminate}
+               'Stop processing options so that the',
+               'remaining options will be passed to the',
+               'test.'){o.terminate}
 
           o.on('-h', '--help', 'Display this help.'){puts o; exit}
 
@@ -185,17 +185,17 @@ module Test
           o.on_tail('Deprecated options:')
 
           o.on_tail('--console', 'Console runner (use --runner).') do
-            warn("Deprecated option (--console).")
+            warn('Deprecated option (--console).')
             @runner = RUNNERS[:console]
           end
 
           o.on_tail('--gtk', 'GTK runner (use --runner).') do
-            warn("Deprecated option (--gtk).")
+            warn('Deprecated option (--gtk).')
             @runner = RUNNERS[:gtk]
           end
 
           o.on_tail('--fox', 'Fox runner (use --runner).') do
-            warn("Deprecated option (--fox).")
+            warn('Deprecated option (--fox).')
             @runner = RUNNERS[:fox]
           end
 
@@ -206,7 +206,7 @@ module Test
       def keyword_display(array)
         list = array.collect {|e, *| e.to_s}
         Array === array or list.sort!
-        list.collect {|e| e.sub(/^(.)([A-Za-z]+)(?=\w*$)/, '\\1[\\2]')}.join(", ")
+        list.collect {|e| e.sub(/^(.)([A-Za-z]+)(?=\w*$)/, '\\1[\\2]')}.join(', ')
       end
 
       def run

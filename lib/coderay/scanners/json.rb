@@ -70,7 +70,7 @@ module Scanners
             encoder.text_token match, :error unless match.empty?
             state = :initial
           else
-            raise_inspect "else case \" reached; %p not handled." % peek(1), encoder
+            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
           end
 
         else

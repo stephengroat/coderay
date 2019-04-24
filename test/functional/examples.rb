@@ -49,15 +49,15 @@ end
     tokens = CodeRay.scan('{ "just": "an", "example": 42 }', :json)
     assert_kind_of CodeRay::TokensProxy, tokens
 
-    assert_equal ["{", :operator, " ", :space, :begin_group, :key,
-      "\"", :delimiter, "just", :content, "\"", :delimiter,
-      :end_group, :key, ":", :operator, " ", :space,
-      :begin_group, :string, "\"", :delimiter, "an", :content,
-      "\"", :delimiter, :end_group, :string, ",", :operator,
-      " ", :space, :begin_group, :key, "\"", :delimiter,
-      "example", :content, "\"", :delimiter, :end_group, :key,
-      ":", :operator, " ", :space, "42", :integer,
-      " ", :space, "}", :operator], tokens.tokens
+    assert_equal ['{', :operator, ' ', :space, :begin_group, :key,
+      '"', :delimiter, 'just', :content, '"', :delimiter,
+      :end_group, :key, ':', :operator, ' ', :space,
+      :begin_group, :string, '"', :delimiter, 'an', :content,
+      '"', :delimiter, :end_group, :string, ',', :operator,
+      ' ', :space, :begin_group, :key, '"', :delimiter,
+      'example', :content, '"', :delimiter, :end_group, :key,
+      ':', :operator, ' ', :space, '42', :integer,
+      ' ', :space, '}', :operator], tokens.tokens
 
     # produce a token statistic
     assert_equal <<-STATISTIC, tokens.statistic
@@ -108,8 +108,8 @@ Token Types (7):
 
     # scanning into tokens
     tokens = python_scanner.tokenize 'import this;  # The Zen of Python'
-    assert_equal ["import", :keyword, " ", :space, "this", :include,
-      ";", :operator, "  ", :space, "# The Zen of Python", :comment], tokens
+    assert_equal ['import', :keyword, ' ', :space, 'this', :include,
+      ';', :operator, '  ', :space, '# The Zen of Python', :comment], tokens
 
     # format the tokens
     term = terminal_encoder.encode_tokens(tokens)

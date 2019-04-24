@@ -76,7 +76,7 @@ module Encoders
           end
           self
         else
-          raise "Unknown value %p for :wrap" % element
+          raise 'Unknown value %p for :wrap' % element
         end
         @wrapped_in = element
         self
@@ -95,7 +95,7 @@ module Encoders
             str[0, 0] = $`
             str << $'
           else
-            raise "Template target <%%%p%%> not found" % target
+            raise 'Template target <%%%p%%> not found' % target
           end
         end
 
@@ -104,7 +104,7 @@ module Encoders
           if self =~ target
             Template.new($` + replacement + $')
           else
-            raise "Template target <%%%p%%> not found" % target
+            raise 'Template target <%%%p%%> not found' % target
           end
         end
       end

@@ -29,24 +29,24 @@ class TokensTest < Test::Unit::TestCase
 
   def test_split_into_parts
     parts_4_3 = [
-      ["stri", :type],
-      ["ng", :type, :begin_group, :operator, "(", :content, :end_group, :operator],
-      [:begin_group, :operator, ")", :content, :end_group, :operator]
+      ['stri', :type],
+      ['ng', :type, :begin_group, :operator, '(', :content, :end_group, :operator],
+      [:begin_group, :operator, ')', :content, :end_group, :operator]
     ]
     assert_equal parts_4_3, make_tokens.split_into_parts(4, 3)
     assert_equal [make_tokens.to_a], make_tokens.split_into_parts
 
     parts_7_0_1 = [
-      ["string", :type, :begin_group, :operator, "(", :content, :end_group, :operator],
+      ['string', :type, :begin_group, :operator, '(', :content, :end_group, :operator],
       [],
-      [:begin_group, :operator, ")", :content, :end_group, :operator]
+      [:begin_group, :operator, ')', :content, :end_group, :operator]
     ]
     assert_equal parts_7_0_1, make_tokens.split_into_parts(7, 0, 1)
 
     line = CodeRay::Tokens[:begin_line, :head, '...', :plain]
     line_parts = [
-      [:begin_line, :head, ".", :plain, :end_line, :head],
-      [:begin_line, :head, "..", :plain]
+      [:begin_line, :head, '.', :plain, :end_line, :head],
+      [:begin_line, :head, '..', :plain]
     ]
     assert_equal line_parts, line.split_into_parts(1)
 

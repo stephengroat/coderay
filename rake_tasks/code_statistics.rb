@@ -126,12 +126,12 @@ class CodeStatistics
 
   def print_header
     print_splitter
-    puts "| T=Test  Name              | Files | Lines |   LOC | Comments | Classes | Modules | Methods | M/C | LOC/M |"
+    puts '| T=Test  Name              | Files | Lines |   LOC | Comments | Classes | Modules | Methods | M/C | LOC/M |'
     print_splitter
   end
 
   def print_splitter
-    puts "+---------------------------+-------+-------+-------+----------+---------+---------+---------+-----+-------+"
+    puts '+---------------------------+-------+-------+-------+----------+---------+---------+---------+-----+-------+'
   end
 
   def print_line(name, statistics)
@@ -144,7 +144,7 @@ class CodeStatistics
       name = "  #{name}"
     end
 
-    line = "| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |" % (
+    line = '| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |' % (
       [name, *statistics.values_at(:files, :lines, :codelines, :comments, :classes, :modules, :methods)] +
       [m_over_c, loc_over_m] )
 
@@ -156,7 +156,7 @@ class CodeStatistics
     tests = calculate_tests
 
     puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{sprintf("%.2f", tests.to_f/code)}]"
-    puts ""
+    puts ''
   end
 end
 

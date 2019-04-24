@@ -143,7 +143,7 @@ module Scanners
             encoder.end_group :string
             state = :initial
           else
-            raise "else case \" reached; %p not handled." % peek(1), encoder
+            raise 'else case " reached; %p not handled.' % peek(1), encoder
           end
 
         else

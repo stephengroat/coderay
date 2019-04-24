@@ -134,7 +134,7 @@ module Scanners
             encoder.text_token match, :error unless match.empty?
             state = :initial
           else
-            raise_inspect "else case \" reached; %p not handled." % peek(1), encoder, state
+            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder, state
           end
 
         elsif match = scan(/ [ \t]+ | \\?\n /x)

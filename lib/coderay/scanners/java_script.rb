@@ -169,7 +169,7 @@ module Scanners
             key_expected = value_expected = false
             state = :initial
           elsif state != :regexp && (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
-            if string_delimiter == "'" && !(match == "\\\\" || match == "\\'")
+            if string_delimiter == "'" && !(match == '\\\\' || match == "\\'")
               encoder.text_token match, :content
             else
               encoder.text_token match, :char

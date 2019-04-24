@@ -22,7 +22,7 @@ class DebugEncoderTest < Test::Unit::TestCase
     ["\n", :space],
     ["\n  \t", :space],
     ["   \n", :space],
-    ["[]", :method],
+    ['[]', :method],
     [:end_line, :head],
   ].flatten
   TEST_OUTPUT = <<-'DEBUG'.chomp
@@ -64,7 +64,7 @@ method([])]
     [:end_group, :string],
     [:begin_line, :unknown],
     ["\n\n  \t   \n", :space],
-    ["[]", :method],
+    ['[]', :method],
     [:end_line, :unknown],
   ].flatten
   

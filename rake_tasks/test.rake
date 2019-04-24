@@ -75,7 +75,7 @@ Please rename or remove it and run again to use the GitHub repository:
     else
       puts
       puts "Can't run executable tests because shoulda-context requires Ruby 1.8.7+."
-      puts "Skipping."
+      puts 'Skipping.'
     end
   end
 end

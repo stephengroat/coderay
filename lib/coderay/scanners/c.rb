@@ -150,7 +150,7 @@ module Scanners
             state = :initial
             label_expected = false
           else
-            raise_inspect "else case \" reached; %p not handled." % peek(1), encoder
+            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
           end
 
         when :include_expected

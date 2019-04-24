@@ -21,7 +21,7 @@ class StatisticEncoderTest < Test::Unit::TestCase
     ["\n", :space],
     ["\n  \t", :space],
     ["   \n", :space],
-    ["[]", :method],
+    ['[]', :method],
     [:end_line, :test],
   ].flatten
   TEST_OUTPUT = <<-'DEBUG'

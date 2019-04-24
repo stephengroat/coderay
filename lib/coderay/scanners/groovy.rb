@@ -194,7 +194,7 @@ module Scanners
 
           elsif (state == :string || state == :multiline_string) &&
               (match = scan(/ \\ (?: #{ESCAPE} | #{UNICODE_ESCAPE} ) /mox))
-            if string_delimiter[0] == ?' && !(match == "\\\\" || match == "\\'")
+            if string_delimiter[0] == ?' && !(match == '\\\\' || match == "\\'")
               encoder.text_token match, :content
             else
               encoder.text_token match, :char
@@ -230,7 +230,7 @@ module Scanners
             state = :initial
 
           else
-            raise_inspect "else case \" reached; %p not handled." % peek(1), encoder
+            raise_inspect 'else case " reached; %p not handled.' % peek(1), encoder
 
           end
 
