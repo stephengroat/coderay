@@ -13,7 +13,7 @@ task :default => %i[test rubocop]
 if File.directory? 'rake_tasks'
 
   # load rake tasks from subfolder
-  for task_file in Dir['rake_tasks/*.rake'].sort
+  Dir['rake_tasks/*.rake'].sort.each do |task_file|
     load task_file
   end
 

@@ -91,7 +91,7 @@ module CodeRay
       part_size = 0
       size = sizes.first
       i = 0
-      for item in self
+      self.each do |item|
         case content
         when nil
           content = item

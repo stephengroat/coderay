@@ -10,6 +10,6 @@ suite = Dir[File.join(mydir, '*.rb')]
 
 puts "Running basic CodeRay #{CodeRay::VERSION} tests: #{suite.join(', ')}"
 
-for test_case in suite
+suite.each do |test_case|
   load File.join(mydir, test_case + '.rb')
 end

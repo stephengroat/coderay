@@ -11,6 +11,6 @@ suite = Dir[File.join(mydir, '*.rb')]
 puts "Running CodeRay unit tests: #{suite.join(', ')}"
 
 helpers = %w(file_type word_list tokens)
-for test_case in helpers + (suite - helpers)
+helpers + (suite - helpers).each do |test_case|
   load File.join(mydir, test_case + '.rb')
 end

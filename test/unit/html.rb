@@ -91,7 +91,7 @@ public class Test {
 }
     HTML_OPT_INDEPENDENT_LINES_ON
 
-    for lang, code in snippets
+    snippets.each do |lang, code|
       tokens = CodeRay.scan code[:in], lang
 
       assert_equal code[:expected_with_option_off], tokens.html

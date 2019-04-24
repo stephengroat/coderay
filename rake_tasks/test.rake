@@ -54,16 +54,16 @@ Please rename or remove it and run again to use the GitHub repository:
 
   desc 'clean test output files'
   task :clean do
-    for file in Dir['test/scanners/**/*.actual.*']
+    Dir['test/scanners/**/*.actual.*'].each do |file|
       rm file
     end
-    for file in Dir['test/scanners/**/*.debug.diff']
+    Dir['test/scanners/**/*.debug.diff'].each do |file|
       rm file
     end
-    for file in Dir['test/scanners/**/*.debug.diff.html']
+    Dir['test/scanners/**/*.debug.diff.html'].each do |file|
       rm file
     end
-    for file in Dir['test/scanners/**/*.expected.html']
+    Dir['test/scanners/**/*.expected.html'].each do |file|
       rm file
     end
   end

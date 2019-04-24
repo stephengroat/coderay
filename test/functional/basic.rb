@@ -157,7 +157,7 @@ more code  # and another comment, in-line.
   
   def test_token_kinds
     assert_kind_of Hash, CodeRay::TokenKinds
-    for kind, css_class in CodeRay::TokenKinds
+    CodeRay::TokenKinds.each do |kind, css_class|
       assert_kind_of Symbol, kind
       if css_class != false
         assert_kind_of String, css_class, 'TokenKinds[%p] == %p' % [kind, css_class]

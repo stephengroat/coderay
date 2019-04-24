@@ -164,7 +164,7 @@ module CodeRay
       # Tokens object.
       def compile(tokens, options = {})
         content = nil
-        for item in tokens
+        tokens.each do |item|
           if item.is_a? Array
             raise ArgumentError, 'Two-element array tokens are no longer supported.'
           end

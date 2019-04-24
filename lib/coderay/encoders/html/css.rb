@@ -49,7 +49,7 @@ module Encoders
         stylesheet.scan CSS_CLASS_PATTERN do |selectors, style, error|
           raise "CSS parse error: '#{error.inspect}' not recognized" if error
 
-          for selector in selectors.split(',')
+          selectors.split(',').each do |selector|
             classes = selector.scan(/[-\w]+/)
             cl = classes.pop
             @styles[cl] ||= Hash.new

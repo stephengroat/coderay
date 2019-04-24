@@ -14,7 +14,7 @@ class TokenKindFilterTest < Test::Unit::TestCase
 
   def test_filtering_text_tokens
     tokens = CodeRay::Tokens.new
-    for i in 1..10
+    (1..10).each do |i|
       tokens.text_token i.to_s, :index
       tokens.text_token ' ', :space if i < 10
     end

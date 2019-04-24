@@ -48,7 +48,7 @@ namespace :generate do
     if extensions = ENV['EXT']
       file_type_file = File.join(LIB_ROOT, 'coderay', 'helpers', 'filetype.rb')
       puts "Not automated. Remember to add your extensions to #{file_type_file}:"
-      for ext in extensions.split(',')
+      extensions.split(',').each do |ext|
         puts "    '#{ext}' => :#{lang},"
       end
     end
@@ -56,7 +56,7 @@ namespace :generate do
     if alternative_ids = ENV['ALT'] && alternative_ids != lang
       map_file = File.join(LIB_ROOT, 'coderay', 'scanners', '_map.rb')
       puts "Not automated. Remember to add your alternative plugin ids to #{map_file}:"
-      for id in alternative_ids.split(',')
+      alternative_ids.split(',').each do |id|
         puts "  :#{id} => :#{lang},"
       end
     end

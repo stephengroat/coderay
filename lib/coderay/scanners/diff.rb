@@ -109,7 +109,7 @@ module Scanners
 
               deleted_lines_tokenized  = []
               inserted_lines_tokenized = []
-              for deleted_line, inserted_line in deleted_lines.zip(inserted_lines)
+              deleted_lines.zip(inserted_lines).each do |deleted_line, inserted_line|
                 pre, deleted_part, inserted_part, post = diff deleted_line, inserted_line
                 content_scanner_entry_state = content_scanner.state
                 deleted_lines_tokenized << content_scanner.tokenize([pre, deleted_part, post], :tokens => Tokens.new)
@@ -117,7 +117,7 @@ module Scanners
                 inserted_lines_tokenized << content_scanner.tokenize([pre, inserted_part, post], :tokens => Tokens.new)
               end
 
-              for pre, deleted_part, post in deleted_lines_tokenized
+              deleted_lines_tokenized.each do |pre, deleted_part, post|
                 encoder.begin_line :delete
                 encoder.text_token '-', :delete
                 encoder.tokens pre
@@ -131,7 +131,7 @@ module Scanners
                 encoder.text_token "\n", :space
               end
 
-              for pre, inserted_part, post in inserted_lines_tokenized
+              inserted_lines_tokenized.each do |pre, inserted_part, post|
                 encoder.begin_line :insert
                 encoder.text_token '+', :insert
                 encoder.tokens pre

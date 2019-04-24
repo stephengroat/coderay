@@ -35,7 +35,7 @@ module CodeRay
 
     # Loads all plugins using list and load.
     def load_all
-      for plugin in list
+      list.each do |plugin|
         load plugin
       end
     end
@@ -89,7 +89,7 @@ module CodeRay
     #      :luna => :moon
     #  end
     def map(hash)
-      for from, to in hash
+      hash.each do |from, to|
         from = validate_id from
         to   = validate_id to
         plugin_hash[from] = to unless plugin_hash.key? from
