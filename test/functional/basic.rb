@@ -96,7 +96,7 @@ class BasicTest < Test::Unit::TestCase
 code
 
 more code  
-      EXPECTED
+    EXPECTED
 #!/usr/bin/env ruby
 =begin
 A multi-line comment.
@@ -104,7 +104,7 @@ A multi-line comment.
 code
 # A single-line comment.
 more code  # and another comment, in-line.
-      INPUT
+    INPUT
   end
   
   def test_lines_of_code
@@ -116,7 +116,7 @@ A multi-line comment.
 code
 # A single-line comment.
 more code  # and another comment, in-line.
-      INPUT
+    INPUT
     rHTML = <<-RHTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -137,7 +137,7 @@ more code  # and another comment, in-line.
 
 </body>
 </html>
-      RHTML
+    RHTML
     assert_equal 0, CodeRay.scan(rHTML, :html).lines_of_code
     assert_equal 0, CodeRay.scan(rHTML, :php).lines_of_code
     assert_equal 0, CodeRay.scan(rHTML, :yaml).lines_of_code
