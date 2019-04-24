@@ -24,11 +24,11 @@ namespace :generate do
     base_scanner = File.read base_scanner_file
     puts "Writing new scanner #{scanner_file}..."
     File.open(scanner_file, 'w') do |file|
-      file.write base_scanner.
-        sub(/class \w+ < Scanner/, "class #{class_name} < Scanner").
-        sub('# Scanner for JSON (JavaScript Object Notation).', "# A scanner for #{scanner_class_name}.").
-        sub(/register_for :\w+/, "register_for :#{lang}").
-        sub(/file_extension '\S+'/, "file_extension '#{ENV.fetch('EXT', lang).split(',').first}'")
+      file.write base_scanner
+        .sub(/class \w+ < Scanner/, "class #{class_name} < Scanner")
+        .sub('# Scanner for JSON (JavaScript Object Notation).', "# A scanner for #{scanner_class_name}.")
+        .sub(/register_for :\w+/, "register_for :#{lang}")
+        .sub(/file_extension '\S+'/, "file_extension '#{ENV.fetch('EXT', lang).split(',').first}'")
     end
 
     test_dir = File.join(ROOT, 'test', 'scanners', lang)

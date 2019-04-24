@@ -31,12 +31,12 @@ module Scanners
       'virtual', 'write', 'writeonly',
     ]  # :nodoc:
 
-    IDENT_KIND = WordList::CaseIgnoring.new(:ident).
-                 add(KEYWORDS, :keyword).
-                 add(DIRECTIVES, :directive) # :nodoc:
+    IDENT_KIND = WordList::CaseIgnoring.new(:ident)
+                 .add(KEYWORDS, :keyword)
+                 .add(DIRECTIVES, :directive) # :nodoc:
 
-    NAME_FOLLOWS = WordList::CaseIgnoring.new(false).
-                   add(%w(procedure function .)) # :nodoc:
+    NAME_FOLLOWS = WordList::CaseIgnoring.new(false)
+                   .add(%w(procedure function .)) # :nodoc:
 
     protected
 

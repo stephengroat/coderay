@@ -23,15 +23,15 @@ module Scanners
       __FILE__ __LINE__ __ENCODING__
     ]
 
-    IDENT_KIND = WordList.new(:ident).
-                 add(KEYWORDS, :keyword).
-                 add(PREDEFINED_CONSTANTS, :predefined_constant)
+    IDENT_KIND = WordList.new(:ident)
+                 .add(KEYWORDS, :keyword)
+                 .add(PREDEFINED_CONSTANTS, :predefined_constant)
 
-    KEYWORD_NEW_STATE = WordList.new(:initial).
-                        add(%w[def], :def_expected).
-                        add(%w[undef], :undef_expected).
-                        add(%w[alias], :alias_expected).
-                        add(%w[class module], :module_expected)
+    KEYWORD_NEW_STATE = WordList.new(:initial)
+                        .add(%w[def], :def_expected)
+                        .add(%w[undef], :undef_expected)
+                        .add(%w[alias], :alias_expected)
+                        .add(%w[class module], :module_expected)
 
     IDENT = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : /[^\W\d]\w*/
 

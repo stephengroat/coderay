@@ -52,12 +52,12 @@ module Scanners
       'self', 'Ellipsis', 'NotImplemented',
     ] # :nodoc:
 
-    IDENT_KIND = WordList.new(:ident).
-                 add(KEYWORDS, :keyword).
-                 add(OLD_KEYWORDS, :old_keyword).
-                 add(PREDEFINED_METHODS_AND_TYPES, :predefined).
-                 add(PREDEFINED_VARIABLES_AND_CONSTANTS, :predefined_constant).
-                 add(PREDEFINED_EXCEPTIONS, :exception) # :nodoc:
+    IDENT_KIND = WordList.new(:ident)
+                 .add(KEYWORDS, :keyword)
+                 .add(OLD_KEYWORDS, :old_keyword)
+                 .add(PREDEFINED_METHODS_AND_TYPES, :predefined)
+                 .add(PREDEFINED_VARIABLES_AND_CONSTANTS, :predefined_constant)
+                 .add(PREDEFINED_EXCEPTIONS, :exception) # :nodoc:
 
     NAME = / [[:alpha:]_] \w* /x # :nodoc:
     ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
@@ -81,10 +81,10 @@ module Scanners
       h[delimiter] = / [^\\\n]+? (?= \\ | $ | #{Regexp.escape(delimiter)} ) /x # :nodoc:
     }
 
-    DEF_NEW_STATE = WordList.new(:initial).
-                    add(%w(def), :def_expected).
-                    add(%w(import from), :include_expected).
-                    add(%w(class), :class_expected) # :nodoc:
+    DEF_NEW_STATE = WordList.new(:initial)
+                    .add(%w(def), :def_expected)
+                    .add(%w(import from), :include_expected)
+                    .add(%w(class), :class_expected) # :nodoc:
 
     DESCRIPTOR = /
       #{NAME}

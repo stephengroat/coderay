@@ -41,14 +41,14 @@ module Scanners
 
     PREDEFINED_CONSTANTS = %w(null true false)
 
-    IDENT_KIND = WordList::CaseIgnoring.new(:ident).
-                 add(KEYWORDS, :keyword).
-                 add(OBJECTS, :type).
-                 add(COMMANDS, :class).
-                 add(PREDEFINED_TYPES, :predefined_type).
-                 add(PREDEFINED_CONSTANTS, :predefined_constant).
-                 add(PREDEFINED_FUNCTIONS, :predefined).
-                 add(DIRECTIVES, :directive)
+    IDENT_KIND = WordList::CaseIgnoring.new(:ident)
+                 .add(KEYWORDS, :keyword)
+                 .add(OBJECTS, :type)
+                 .add(COMMANDS, :class)
+                 .add(PREDEFINED_TYPES, :predefined_type)
+                 .add(PREDEFINED_CONSTANTS, :predefined_constant)
+                 .add(PREDEFINED_FUNCTIONS, :predefined)
+                 .add(DIRECTIVES, :directive)
 
     ESCAPE = / [rbfntv\n\\\/'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | . /mx
     UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x

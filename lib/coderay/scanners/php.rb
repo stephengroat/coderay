@@ -178,17 +178,17 @@ module Scanners
         $argc $argv
       ]
 
-      IDENT_KIND = WordList::CaseIgnoring.new(:ident).
-                   add(KEYWORDS, :keyword).
-                   add(TYPES, :predefined_type).
-                   add(LANGUAGE_CONSTRUCTS, :keyword).
-                   add(BUILTIN_FUNCTIONS, :predefined).
-                   add(CLASSES, :predefined_constant).
-                   add(EXCEPTIONS, :exception).
-                   add(CONSTANTS, :predefined_constant)
+      IDENT_KIND = WordList::CaseIgnoring.new(:ident)
+                   .add(KEYWORDS, :keyword)
+                   .add(TYPES, :predefined_type)
+                   .add(LANGUAGE_CONSTRUCTS, :keyword)
+                   .add(BUILTIN_FUNCTIONS, :predefined)
+                   .add(CLASSES, :predefined_constant)
+                   .add(EXCEPTIONS, :exception)
+                   .add(CONSTANTS, :predefined_constant)
 
-      VARIABLE_KIND = WordList.new(:local_variable).
-                      add(PREDEFINED, :predefined)
+      VARIABLE_KIND = WordList.new(:local_variable)
+                      .add(PREDEFINED, :predefined)
     end
 
     module RE # :nodoc:

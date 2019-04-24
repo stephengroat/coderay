@@ -31,11 +31,11 @@ module Scanners
       volatile
     ] # :nodoc:
 
-    IDENT_KIND = WordList.new(:ident).
-                 add(RESERVED_WORDS, :reserved).
-                 add(PREDEFINED_CONSTANTS, :predefined_constant).
-                 add(MAGIC_VARIABLES, :local_variable).
-                 add(KEYWORDS, :keyword) # :nodoc:
+    IDENT_KIND = WordList.new(:ident)
+                 .add(RESERVED_WORDS, :reserved)
+                 .add(PREDEFINED_CONSTANTS, :predefined_constant)
+                 .add(MAGIC_VARIABLES, :local_variable)
+                 .add(KEYWORDS, :keyword) # :nodoc:
 
     ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:

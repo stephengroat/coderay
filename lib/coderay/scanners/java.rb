@@ -25,15 +25,15 @@ module Scanners
       static strictfp synchronized throws transient volatile
     ] # :nodoc:
 
-    IDENT_KIND = WordList.new(:ident).
-                 add(KEYWORDS, :keyword).
-                 add(RESERVED, :reserved).
-                 add(CONSTANTS, :predefined_constant).
-                 add(MAGIC_VARIABLES, :local_variable).
-                 add(TYPES, :type).
-                 add(BuiltinTypes::List, :predefined_type).
-                 add(BuiltinTypes::List.select { |builtin| builtin[/(Error|Exception)$/] }, :exception).
-                 add(DIRECTIVES, :directive) # :nodoc:
+    IDENT_KIND = WordList.new(:ident)
+                 .add(KEYWORDS, :keyword)
+                 .add(RESERVED, :reserved)
+                 .add(CONSTANTS, :predefined_constant)
+                 .add(MAGIC_VARIABLES, :local_variable)
+                 .add(TYPES, :type)
+                 .add(BuiltinTypes::List, :predefined_type)
+                 .add(BuiltinTypes::List.select { |builtin| builtin[/(Error|Exception)$/] }, :exception)
+                 .add(DIRECTIVES, :directive) # :nodoc:
 
     ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x # :nodoc:
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x # :nodoc:

@@ -30,9 +30,9 @@ module Scanners
       onvolumechange onwaiting
     )
 
-    IN_ATTRIBUTE = WordList::CaseIgnoring.new(nil).
-                   add(EVENT_ATTRIBUTES, :script).
-                   add(['style'], :style)
+    IN_ATTRIBUTE = WordList::CaseIgnoring.new(nil)
+                   .add(EVENT_ATTRIBUTES, :script)
+                   .add(['style'], :style)
 
     ATTR_NAME = /[\w.:-]+/ # :nodoc:
     TAG_END = /\/?>/ # :nodoc:
