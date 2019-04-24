@@ -22,11 +22,11 @@ module Test
           # where runner output should go to; defaults to
           # STDOUT.
           def initialize(suite, output_level=NORMAL, io=STDOUT)
-            if (suite.respond_to?(:suite))
-              @suite = suite.suite
+            @suite = if (suite.respond_to?(:suite))
+              suite.suite
             else
-              @suite = suite
-            end
+              suite
+                     end
             @output_level = output_level
             @io = io
             @already_outputted = false

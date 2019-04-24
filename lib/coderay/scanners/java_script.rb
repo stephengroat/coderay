@@ -130,11 +130,11 @@ module Scanners
             encoder.text_token match, kind
 
           elsif match = scan(/["']/)
-            if key_expected && check(KEY_CHECK_PATTERN[match])
-              state = :key
+            state = if key_expected && check(KEY_CHECK_PATTERN[match])
+              :key
             else
-              state = :string
-            end
+              :string
+                    end
             encoder.begin_group state
             string_delimiter = match
             encoder.text_token match, :delimiter

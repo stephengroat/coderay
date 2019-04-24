@@ -138,11 +138,11 @@ class CodeStatistics
     m_over_c = (statistics[:methods] / (statistics[:classes] + statistics[:modules])) rescue m_over_c = 0
     loc_over_m = (statistics[:codelines] / statistics[:methods]) - 2 rescue loc_over_m = 0
 
-    if name[TEST_TYPES]
-      name = "T #{name}"
+    name = if name[TEST_TYPES]
+      "T #{name}"
     else
-      name = "  #{name}"
-    end
+      "  #{name}"
+           end
 
     line = '| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |' % (
       [name, *statistics.values_at(:files, :lines, :codelines, :comments, :classes, :modules, :methods)] +

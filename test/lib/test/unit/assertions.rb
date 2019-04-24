@@ -108,11 +108,11 @@ EOT
       public
       def assert_raise(*args)
         _wrap_assertion do
-          if Module === args.last
-            message = ''
+          message = if Module === args.last
+            ''
           else
-            message = args.pop
-          end
+            args.pop
+                    end
           exceptions, modules = _check_exception_class(args)
           expected = args.size == 1 ? args.first : args
           actual_exception = nil
@@ -281,11 +281,11 @@ EOT
       public
       def assert_nothing_raised(*args)
         _wrap_assertion do
-          if Module === args.last
-            message = ''
+          message = if Module === args.last
+            ''
           else
-            message = args.pop
-          end
+            args.pop
+                    end
           exceptions, modules = _check_exception_class(args)
           begin
             yield

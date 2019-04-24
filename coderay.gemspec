@@ -5,11 +5,11 @@ require 'coderay/version'
 Gem::Specification.new do |s|
   s.name = 'coderay'
 
-  if ENV['RELEASE']
-    s.version = CodeRay::VERSION
+  s.version = if ENV['RELEASE']
+    CodeRay::VERSION
   else
-    s.version = "#{CodeRay::VERSION}.rc#{ENV['RC'] || 1}"
-  end
+    "#{CodeRay::VERSION}.rc#{ENV['RC'] || 1}"
+              end
 
   s.authors     = ['Kornelius Kalnbach']
   s.email       = ['murphy@rubychan.de']

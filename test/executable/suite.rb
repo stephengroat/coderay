@@ -23,23 +23,23 @@ class TestCodeRayExecutable < Test::Unit::TestCase
     end % [ROOT_DIR + 'lib', EXECUTABLE]
 
   def coderay(args, options = {})
-    if options[:fake_tty]
-      command = "#{EXE_COMMAND} #{args} --tty"
+    command = if options[:fake_tty]
+      "#{EXE_COMMAND} #{args} --tty"
     else
-      command = "#{EXE_COMMAND} #{args}"
-    end
+      "#{EXE_COMMAND} #{args}"
+              end
 
     puts command if $DEBUG
 
-    if options[:input]
-      output = IO.popen "#{command} 2>&1", 'r+' do |io|
+    output = if options[:input]
+      IO.popen "#{command} 2>&1", 'r+' do |io|
         io.write options[:input]
         io.close_write
         io.read
       end
     else
-      output = `#{command} 2>&1`
-    end
+      `#{command} 2>&1`
+             end
 
     if output[EXECUTABLE.to_s]
       raise output

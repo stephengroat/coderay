@@ -243,15 +243,15 @@ module Encoders
 
     # whole lines to be highlighted, eg. a deleted line in a diff
     def begin_line(kind)
-      if style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
+      @out << if style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
         if style['class="']
-          @out << style.sub('class="', 'class="line ')
+          style.sub('class="', 'class="line ')
         else
-          @out << style.sub('>', ' class="line">')
-        end
+          style.sub('>', ' class="line">')
+                end
       else
-        @out << '<span class="line">'
-      end
+        '<span class="line">'
+              end
       @opened << kind
       @last_opened = kind if @options[:css] == :style
     end

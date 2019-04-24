@@ -58,11 +58,11 @@ module Encoders
           after_last_newline = output[position_of_last_newline + 1 .. -1]
           ends_with_newline = after_last_newline[/\A(?:<\/span>)*\z/]
 
-          if ends_with_newline
-            line_count = output.count("\n")
+          line_count = if ends_with_newline
+            output.count("\n")
           else
-            line_count = output.count("\n") + 1
-          end
+            output.count("\n") + 1
+                       end
         else
           line_count = 1
         end

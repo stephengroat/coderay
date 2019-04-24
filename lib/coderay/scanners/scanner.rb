@@ -50,11 +50,11 @@ module CodeRay
           code = code.to_s unless code.is_a? ::String
           return code if code.empty?
 
-          if code.respond_to? :encoding
-            code = encode_with_encoding code, encoding
+          code = if code.respond_to? :encoding
+            encode_with_encoding code, encoding
           else
-            code = to_unix code
-          end
+            to_unix code
+                 end
           # code = code.dup if code.eql? original
           code
         end

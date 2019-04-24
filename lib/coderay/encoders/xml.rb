@@ -34,22 +34,22 @@ module Encoders
 
     public
     def text_token(text, kind)
-      if kind == :space
-        token = @node
+      token = if kind == :space
+        @node
       else
-        token = @node.add_element kind.to_s
-      end
+        @node.add_element kind.to_s
+              end
       text.scan(/(\x20+)|(\t+)|(\n)|[^\x20\t\n]+/) do |space, tab, nl|
-        case
+        token << case
         when space
-          token << REXML::Text.new(space, true)
+          REXML::Text.new(space, true)
         when tab
-          token << REXML::Text.new(tab, true)
+          REXML::Text.new(tab, true)
         when nl
-          token << REXML::Text.new(nl, true)
+          REXML::Text.new(nl, true)
         else
-          token << REXML::Text.new($&)
-        end
+          REXML::Text.new($&)
+                 end
       end
     end
 

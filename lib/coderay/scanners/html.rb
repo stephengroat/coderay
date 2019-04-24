@@ -145,11 +145,11 @@ module Scanners
             if match = scan(/#{TAG_END}/o)
               encoder.text_token match, :tag
               in_attribute = nil
-              if in_tag
-                state = :in_special_tag
+              state = if in_tag
+                :in_special_tag
               else
-                state = :initial
-              end
+                :initial
+                      end
             elsif match = scan(/#{ATTR_NAME}/o)
               in_attribute = IN_ATTRIBUTE[match]
               encoder.text_token match, :attribute_name

@@ -143,24 +143,24 @@ module Test
                'Runs tests matching NAME.',
                '(patterns may be used).') do |n|
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
-            case n
+            @filters << case n
             when Regexp
-              @filters << proc{|t| n =~ t.method_name ? true : nil}
+              proc{|t| n =~ t.method_name ? true : nil}
             else
-              @filters << proc{|t| n == t.method_name ? true : nil}
-            end
+              proc{|t| n == t.method_name ? true : nil}
+                        end
           end
 
           o.on('-t', '--testcase=TESTCASE', String,
                'Runs tests in TestCases matching TESTCASE.',
                '(patterns may be used).') do |n|
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new($1) : n)
-            case n
+            @filters << case n
             when Regexp
-              @filters << proc{|t| n =~ t.class.name ? true : nil}
+              proc{|t| n =~ t.class.name ? true : nil}
             else
-              @filters << proc{|t| n == t.class.name ? true : nil}
-            end
+              proc{|t| n == t.class.name ? true : nil}
+                        end
           end
 
           o.on('-I', "--load-path=DIR[#{File::PATH_SEPARATOR}DIR...]",

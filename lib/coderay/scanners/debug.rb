@@ -33,11 +33,11 @@ module Scanners
           end
 
         elsif match = scan(/ (\w+) ([<\[]) /x)
-          if @known_token_kinds.include? self[1]
-            kind = self[1].to_sym
+          kind = if @known_token_kinds.include? self[1]
+            self[1].to_sym
           else
-            kind = :unknown
-          end
+            :unknown
+                 end
 
           opened_tokens << kind
           case self[2]

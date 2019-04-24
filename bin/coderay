@@ -124,19 +124,19 @@ when 'highlight', nil
       input_lang ||= CodeRay::FileType.fetch input_file, :text, true
     end
 
-    if output_file
-      output_format ||= CodeRay::FileType[output_file] || :plain
+    output_format ||= if output_file
+      CodeRay::FileType[output_file] || :plain
     else
-      output_format ||= :terminal
-    end
+      :terminal
+                      end
 
     output_format = :page if output_format.to_s == 'html'
 
-    if input_file
-      input = File.read input_file
+    input = if input_file
+      File.read input_file
     else
-      input = $stdin.read
-    end
+      $stdin.read
+            end
 
     begin
       file =
