@@ -9,7 +9,7 @@ module CodeRay
     attr_accessor :input, :lang, :options, :block
     
     # Create a new TokensProxy with the arguments of CodeRay.scan.
-    def initialize input, lang, options = {}, block = nil
+    def initialize(input, lang, options = {}, block = nil)
       @input   = input
       @lang    = lang
       @options = options
@@ -18,7 +18,7 @@ module CodeRay
     
     # Call CodeRay.encode if +encoder+ is a Symbol;
     # otherwise, convert the receiver to tokens and call encoder.encode_tokens.
-    def encode encoder, options = {}
+    def encode(encoder, options = {})
       if encoder.respond_to? :to_sym
         CodeRay.encode(input, lang, encoder, options)
       else
@@ -28,7 +28,7 @@ module CodeRay
     
     # Tries to call encode;
     # delegates to tokens otherwise.
-    def method_missing method, *args, &blk
+    def method_missing(method, *args, &blk)
       encode method.to_sym, *args
     rescue PluginHost::PluginNotFound
       tokens.send(method, *args, &blk)
@@ -45,7 +45,7 @@ module CodeRay
     end
     
     # Overwrite Struct#each.
-    def each *args, &blk
+    def each(*args, &blk)
       tokens.each(*args, &blk)
       self
     end

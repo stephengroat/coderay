@@ -15,7 +15,7 @@ module CodeRay
       
     protected
       
-      def scan_tokens encoder, options
+      def scan_tokens(encoder, options)
         encoder.text_token string, :plain
         encoder
       end

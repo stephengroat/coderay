@@ -6,7 +6,7 @@ subcommand = args.first if /^\w/ === args.first
 subcommand = nil if subcommand && File.exist?(subcommand)
 args.delete subcommand
 
-def option? *options
+def option?(*options)
   !($options & options).empty?
 end
 
@@ -65,7 +65,7 @@ def commands
   COMMANDS
 end
 
-def print_list_of plugin_host
+def print_list_of(plugin_host)
   plugins = plugin_host.all_plugins.map do |plugin|
     info = "  #{plugin.plugin_id}: #{plugin.title}"
     

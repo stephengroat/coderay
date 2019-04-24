@@ -48,7 +48,7 @@ module CodeRay
         # Normalizes the given code into a string with UNIX newlines, in the
         # scanner's internal encoding, with invalid and undefined charachters
         # replaced by placeholders. Always returns a new object.
-        def normalize code
+        def normalize(code)
           # original = code
           code = code.to_s unless code.is_a? ::String
           return code if code.empty?
@@ -63,12 +63,12 @@ module CodeRay
         end
         
         # The typical filename suffix for this scanner's language.
-        def file_extension extension = lang
+        def file_extension(extension = lang)
           @file_extension ||= extension.to_s
         end
         
         # The encoding used internally by this scanner.
-        def encoding name = 'UTF-8'
+        def encoding(name = 'UTF-8')
           @encoding ||= defined?(Encoding.find) && Encoding.find(name)
         end
         
@@ -79,7 +79,7 @@ module CodeRay
         
       protected
         
-        def encode_with_encoding code, target_encoding
+        def encode_with_encoding(code, target_encoding)
           if code.encoding == target_encoding
             if code.valid_encoding?
               return to_unix(code)
@@ -93,11 +93,11 @@ module CodeRay
           code.encode target_encoding, source_encoding, :universal_newline => true, :undef => :replace, :invalid => :replace
         end
         
-        def to_unix code
+        def to_unix(code)
           code.index(?\r) ? code.gsub(/\r\n?/, "\n") : code
         end
         
-        def guess_encoding s
+        def guess_encoding(s)
           #:nocov:
           IO.popen("file -b --mime -", "w+") do |file|
             file.write s[0, 1024]
@@ -122,7 +122,7 @@ module CodeRay
       #   overwrite default options here.)
       #
       # Else, a Tokens object is used.
-      def initialize code = '', options = {}
+      def initialize(code = '', options = {})
         if self.class == Scanner
           raise NotImplementedError, "I am only the basic Scanner class. I can't scan anything. :( Use my subclasses."
         end
@@ -145,7 +145,7 @@ module CodeRay
       end
       
       # Set a new string to be scanned.
-      def string= code
+      def string=(code)
         code = self.class.normalize(code)
         super code
         reset_instance
@@ -162,7 +162,7 @@ module CodeRay
       end
       
       # Scan the code and returns all tokens in a Tokens object.
-      def tokenize source = nil, options = {}
+      def tokenize(source = nil, options = {})
         options = @options.merge(options)
         
         set_tokens_from_options options
@@ -189,7 +189,7 @@ module CodeRay
       end
       
       # Traverse the tokens.
-      def each &block
+      def each(&block)
         tokens.each(&block)
       end
       include Enumerable
@@ -199,14 +199,14 @@ module CodeRay
       #
       # Beware, this is implemented inefficiently. It should be used
       # for debugging only.
-      def line pos = self.pos
+      def line(pos = self.pos)
         return 1 if pos <= 0
         binary_string[0...pos].count("\n") + 1
       end
       
       # The current column position of the scanner, starting with 1.
       # See also: #line.
-      def column pos = self.pos
+      def column(pos = self.pos)
         return 1 if pos <= 0
         pos - (binary_string.rindex(?\n, pos - 1) || -1)
       end
@@ -236,7 +236,7 @@ module CodeRay
       def setup # :doc:
       end
       
-      def set_string_from_source source
+      def set_string_from_source(source)
         case source
         when Array
           self.string = self.class.normalize(source.join)
@@ -247,7 +247,7 @@ module CodeRay
         end
       end
       
-      def set_tokens_from_options options
+      def set_tokens_from_options(options)
         @tokens = options[:tokens] || @tokens || Tokens.new
         @tokens.scanner = self if @tokens.respond_to? :scanner=
       end
@@ -257,7 +257,7 @@ module CodeRay
       #
       # Subclasses must implement this method; it must return +tokens+
       # and must only use Tokens#<< for storing scanned tokens!
-      def scan_tokens tokens, options # :doc:
+      def scan_tokens(tokens, options) # :doc:
         raise NotImplementedError, "#{self.class}#scan_tokens not implemented."
       end
       
@@ -286,7 +286,7 @@ surrounding code:
 
       MESSAGE
       
-      def raise_inspect_arguments message, tokens, state, ambit
+      def raise_inspect_arguments(message, tokens, state, ambit)
         return File.basename(caller[0]),
           message,
           tokens_size(tokens),
@@ -302,7 +302,7 @@ matched: %p  state: %p
 bol?: %p,  eos?: %p
       INFO
       
-      def scanner_state_info state
+      def scanner_state_info(state)
         SCANNER_STATE_INFO % [
           line, column, pos,
           matched, state || 'No state given!',
@@ -311,15 +311,15 @@ bol?: %p,  eos?: %p
       end
       
       # Scanner error with additional status information
-      def raise_inspect message, tokens, state = self.state, ambit = 30, backtrace = caller
+      def raise_inspect(message, tokens, state = self.state, ambit = 30, backtrace = caller)
         raise ScanError, SCAN_ERROR_MESSAGE % raise_inspect_arguments(message, tokens, state, ambit), backtrace
       end
       
-      def tokens_size tokens
+      def tokens_size(tokens)
         tokens.size if tokens.respond_to?(:size)
       end
       
-      def tokens_last tokens, n
+      def tokens_last(tokens, n)
         tokens.respond_to?(:last) ? tokens.last(n) : []
       end
       

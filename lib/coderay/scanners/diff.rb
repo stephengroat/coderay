@@ -16,7 +16,7 @@ module Scanners
     
   protected
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       line_kind = nil
       state = :initial
@@ -201,7 +201,7 @@ module Scanners
     
   private
     
-    def diff a, b
+    def diff(a, b)
       # i will be the index of the leftmost difference from the left.
       i_max = [a.size, b.size].min
       i = 0

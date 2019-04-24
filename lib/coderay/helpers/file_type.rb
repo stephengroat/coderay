@@ -26,7 +26,7 @@ module CodeRay
       #
       # The file itself is only accessed when +read_shebang+ is set to true.
       # That means you can get filetypes from files that don't exist.
-      def [] filename, read_shebang = false
+      def [](filename, read_shebang = false)
         name = File.basename filename
         ext = File.extname(name).sub(/^\./, '') # from last dot, delete the leading dot
         ext2 = filename.to_s[/\.(.*)/, 1] # from first dot
@@ -47,7 +47,7 @@ module CodeRay
       #
       # If the filetype cannot be found, the +default+ value
       # is returned.
-      def fetch filename, default = nil, read_shebang = false
+      def fetch(filename, default = nil, read_shebang = false)
         if default && block_given?
           warn 'Block supersedes default value argument; use either.'
         end
@@ -63,7 +63,7 @@ module CodeRay
       
     protected
       
-      def type_from_shebang filename
+      def type_from_shebang(filename)
         return unless File.exist? filename
         File.open filename, 'r' do |f|
           if first_line = f.gets

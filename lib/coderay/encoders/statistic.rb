@@ -14,7 +14,7 @@ module Encoders
     
   protected
     
-    def setup options
+    def setup(options)
       super
       
       @type_stats = Hash.new { |h, k| h[k] = TypeStats.new 0, 0 }
@@ -39,7 +39,7 @@ Token Types (%d):
   %-20s  %8d  %6.2f %%   %5.1f
     TKR
     
-    def finish options
+    def finish(options)
       all = @type_stats['TOTAL']
       all_count, all_size = all.count, all.size
       @type_stats.each do |type, stat|
@@ -59,7 +59,7 @@ Token Types (%d):
     
   public
     
-    def text_token text, kind
+    def text_token(text, kind)
       @real_token_count += 1 unless kind == :space
       @type_stats[kind].count += 1
       @type_stats[kind].size += text.size
@@ -67,23 +67,23 @@ Token Types (%d):
       @type_stats['TOTAL'].count += 1
     end
     
-    def begin_group kind
+    def begin_group(kind)
       block_token ':begin_group', kind
     end
     
-    def end_group kind
+    def end_group(kind)
       block_token ':end_group', kind
     end
     
-    def begin_line kind
+    def begin_line(kind)
       block_token ':begin_line', kind
     end
     
-    def end_line kind
+    def end_line(kind)
       block_token ':end_line', kind
     end
     
-    def block_token action, kind
+    def block_token(action, kind)
       @type_stats['TOTAL'].count += 1
       @type_stats[action].count += 1
       @type_stats[kind].count += 1

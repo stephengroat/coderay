@@ -19,11 +19,11 @@ module Encoders
 
         # Raises an exception if an object that doesn't respond to to_str is extended by Output,
         # to prevent users from misuse. Use Module#remove_method to disable.
-        def extended o # :nodoc:
+        def extended(o) # :nodoc:
           warn "The Output module is intended to extend instances of String, not #{o.class}." unless o.respond_to? :to_str
         end
 
-        def make_stylesheet css, in_tag = false # :nodoc:
+        def make_stylesheet(css, in_tag = false) # :nodoc:
           sheet = css.stylesheet
           sheet = <<-'CSS' if in_tag
 <style type="text/css">
@@ -33,14 +33,14 @@ module Encoders
           sheet
         end
 
-        def page_template_for_css css # :nodoc:
+        def page_template_for_css(css) # :nodoc:
           sheet = make_stylesheet css
           PAGE.apply 'CSS', sheet
         end
 
       end
 
-      def wrapped_in? element
+      def wrapped_in?(element)
         wrapped_in == element
       end
 
@@ -49,17 +49,17 @@ module Encoders
       end
       attr_writer :wrapped_in
 
-      def wrap_in! template
+      def wrap_in!(template)
         Template.wrap! self, template, 'CONTENT'
         self
       end
       
-      def apply_title! title
+      def apply_title!(title)
         self.sub!(/(<title>)(<\/title>)/) { $1 + title + $2 }
         self
       end
 
-      def wrap! element, *args
+      def wrap!(element, *args)
         return self if not element or element == wrapped_in
         case element
         when :div
@@ -83,7 +83,7 @@ module Encoders
         self
       end
 
-      def stylesheet in_tag = false
+      def stylesheet(in_tag = false)
         Output.make_stylesheet @css, in_tag
       end
 
@@ -91,7 +91,7 @@ module Encoders
 
       class Template < String # :nodoc:
 
-        def self.wrap! str, template, target
+        def self.wrap!(str, template, target)
           target = Regexp.new(Regexp.escape("<%#{target}%>"))
           if template =~ target
             str[0, 0] = $`
@@ -101,7 +101,7 @@ module Encoders
           end
         end
 
-        def apply target, replacement
+        def apply(target, replacement)
           target = Regexp.new(Regexp.escape("<%#{target}%>"))
           if self =~ target
             Template.new($` + replacement + $')

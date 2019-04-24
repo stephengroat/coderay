@@ -58,7 +58,7 @@ module Scanners
       @state = :initial
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       state, string_delimiter = options[:state] || @state
       if string_delimiter

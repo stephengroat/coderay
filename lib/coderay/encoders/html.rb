@@ -154,7 +154,7 @@ module Encoders
     # Generate a hint about the given +kinds+ in a +hint+ style.
     #
     # +hint+ may be :info, :info_long or :debug.
-    def self.token_path_to_hint hint, kinds
+    def self.token_path_to_hint(hint, kinds)
       kinds = Array kinds
       title =
         case hint
@@ -169,7 +169,7 @@ module Encoders
       title ? " title=\"#{title}\"" : ''
     end
     
-    def setup options
+    def setup(options)
       super
       
       check_options! options
@@ -192,7 +192,7 @@ module Encoders
       @set_last_opened = options[:hint] || options[:css] == :style
     end
     
-    def finish options
+    def finish(options)
       unless @opened.empty?
         @out << '</span>' while @opened.pop
         @last_opened = nil
@@ -218,7 +218,7 @@ module Encoders
     
   public
     
-    def text_token text, kind
+    def text_token(text, kind)
       style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
       
       text = text.gsub(/#{HTML_ESCAPE_PATTERN}/o) { |m| @HTML_ESCAPE[m] } if text =~ /#{HTML_ESCAPE_PATTERN}/o
@@ -232,19 +232,19 @@ module Encoders
     end
     
     # token groups, eg. strings
-    def begin_group kind
+    def begin_group(kind)
       @out << (@span_for_kinds[@last_opened ? [kind, *@opened] : kind] || '<span>')
       @opened << kind
       @last_opened = kind if @set_last_opened
     end
     
-    def end_group kind
+    def end_group(kind)
       check_group_nesting 'token group', kind if $CODERAY_DEBUG
       close_span
     end
     
     # whole lines to be highlighted, eg. a deleted line in a diff
-    def begin_line kind
+    def begin_line(kind)
       if style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
         if style['class="']
           @out << style.sub('class="', 'class="line ')
@@ -258,14 +258,14 @@ module Encoders
       @last_opened = kind if @options[:css] == :style
     end
     
-    def end_line kind
+    def end_line(kind)
       check_group_nesting 'line', kind if $CODERAY_DEBUG
       close_span
     end
     
   protected
     
-    def check_options! options
+    def check_options!(options)
       unless [false, nil, :debug, :info, :info_long].include? options[:hint]
         raise ArgumentError, "Unknown value %p for :hint; expected :info, :info_long, :debug, false, or nil." % [options[:hint]]
       end
@@ -277,16 +277,16 @@ module Encoders
       options[:break_lines] = true if options[:line_numbers] == :inline
     end
     
-    def css_class_for_kinds kinds
+    def css_class_for_kinds(kinds)
       TokenKinds[kinds.is_a?(Symbol) ? kinds : kinds.first]
     end
     
-    def style_for_kinds kinds
+    def style_for_kinds(kinds)
       css_classes = kinds.is_a?(Array) ? kinds.map { |c| TokenKinds[c] } : [TokenKinds[kinds]]
       @css.get_style_for_css_classes css_classes
     end
     
-    def make_span_for_kinds method, hint
+    def make_span_for_kinds(method, hint)
       Hash.new do |h, kinds|
         begin
           css_class = css_class_for_kinds(kinds)
@@ -307,13 +307,13 @@ module Encoders
       end
     end
     
-    def check_group_nesting name, kind
+    def check_group_nesting(name, kind)
       if @opened.empty? || @opened.last != kind
         warn "Malformed token stream: Trying to close a #{name} (%p) that is not open. Open are: %p." % [kind, @opened[1..-1]]
       end
     end
     
-    def break_lines text, style
+    def break_lines(text, style)
       reopen = ''.dup
       @opened.each_with_index do |kind, index|
         reopen << (@span_for_kinds[index > 0 ? [kind, *@opened[0...index]] : kind] || '<span>')

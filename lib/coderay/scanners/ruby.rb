@@ -26,7 +26,7 @@ module Scanners
       @state = :initial
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       state, heredocs = options[:state] || @state
       heredocs = heredocs.dup if heredocs.is_a?(Array)
       

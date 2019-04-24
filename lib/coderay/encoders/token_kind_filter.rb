@@ -32,7 +32,7 @@ module Encoders
     }
     
   protected
-    def setup options
+    def setup(options)
       super
       
       @group_excluded = false
@@ -42,11 +42,11 @@ module Encoders
       @include = Array(@include) unless @include == :all
     end
     
-    def include_text_token? text, kind
+    def include_text_token?(text, kind)
       include_group? kind
     end
     
-    def include_group? kind
+    def include_group?(kind)
        (@include == :all || @include.include?(kind)) &&
       !(@exclude == :all || @exclude.include?(kind))
     end
@@ -54,7 +54,7 @@ module Encoders
   public
     
     # Add the token to the output stream if +kind+ matches the conditions.
-    def text_token text, kind
+    def text_token(text, kind)
       super if !@group_excluded && include_text_token?(text, kind)
     end
     
@@ -63,7 +63,7 @@ module Encoders
     # 
     # If it does not, all tokens inside the group are excluded from the
     # stream, even if their kinds match.
-    def begin_group kind
+    def begin_group(kind)
       if @group_excluded
         @group_excluded += 1
       elsif include_group? kind
@@ -74,7 +74,7 @@ module Encoders
     end
     
     # See +begin_group+.
-    def begin_line kind
+    def begin_line(kind)
       if @group_excluded
         @group_excluded += 1
       elsif include_group? kind
@@ -86,7 +86,7 @@ module Encoders
     
     # Take care of re-enabling the delegation of tokens to the output stream
     # if an exluded group has ended.
-    def end_group kind
+    def end_group(kind)
       if @group_excluded
         @group_excluded -= 1
         @group_excluded = false if @group_excluded.zero?
@@ -96,7 +96,7 @@ module Encoders
     end
     
     # See +end_group+.
-    def end_line kind
+    def end_line(kind)
       if @group_excluded
         @group_excluded -= 1
         @group_excluded = false if @group_excluded.zero?

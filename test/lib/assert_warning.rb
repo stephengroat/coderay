@@ -1,6 +1,6 @@
 class Test::Unit::TestCase
   
-  def assert_warning expected_warning
+  def assert_warning(expected_warning)
     require 'stringio'
     oldstderr = $stderr
     $stderr = StringIO.new

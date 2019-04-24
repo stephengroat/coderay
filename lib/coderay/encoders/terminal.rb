@@ -138,7 +138,7 @@ module CodeRay
       
     public
       
-      def text_token text, kind
+      def text_token(text, kind)
         if color = @color_scopes.last[kind]
           color = color[:self] if color.is_a? Hash
           
@@ -153,13 +153,13 @@ module CodeRay
         end
       end
       
-      def begin_group kind
+      def begin_group(kind)
         @opened << kind
         @out << open_token(kind)
       end
       alias begin_line begin_group
       
-      def end_group kind
+      def end_group(kind)
         if @opened.pop
           @color_scopes.pop
           @out << "\e[0m"
@@ -169,14 +169,14 @@ module CodeRay
         end
       end
       
-      def end_line kind
+      def end_line(kind)
         @out << (@line_filler ||= "\t" * 100)
         end_group kind
       end
       
     private
       
-      def open_token kind
+      def open_token(kind)
         if color = @color_scopes.last[kind]
           if color.is_a? Hash
             @color_scopes << color

@@ -53,7 +53,7 @@ private
     end
   end
 
-  def calculate_directory_statistics directory, pattern = DEFAULT_FILE_PATTERN, is_ruby_code = true
+  def calculate_directory_statistics(directory, pattern = DEFAULT_FILE_PATTERN, is_ruby_code = true)
     is_ruby_code = true if is_ruby_code.nil?
     stats = Hash.new 0
 
@@ -135,7 +135,7 @@ private
     puts "+---------------------------+-------+-------+-------+----------+---------+---------+---------+-----+-------+"
   end
 
-  def print_line name, statistics
+  def print_line(name, statistics)
     m_over_c = (statistics[:methods] / (statistics[:classes] + statistics[:modules])) rescue m_over_c = 0
     loc_over_m = (statistics[:codelines] / statistics[:methods]) - 2 rescue loc_over_m = 0
 

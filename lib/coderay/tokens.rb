@@ -53,7 +53,7 @@ module CodeRay
     # * an Encoder object
     #
     # options are passed to the encoder.
-    def encode encoder, options = {}
+    def encode(encoder, options = {})
       encoder = Encoders[encoder].new options if encoder.respond_to? :to_sym
       encoder.encode_tokens self, options
     end
@@ -67,7 +67,7 @@ module CodeRay
     #
     # For example, if you call +tokens.html+, the HTML encoder
     # is used to highlight the tokens.
-    def method_missing meth, options = {}
+    def method_missing(meth, options = {})
       encode meth, options
     rescue PluginHost::PluginNotFound
       super
@@ -82,7 +82,7 @@ module CodeRay
     # 
     # This method is used by @Scanner#tokenize@ when called with an Array
     # of source strings. The Diff encoder uses it for inline highlighting.
-    def split_into_parts *sizes
+    def split_into_parts(*sizes)
       return Array.new(sizes.size) { Tokens.new } if size == 2 && first == ''
       parts = []
       opened = []
@@ -153,10 +153,10 @@ module CodeRay
     end
     
     alias text_token push
-    def begin_group kind; push :begin_group, kind end
-    def end_group kind; push :end_group, kind end
-    def begin_line kind; push :begin_line, kind end
-    def end_line kind; push :end_line, kind end
+    def begin_group(kind); push :begin_group, kind end
+    def end_group(kind); push :end_group, kind end
+    def begin_line(kind); push :begin_line, kind end
+    def end_line(kind); push :end_line, kind end
     alias tokens concat
     
   end

@@ -41,7 +41,7 @@ module Scanners
     
   protected
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
 
       state = :initial
       label_expected = true

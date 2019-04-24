@@ -23,7 +23,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
       "#{RUBY_COMMAND} -I%s %s"
     end % [ROOT_DIR + 'lib', EXECUTABLE]
   
-  def coderay args, options = {}
+  def coderay(args, options = {})
     if options[:fake_tty]
       command = "#{EXE_COMMAND} #{args} --tty"
     else

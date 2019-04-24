@@ -52,7 +52,7 @@ module Scanners
       @value_expected = false
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       states = Array(options[:state] || @state).dup
       value_expected = @value_expected
       

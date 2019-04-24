@@ -73,21 +73,21 @@ module Scanners
       @in_tag = nil
     end
     
-    def scan_java_script encoder, code
+    def scan_java_script(encoder, code)
       if code && !code.empty?
         @java_script_scanner ||= Scanners::JavaScript.new '', :keep_tokens => true
         @java_script_scanner.tokenize code, :tokens => encoder
       end
     end
     
-    def scan_css encoder, code, state = [:initial]
+    def scan_css(encoder, code, state = [:initial])
       if code && !code.empty?
         @css_scanner ||= Scanners::CSS.new '', :keep_tokens => true
         @css_scanner.tokenize code, :tokens => encoder, :state => state
       end
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       state = options[:state] || @state
       plain_string_content = @plain_string_content
       in_tag = @in_tag

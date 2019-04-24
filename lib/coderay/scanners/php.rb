@@ -231,7 +231,7 @@ module Scanners
     
   protected
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       if check(RE::PHP_START) || # starts with <?
        (match?(/\s*<\S/) && check(/.{1,1000}#{RE::PHP_START}/om)) || # starts with tag and contains <?

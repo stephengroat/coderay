@@ -5,7 +5,7 @@ module Encoders
     
     module Numbering # :nodoc:
       
-      def self.number! output, mode = :table, options = {}
+      def self.number!(output, mode = :table, options = {})
         return self unless mode
         
         options = DEFAULT_OPTIONS.merge options

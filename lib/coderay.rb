@@ -130,7 +130,7 @@ module CodeRay
   CODERAY_PATH = File.expand_path('../coderay', __FILE__)
   
   # Assuming the path is a subpath of lib/coderay/
-  def self.coderay_path *path
+  def self.coderay_path(*path)
     File.join CODERAY_PATH, *path
   end
   
@@ -165,7 +165,7 @@ module CodeRay
     #  page = CodeRay.scan("puts 'Hello, world!'", :ruby).html
     #
     # See also demo/demo_simple.
-    def scan code, lang, options = {}, &block
+    def scan(code, lang, options = {}, &block)
       CodeRay::TokensProxy.new code, lang, options, block
     end
     
@@ -180,7 +180,7 @@ module CodeRay
     # Example:
     #  require 'coderay'
     #  page = CodeRay.scan_file('some_c_code.c').html
-    def scan_file filename, lang = :auto, options = {}, &block
+    def scan_file(filename, lang = :auto, options = {}, &block)
       lang = CodeRay::FileType.fetch filename, :text, true if lang == :auto
       code = File.read filename
       scan code, lang, options, &block
@@ -193,7 +193,7 @@ module CodeRay
     # +options+ will be passed to the Encoder.
     #
     # See CodeRay::Encoder.encode.
-    def encode code, lang, format, options = {}
+    def encode(code, lang, format, options = {})
       encoder(format, options).encode code, lang, options
     end
     
@@ -206,7 +206,7 @@ module CodeRay
     #  tokens = CodeRay.scan '1 + 2', :ruby
     #  puts CodeRay.encode_tokens(tokens, :span)
     #
-    def encode_tokens tokens, format, options = {}
+    def encode_tokens(tokens, format, options = {})
       encoder(format, options).encode_tokens tokens, options
     end
     
@@ -218,7 +218,7 @@ module CodeRay
     # Example:
     #  require 'coderay'
     #  page = CodeRay.encode_file 'some_c_code.c', :html
-    def encode_file filename, format, options = {}
+    def encode_file(filename, format, options = {})
       tokens = scan_file filename, :auto, get_scanner_options(options)
       encode_tokens tokens, format, options
     end
@@ -229,7 +229,7 @@ module CodeRay
     # in your output.
     #
     # See encode.
-    def highlight code, lang, options = { :css => :class }, format = :div
+    def highlight(code, lang, options = { :css => :class }, format = :div)
       encode code, lang, format, options
     end
     
@@ -239,7 +239,7 @@ module CodeRay
     # in your output.
     #
     # See encode.
-    def highlight_file filename, options = { :css => :class }, format = :div
+    def highlight_file(filename, options = { :css => :class }, format = :div)
       encode_file filename, format, options
     end
     
@@ -257,7 +257,7 @@ module CodeRay
     #    stats.real_token_count
     #  ]
     #  #-> 2 out of 4 tokens have the kind :integer.
-    def encoder format, options = {}
+    def encoder(format, options = {})
       CodeRay::Encoders[format].new options
     end
     
@@ -265,7 +265,7 @@ module CodeRay
     # +options+ to it.
     #
     # See Scanner.new.
-    def scanner lang, options = {}, &block
+    def scanner(lang, options = {}, &block)
       CodeRay::Scanners[lang].new '', options, &block
     end
     
@@ -275,7 +275,7 @@ module CodeRay
     #
     # This is used if a method like CodeRay.encode has to provide options
     # for Encoder _and_ scanner.
-    def get_scanner_options options
+    def get_scanner_options(options)
       options.fetch :scanner_options, {}
     end
     

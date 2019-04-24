@@ -37,7 +37,7 @@ module Scanners
         end
       end
       
-      def self.simple_key_pattern delim
+      def self.simple_key_pattern(delim)
         if delim == "'"
           / (?> (?: [^\\']+ | \\. )* ) ' : /mx
         else
@@ -45,7 +45,7 @@ module Scanners
         end
       end
       
-      def initialize kind, interpreted, delim, heredoc = false
+      def initialize(kind, interpreted, delim, heredoc = false)
         if heredoc
           pattern = heredoc_pattern delim, interpreted, heredoc == :indented
           delim = nil
@@ -60,7 +60,7 @@ module Scanners
         super kind, interpreted, delim, heredoc, opening_paren, paren_depth, pattern, :initial
       end
       
-      def heredoc_pattern delim, interpreted, indented
+      def heredoc_pattern(delim, interpreted, indented)
         # delim = delim.dup  # workaround for old Ruby
         delim_pattern = Regexp.escape(delim)
         delim_pattern = / (?:\A|\n) #{ '(?>[ \t]*)' if indented } #{ Regexp.new delim_pattern } $ /x

@@ -19,7 +19,7 @@ module Encoders
     }
     
   protected
-    def setup options
+    def setup(options)
       super
       
       @doc = REXML::Document.new
@@ -28,14 +28,14 @@ module Encoders
       @root = @node = @doc.add_element('coderay-tokens')
     end
     
-    def finish options
+    def finish(options)
       @doc.write @out, options[:pretty], options[:transitive], true
       
       super
     end
     
   public
-    def text_token text, kind
+    def text_token(text, kind)
       if kind == :space
         token = @node
       else
@@ -55,11 +55,11 @@ module Encoders
       end
     end
     
-    def begin_group kind
+    def begin_group(kind)
       @node = @node.add_element kind.to_s
     end
     
-    def end_group kind
+    def end_group(kind)
       if @node == @root
         raise 'no token to close!'
       end

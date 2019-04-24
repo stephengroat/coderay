@@ -23,7 +23,7 @@ module Scanners
     end
     
     # See http://json.org/ for a definition of the JSON lexic/grammar.
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       state = options[:state] || @state
       
       if [:string, :key].include? state

@@ -142,7 +142,7 @@ module CodeRay
       
     protected
       
-      def scan_tokens encoder, options
+      def scan_tokens(encoder, options)
         
         state = :initial
         kind = nil

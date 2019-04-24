@@ -42,7 +42,7 @@ module Scanners
     
   protected
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       state = :initial
       last_token = ''

@@ -22,7 +22,7 @@ module Encoders
     
   protected
     
-    def setup options
+    def setup(options)
       if scanner
         kinds_not_loc = scanner.class::KINDS_NOT_LOC
       else
@@ -35,7 +35,7 @@ module Encoders
       super options
     end
     
-    def finish options
+    def finish(options)
       output @tokens.text.scan(NON_EMPTY_LINE).size
     end
     

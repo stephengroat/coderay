@@ -21,7 +21,7 @@ module CodeRay
         
         # If FILE_EXTENSION isn't defined, this method returns the
         # downcase class name instead.
-        def const_missing sym
+        def const_missing(sym)
           if sym == :FILE_EXTENSION
             (defined?(@plugin_id) && @plugin_id || name[/\w+$/].downcase).to_s
           else
@@ -52,13 +52,13 @@ module CodeRay
       #
       # Each method has an optional +options+ parameter. These are
       # added to the options you passed at creation.
-      def initialize options = {}
+      def initialize(options = {})
         @options = self.class::DEFAULT_OPTIONS.merge options
         @@CODERAY_TOKEN_INTERFACE_DEPRECATION_WARNING_GIVEN = false
       end
       
       # Encode a Tokens object.
-      def encode_tokens tokens, options = {}
+      def encode_tokens(tokens, options = {})
         options = @options.merge options
         @scanner = tokens.scanner if tokens.respond_to? :scanner
         setup options
@@ -67,7 +67,7 @@ module CodeRay
       end
       
       # Encode the given +code+ using the Scanner for +lang+.
-      def encode code, lang, options = {}
+      def encode(code, lang, options = {})
         options = @options.merge options
         @scanner = Scanners[lang].new code, CodeRay.get_scanner_options(options).update(:tokens => self)
         setup options
@@ -84,7 +84,7 @@ module CodeRay
         self.class.file_extension
       end
       
-      def << token
+      def <<(token)
         unless @@CODERAY_TOKEN_INTERFACE_DEPRECATION_WARNING_GIVEN
           warn 'Using old Tokens#<< interface.'
           @@CODERAY_TOKEN_INTERFACE_DEPRECATION_WARNING_GIVEN = true
@@ -97,7 +97,7 @@ module CodeRay
       #
       # By default, it calls text_token, begin_group, end_group, begin_line,
       # or end_line, depending on the +content+.
-      def token content, kind
+      def token(content, kind)
         case content
         when String
           text_token content, kind
@@ -115,24 +115,24 @@ module CodeRay
       end
       
       # Called for each text token ([text, kind]), where text is a String.
-      def text_token text, kind
+      def text_token(text, kind)
         @out << text
       end
       
       # Starts a token group with the given +kind+.
-      def begin_group kind
+      def begin_group(kind)
       end
       
       # Ends a token group with the given +kind+.
-      def end_group kind
+      def end_group(kind)
       end
       
       # Starts a new line token group with the given +kind+.
-      def begin_line kind
+      def begin_line(kind)
       end
       
       # Ends a new line token group with the given +kind+.
-      def end_line kind
+      def end_line(kind)
       end
       
     protected
@@ -141,23 +141,23 @@ module CodeRay
       # Sets @out to an empty string.
       #
       # See the HTML Encoder for an example of option caching.
-      def setup options
+      def setup(options)
         @out = get_output(options)
       end
       
-      def get_output options
+      def get_output(options)
         options[:out] || ''.dup
       end
       
       # Append data.to_s to the output. Returns the argument.
-      def output data
+      def output(data)
         @out << data.to_s
         data
       end
       
       # Called with merged options after encoding starts.
       # The return value is the result of encoding, typically @out.
-      def finish options
+      def finish(options)
         @out
       end
       
@@ -165,7 +165,7 @@ module CodeRay
       #
       # The already created +tokens+ object must be used; it must be a
       # Tokens object.
-      def compile tokens, options = {}
+      def compile(tokens, options = {})
         content = nil
         for item in tokens
           if item.is_a? Array

@@ -7,7 +7,7 @@ namespace :generate do
     lang = scanner_class_name.underscore
     class_name = scanner_class_name.camelize
     
-    def scanner_file_for_lang lang
+    def scanner_file_for_lang(lang)
       File.join(LIB_ROOT, 'coderay', 'scanners', lang + '.rb')
     end
     

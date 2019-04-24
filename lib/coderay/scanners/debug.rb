@@ -18,7 +18,7 @@ module Scanners
       @known_token_kinds = TokenKinds.keys.map(&:to_s).to_set
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       opened_tokens = []
       

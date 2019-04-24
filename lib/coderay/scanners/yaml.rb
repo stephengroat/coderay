@@ -13,7 +13,7 @@ module Scanners
     
   protected
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       state = :initial
       key_indent = string_indent = 0

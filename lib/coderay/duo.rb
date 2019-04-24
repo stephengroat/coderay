@@ -34,7 +34,7 @@ module CodeRay
     # 
     # The options are forwarded to scanner and encoder
     # (see CodeRay.get_scanner_options).
-    def initialize lang = nil, format = nil, options = {}
+    def initialize(lang = nil, format = nil, options = {})
       if format.nil? && lang.is_a?(Hash) && lang.size == 1
         @lang = lang.keys.first
         @format = lang[@lang]
@@ -61,7 +61,7 @@ module CodeRay
     end
     
     # Tokenize and highlight the code using +scanner+ and +encoder+.
-    def encode code, options = {}
+    def encode(code, options = {})
       options = @options.merge options
       encoder.encode(code, @lang, options)
     end

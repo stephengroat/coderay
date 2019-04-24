@@ -40,14 +40,14 @@ module CodeRay
   class WordList < Hash
     
     # Create a new WordList with +default+ as default value.
-    def initialize default = false
+    def initialize(default = false)
       super default
     end
     
     # Add words to the list and associate them with +value+.
     # 
     # Returns +self+, so you can concat add calls.
-    def add words, value = true
+    def add(words, value = true)
       words.each { |word| self[word] = value }
       self
     end
@@ -59,11 +59,11 @@ module CodeRay
   # keys are compared case-insensitively (normalizing keys using +downcase+).
   class WordList::CaseIgnoring < WordList
     
-    def [] key
+    def [](key)
       super key.downcase
     end
     
-    def []= key, value
+    def []=(key, value)
       super key.downcase, value
     end
     

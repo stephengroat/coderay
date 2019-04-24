@@ -40,7 +40,7 @@ module Scanners
       @html_scanner.reset
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       until eos?
         

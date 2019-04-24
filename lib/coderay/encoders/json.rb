@@ -35,18 +35,18 @@ module Encoders
     FILE_EXTENSION = 'json'
     
   protected
-    def setup options
+    def setup(options)
       super
       
       @first = true
       @out << '['
     end
     
-    def finish options
+    def finish(options)
       @out << ']'
     end
     
-    def append data
+    def append(data)
       if @first
         @first = false
       else
@@ -57,23 +57,23 @@ module Encoders
     end
     
   public
-    def text_token text, kind
+    def text_token(text, kind)
       append :type => 'text', :text => text, :kind => kind
     end
     
-    def begin_group kind
+    def begin_group(kind)
       append :type => 'block', :action => 'open', :kind => kind
     end
     
-    def end_group kind
+    def end_group(kind)
       append :type => 'block', :action => 'close', :kind => kind
     end
     
-    def begin_line kind
+    def begin_line(kind)
       append :type => 'block', :action => 'begin_line', :kind => kind
     end
     
-    def end_line kind
+    def end_line(kind)
       append :type => 'block', :action => 'end_line', :kind => kind
     end
     

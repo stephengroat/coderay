@@ -46,7 +46,7 @@ module CodeRay
     #
     # Example:
     #  yaml_plugin = MyPluginHost[:yaml]
-    def [] id, *args, &blk
+    def [](id, *args, &blk)
       plugin = validate_id(id)
       begin
         plugin = plugin_hash.[](plugin, *args, &blk)
@@ -58,7 +58,7 @@ module CodeRay
     
     # Tries to +load+ the missing plugin by translating +const+ to the
     # underscore form (eg. LinesOfCode becomes lines_of_code).
-    def const_missing const
+    def const_missing(const)
       id = const.to_s.
         gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
         gsub(/([a-z\d])([A-Z])/, '\1_\2').
@@ -69,14 +69,14 @@ module CodeRay
     class << self
       
       # Adds the module/class to the PLUGIN_HOSTS list.
-      def extended mod
+      def extended(mod)
         PLUGIN_HOSTS << mod
       end
       
     end
     
     # The path where the plugins can be found.
-    def plugin_path *args
+    def plugin_path(*args)
       unless args.empty?
         @plugin_path = File.expand_path File.join(*args)
       end
@@ -92,7 +92,7 @@ module CodeRay
     #      :maroon => :brown,
     #      :luna => :moon
     #  end
-    def map hash
+    def map(hash)
       for from, to in hash
         from = validate_id from
         to   = validate_id to
@@ -111,7 +111,7 @@ module CodeRay
     #  end
     #  
     #  MyColorHost.default  # loads and returns the Gray plugin
-    def default id = nil
+    def default(id = nil)
       if id
         id = validate_id id
         raise "The default plugin can't be named \"default\"." if id == :default
@@ -125,7 +125,7 @@ module CodeRay
     # which calls this method.
     #
     # See Plugin#register_for.
-    def register plugin, id
+    def register(plugin, id)
       plugin_hash[validate_id(id)] = plugin
     end
     
@@ -193,7 +193,7 @@ module CodeRay
     end
     
     # Returns the expected path to the plugin file for the given id.
-    def path_to plugin_id
+    def path_to(plugin_id)
       File.join plugin_path, "#{plugin_id}.rb"
     end
     
@@ -201,7 +201,7 @@ module CodeRay
     #
     # Raises +ArgumentError+ for all other objects, or if the
     # given String includes non-alphanumeric characters (\W).
-    def validate_id id
+    def validate_id(id)
       case id
       when Symbol
         id.to_s

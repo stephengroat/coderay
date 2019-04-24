@@ -63,7 +63,7 @@ module Scanners
       '`' => / (?: [^\\`] | `` )+ /x,
     }
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       state = :initial
       string_type = nil

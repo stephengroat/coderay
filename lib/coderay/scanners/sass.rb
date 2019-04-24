@@ -13,7 +13,7 @@ module Scanners
       @state = :initial
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       states = Array(options[:state] || @state).dup
       
       encoder.begin_group :string if states.last == :sqstring || states.last == :dqstring

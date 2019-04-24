@@ -22,7 +22,7 @@ module Encoders
       :separator => nil
     }
     
-    def text_token text, kind
+    def text_token(text, kind)
       super
       
       if @first
@@ -33,7 +33,7 @@ module Encoders
     end
     
   protected
-    def setup options
+    def setup(options)
       super
       
       @first = true

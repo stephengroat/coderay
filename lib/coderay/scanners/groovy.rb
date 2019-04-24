@@ -40,7 +40,7 @@ module Scanners
       @state = :initial
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       state = options[:state] || @state
       inline_block_stack = []
       inline_block_paren_depth = nil

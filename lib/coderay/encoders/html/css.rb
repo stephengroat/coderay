@@ -6,11 +6,11 @@ module Encoders
 
       attr :stylesheet
 
-      def CSS.load_stylesheet style = nil
+      def CSS.load_stylesheet(style = nil)
         CodeRay::Styles[style]
       end
 
-      def initialize style = :default
+      def initialize(style = :default)
         @styles = Hash.new
         style = CSS.load_stylesheet style
         @stylesheet = [
@@ -20,7 +20,7 @@ module Encoders
         parse style::TOKEN_COLORS
       end
 
-      def get_style_for_css_classes css_classes
+      def get_style_for_css_classes(css_classes)
         cl = @styles[css_classes.first]
         return '' unless cl
         style = ''
@@ -46,7 +46,7 @@ module Encoders
       |
         ( [^\n]+ )           # $3 = error
       /mx
-      def parse stylesheet
+      def parse(stylesheet)
         stylesheet.scan CSS_CLASS_PATTERN do |selectors, style, error|
           raise "CSS parse error: '#{error.inspect}' not recognized" if error
           for selector in selectors.split(',')

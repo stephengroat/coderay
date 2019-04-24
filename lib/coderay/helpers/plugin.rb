@@ -20,14 +20,14 @@ module CodeRay
     #   end
     #
     # See PluginHost.register.
-    def register_for id
+    def register_for(id)
       @plugin_id = id
       plugin_host.register self, id
     end
     
     # Returns the title of the plugin, or sets it to the
     # optional argument +title+.
-    def title title = nil
+    def title(title = nil)
       if title
         @title = title.to_s
       else
@@ -36,7 +36,7 @@ module CodeRay
     end
     
     # The PluginHost for this Plugin class.
-    def plugin_host host = nil
+    def plugin_host(host = nil)
       if host.is_a? PluginHost
         const_set :PLUGIN_HOST, host
       end

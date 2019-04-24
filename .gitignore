@@ -1,4 +1,5 @@
 .*
+!.rubocop.yml
 bench/example.*
 coverage
 doc

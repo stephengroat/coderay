@@ -287,7 +287,7 @@ more code  # and another comment, in-line.
   end
   
   class RaisingScanner < CodeRay::Scanners::Scanner
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       raise_inspect 'message', [], :initial
     end
   end

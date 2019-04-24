@@ -21,7 +21,7 @@ module Scanners
       @html_scanner          = CodeRay.scanner :html, :tokens => @tokens, :keep_tokens => true
     end
     
-    def scan_tokens encoder, options
+    def scan_tokens(encoder, options)
       
       match = nil
       code = ''

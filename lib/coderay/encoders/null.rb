@@ -8,7 +8,7 @@ module Encoders
     
     register_for :null
     
-    def text_token text, kind
+    def text_token(text, kind)
       # do nothing
     end
     
