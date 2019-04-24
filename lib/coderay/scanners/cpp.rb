@@ -4,7 +4,6 @@ module Scanners
   #
   # Aliases: +cplusplus+, c++
   class CPlusPlus < Scanner
-
     register_for :cpp
     file_extension 'cpp'
     title 'C++'
@@ -209,7 +208,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

@@ -13,7 +13,6 @@ rescue LoadError
 end
 
 class BasicTest < Test::Unit::TestCase
-
   def test_for_redcloth
     require 'coderay/for_redcloth'
     assert_equal "<p><span lang=\"ruby\" class=\"CodeRay\">puts <span style=\"background-color:hsla(0,100%,50%,0.05)\"><span style=\"color:#710\">&quot;</span><span style=\"color:#D20\">Hello, World!</span><span style=\"color:#710\">&quot;</span></span></span></p>",
@@ -74,5 +73,4 @@ class BasicTest < Test::Unit::TestCase
 <pre><code>[project]_dff.skjd</code></pre>
     BLOCKCODE
   end
-
 end if defined? RedCloth

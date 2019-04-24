@@ -4,7 +4,6 @@ module Scanners
   #
   # Alias: +patch+
   class Diff < Scanner
-
     register_for :diff
     title 'diff output'
 
@@ -213,7 +212,6 @@ module Scanners
       j -= 1 while j >= j_min && a[j] == b[j]
       return a[0...i], a[i..j], b[i..j], (j < -1) ? a[j+1..-1] : ''
     end
-
   end
 end
 end

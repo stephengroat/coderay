@@ -6,7 +6,6 @@ module Scanners
   #
   # Interprets the output of the Encoders::Debug encoder (basically the inverse function).
   class Debug < Scanner
-
     register_for :debug
     title 'CodeRay Token Dump Import'
 
@@ -67,7 +66,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

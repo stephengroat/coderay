@@ -65,12 +65,10 @@ module CodeRay
     end
 
     class << self
-
       # Adds the module/class to the PLUGIN_HOSTS list.
       def extended(mod)
         PLUGIN_HOSTS << mod
       end
-
     end
 
     # The path where the plugins can be found.

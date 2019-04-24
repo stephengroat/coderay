@@ -94,7 +94,6 @@ module Encoders
   #
   # Default: false
   class HTML < Encoder
-
     register_for :html
 
     FILE_EXTENSION = 'snippet.html'

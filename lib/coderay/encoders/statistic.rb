@@ -4,7 +4,6 @@ module Encoders
   #
   # Alias: +stats+
   class Statistic < Encoder
-
     register_for :statistic
 
     attr_reader :type_stats, :real_token_count # :nodoc:
@@ -87,7 +86,6 @@ Token Types (%d):
       @type_stats[action].count += 1
       @type_stats[kind].count += 1
     end
-
   end
 end
 end

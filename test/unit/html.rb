@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay'
 
 class HtmlTest < Test::Unit::TestCase
-
   def test_break_lines_option
     snippets = {}
 

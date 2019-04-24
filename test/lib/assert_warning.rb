@@ -1,5 +1,4 @@
 class Test::Unit::TestCase
-
   def assert_warning(expected_warning)
     require 'stringio'
     oldstderr = $stderr
@@ -11,5 +10,4 @@ class Test::Unit::TestCase
   ensure
     $stderr = oldstderr
   end
-
 end

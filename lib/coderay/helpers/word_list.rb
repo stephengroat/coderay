@@ -37,7 +37,6 @@ module CodeRay
   #      kind = IDENT_KIND[match]
   #      ...
   class WordList < Hash
-
     # Create a new WordList with +default+ as default value.
     def initialize(default = false)
       super default
@@ -50,14 +49,12 @@ module CodeRay
       words.each { |word| self[word] = value }
       self
     end
-
   end
 
 
   # A CaseIgnoring WordList is like a WordList, only that
   # keys are compared case-insensitively (normalizing keys using +downcase+).
   class WordList::CaseIgnoring < WordList
-
     def [](key)
       super key.downcase
     end
@@ -65,6 +62,5 @@ module CodeRay
     def []=(key, value)
       super key.downcase, value
     end
-
   end
 end

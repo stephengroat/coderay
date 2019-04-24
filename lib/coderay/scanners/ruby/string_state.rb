@@ -2,7 +2,6 @@
 module CodeRay
 module Scanners
   class Ruby
-
     class StringState < Struct.new :type, :interpreted, :delim, :heredoc,
       :opening_paren, :paren_depth, :pattern, :next_state # :nodoc: all
 
@@ -69,9 +68,7 @@ module Scanners
           / (?= #{delim_pattern}() | \\ ) /mx
         end
       end
-
     end
-
   end
 end
 end

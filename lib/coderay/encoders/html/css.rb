@@ -2,7 +2,6 @@ module CodeRay
 module Encoders
   class HTML
     class CSS # :nodoc:
-
       attr :stylesheet
 
       def CSS.load_stylesheet(style = nil)
@@ -56,7 +55,6 @@ module Encoders
           end
         end
       end
-
     end
   end
 end

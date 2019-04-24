@@ -5,7 +5,6 @@ module Scanners
   load :java_script
 
   class HAML < Scanner
-
     register_for :haml
     title 'HAML Template'
 
@@ -160,7 +159,6 @@ module Scanners
       encoder
 
     end
-
   end
 end
 end

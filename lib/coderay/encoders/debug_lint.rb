@@ -13,7 +13,6 @@ module Encoders
   #
   # See also: Encoders::Debug
   class DebugLint < Debug
-
     register_for :debug_lint
 
     def text_token(text, kind)
@@ -55,7 +54,6 @@ module Encoders
       raise 'Some tokens still open at end of token stream: %p' % [@opened] unless @opened.empty?
       super
     end
-
   end
 end
 end

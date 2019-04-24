@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay/helpers/word_list'
 
 class WordListTest < Test::Unit::TestCase
-
   include CodeRay
 
   # define word arrays
@@ -60,5 +59,4 @@ class WordListTest < Test::Unit::TestCase
     assert_equal :keyword, list2['foobar']
     assert_equal :reserved, list['foobar']
   end
-
 end

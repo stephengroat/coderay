@@ -4,7 +4,6 @@ module Scanners
   #
   # Alias: +pascal+
   class Delphi < Scanner
-
     register_for :delphi
     file_extension 'pas'
 
@@ -136,7 +135,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

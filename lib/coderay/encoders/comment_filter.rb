@@ -12,12 +12,10 @@ module Encoders
   #
   # See also: TokenKindFilter, LinesOfCode
   class CommentFilter < TokenKindFilter
-
     register_for :comment_filter
 
     DEFAULT_OPTIONS = superclass::DEFAULT_OPTIONS.merge \
       :exclude => [:comment, :docstring]
-
   end
 end
 end

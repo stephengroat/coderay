@@ -15,7 +15,6 @@ module Encoders
   #
   # See also: TokenKindFilter
   class Filter < Encoder
-
     register_for :filter
 
   protected
@@ -50,7 +49,6 @@ module Encoders
     def end_line(kind) # :nodoc:
       @tokens.end_line kind
     end
-
   end
 end
 end

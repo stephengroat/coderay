@@ -6,7 +6,6 @@ module Scanners
   #
   # Highlights the output of the Encoders::Debug encoder.
   class Raydebug < Scanner
-
     register_for :raydebug
     file_extension 'raydebug'
     title 'CodeRay Token Dump'
@@ -67,7 +66,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

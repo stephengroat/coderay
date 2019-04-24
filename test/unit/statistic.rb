@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay'
 
 class StatisticEncoderTest < Test::Unit::TestCase
-
   def test_creation
     assert CodeRay::Encoders::Statistic < CodeRay::Encoders::Encoder
     stats = nil
@@ -55,5 +54,4 @@ Token Types (7):
     assert_equal TEST_OUTPUT, CodeRay::Encoders::Statistic.new.encode_tokens(TEST_INPUT)
     assert_equal TEST_OUTPUT, TEST_INPUT.statistic
   end
-
 end

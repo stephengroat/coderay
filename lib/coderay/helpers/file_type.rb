@@ -17,7 +17,6 @@ module CodeRay
     UnknownFileType = Class.new Exception
 
     class << self
-
       # Try to determine the file type of the file.
       #
       # +filename+ is a relative or absolute path to a file.
@@ -71,7 +70,6 @@ module CodeRay
           end
         end
       end
-
     end
 
     TypeFromExt = {

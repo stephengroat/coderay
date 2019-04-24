@@ -22,7 +22,6 @@ module Encoders
   #
   # See also: CommentFilter
   class TokenKindFilter < Filter
-
     register_for :token_kind_filter
 
     DEFAULT_OPTIONS = {
@@ -103,7 +102,6 @@ module Encoders
         super
       end
     end
-
   end
 end
 end

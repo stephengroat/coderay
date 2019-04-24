@@ -17,7 +17,6 @@ module CodeRay
       plugin_host Encoders
 
       class << self
-
         # If FILE_EXTENSION isn't defined, this method returns the
         # downcase class name instead.
         def const_missing(sym)
@@ -32,7 +31,6 @@ module CodeRay
         def file_extension
           self::FILE_EXTENSION
         end
-
       end
 
       # Subclasses are to store their default options in this constant.
@@ -182,7 +180,6 @@ module CodeRay
 
       alias tokens compile
       public :tokens
-
     end
   end
 end

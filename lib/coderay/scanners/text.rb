@@ -6,7 +6,6 @@ module CodeRay
     #
     # Alias: +plaintext+, +plain+
     class Text < Scanner
-
       register_for :text
       title 'Plain text'
 
@@ -18,7 +17,6 @@ module CodeRay
         encoder.text_token string, :plain
         encoder
       end
-
     end
   end
 end

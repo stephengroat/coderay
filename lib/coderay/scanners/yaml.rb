@@ -4,7 +4,6 @@ module Scanners
   #
   # Based on the YAML scanner from Syntax by Jamis Buck.
   class YAML < Scanner
-
     register_for :yaml
     file_extension 'yml'
 
@@ -132,7 +131,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

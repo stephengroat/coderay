@@ -6,7 +6,6 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Span < HTML
-
     FILE_EXTENSION = 'span.html'
 
     register_for :span
@@ -15,7 +14,6 @@ module Encoders
       :css => :style,
       :wrap => :span,
       :line_numbers => false
-
   end
 end
 end

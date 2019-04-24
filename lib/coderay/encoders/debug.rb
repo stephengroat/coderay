@@ -11,7 +11,6 @@ module Encoders
   #
   # See also: Scanners::Debug
   class Debug < Encoder
-
     register_for :debug
 
     FILE_EXTENSION = 'raydebug'
@@ -41,7 +40,6 @@ module Encoders
     def end_line(kind)
       @out << ']'
     end
-
   end
 end
 end

@@ -4,7 +4,6 @@ module CodeRay
   # This proxy makes it possible to use the classic CodeRay.scan.encode API
   # while still providing the benefits of direct streaming.
   class TokensProxy
-
     attr_accessor :input, :lang, :options, :block
 
     # Create a new TokensProxy with the arguments of CodeRay.scan.
@@ -48,6 +47,5 @@ module CodeRay
       tokens.each(*args, &blk)
       self
     end
-
   end
 end

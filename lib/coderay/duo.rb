@@ -14,7 +14,6 @@ module CodeRay
   # Until you want to do uncommon things with CodeRay, I recommend to use
   # this method, since it takes care of everything.
   class Duo
-
     attr_accessor :lang, :format, :options
 
     # Create a new Duo, holding a lang and a format to highlight code.
@@ -74,6 +73,5 @@ module CodeRay
     #
     #  CodeRay::Duo[:python => :yaml].(code)
     alias call encode
-
   end
 end

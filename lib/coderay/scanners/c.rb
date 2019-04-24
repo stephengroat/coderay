@@ -2,7 +2,6 @@ module CodeRay
 module Scanners
   # Scanner for C.
   class C < Scanner
-
     register_for :c
     file_extension 'c'
 
@@ -181,7 +180,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

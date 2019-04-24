@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay'
 
 class FilterTest < Test::Unit::TestCase
-
   def test_creation
     filter = nil
     assert_nothing_raised do
@@ -36,5 +35,4 @@ class FilterTest < Test::Unit::TestCase
     assert_equal CodeRay::Tokens, tokens.filter.class
     assert_equal tokens, tokens.filter
   end
-
 end

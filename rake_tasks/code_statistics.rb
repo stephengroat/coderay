@@ -2,7 +2,6 @@
 #
 # Improved by murphy
 class CodeStatistics
-
   TEST_TYPES = /\btest/i
 
   # Create a new Code Statistic.
@@ -159,7 +158,6 @@ private
     puts "  Code LOC = #{code}     Test LOC = #{tests}     Code:Test Ratio = [1 : #{sprintf("%.2f", tests.to_f/code)}]"
     puts ""
   end
-
 end
 
 # Run a test script.

@@ -26,7 +26,6 @@ module CodeRay
     # You can also use +map+, +any?+, +find+ and even +sort_by+,
     # if you want.
     class Scanner < StringScanner
-
       extend Plugin
       plugin_host Scanners
 
@@ -43,7 +42,6 @@ module CodeRay
       attr_accessor :state
 
       class << self
-
         # Normalizes the given code into a string with UNIX newlines, in the
         # scanner's internal encoding, with invalid and undefined charachters
         # replaced by placeholders. Always returns a new object.
@@ -109,7 +107,6 @@ module CodeRay
           end
           #:nocov:
         end
-
       end
 
       # Create a new Scanner.
@@ -329,7 +326,6 @@ bol?: %p,  eos?: %p
         terminate
         rest
       end
-
     end
   end
 end

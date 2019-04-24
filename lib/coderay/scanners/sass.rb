@@ -2,7 +2,6 @@ module CodeRay
 module Scanners
   # A scanner for Sass.
   class Sass < CSS
-
     register_for :sass
     file_extension 'sass'
 
@@ -224,7 +223,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

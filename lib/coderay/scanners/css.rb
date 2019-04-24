@@ -1,7 +1,6 @@
 module CodeRay
 module Scanners
   class CSS < Scanner
-
     register_for :css
 
     KINDS_NOT_LOC = [
@@ -188,7 +187,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

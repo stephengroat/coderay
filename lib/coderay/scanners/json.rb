@@ -2,7 +2,6 @@ module CodeRay
 module Scanners
   # Scanner for JSON (JavaScript Object Notation).
   class JSON < Scanner
-
     register_for :json
     file_extension 'json'
 
@@ -90,7 +89,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

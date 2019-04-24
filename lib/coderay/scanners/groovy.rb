@@ -4,7 +4,6 @@ module Scanners
 
   # Scanner for Groovy.
   class Groovy < Java
-
     register_for :groovy
 
     # TODO: check list of keywords
@@ -260,7 +259,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

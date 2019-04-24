@@ -1,7 +1,6 @@
 module CodeRay
 module Scanners
   class Go < Scanner
-
     register_for :go
     file_extension 'go'
 
@@ -200,7 +199,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

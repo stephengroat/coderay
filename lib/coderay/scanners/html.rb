@@ -6,7 +6,6 @@ module Scanners
   #
   # See also: Scanners::XML
   class HTML < Scanner
-
     register_for :html
 
     KINDS_NOT_LOC = [
@@ -267,7 +266,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

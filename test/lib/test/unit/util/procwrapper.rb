@@ -17,7 +17,6 @@ module Test
       # not when notifying.
 
       class ProcWrapper
-
         # Creates a new wrapper for a_proc.
         def initialize(a_proc)
           @a_proc = a_proc

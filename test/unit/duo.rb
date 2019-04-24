@@ -3,7 +3,6 @@ require 'yaml'
 require 'coderay'
 
 class DuoTest < Test::Unit::TestCase
-
   def test_two_arguments
     duo = CodeRay::Duo[:ruby, :html]
     assert_kind_of CodeRay::Scanners[:ruby], duo.scanner
@@ -31,5 +30,4 @@ class DuoTest < Test::Unit::TestCase
 
     assert_equal yaml, YAML.load(duo.call('def test: "pass"'))
   end
-
 end

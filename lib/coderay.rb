@@ -156,7 +156,6 @@ module CodeRay
   autoload :Duo,         coderay_path('duo')
 
   class << self
-
     # Scans the given +code+ (a String) with the Scanner for +lang+.
     #
     # This is a simple way to use CodeRay. Example:
@@ -277,6 +276,5 @@ module CodeRay
     def get_scanner_options(options)
       options.fetch :scanner_options, {}
     end
-
   end
 end

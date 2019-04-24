@@ -5,7 +5,6 @@ $:.unshift File.expand_path('../../../lib', __FILE__)
 require 'coderay'
 
 class PluginScannerTest < Test::Unit::TestCase
-
   module Plugins
     extend CodeRay::PluginHost
     plugin_path File.dirname(__FILE__), 'plugins'
@@ -65,5 +64,4 @@ class PluginScannerTest < Test::Unit::TestCase
   def test_title
     assert_equal 'The Example', Plugins::Example.title
   end
-
 end

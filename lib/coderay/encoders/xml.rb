@@ -4,7 +4,6 @@ module Encoders
   #
   # Uses REXML. Very slow.
   class XML < Encoder
-
     register_for :xml
 
     FILE_EXTENSION = 'xml'
@@ -64,7 +63,6 @@ module Encoders
       end
       @node = @node.parent
     end
-
   end
 end
 end

@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay'
 
 class TokensTest < Test::Unit::TestCase
-
   def test_creation
     assert CodeRay::Tokens < Array
     tokens = nil
@@ -73,5 +72,4 @@ class TokensTest < Test::Unit::TestCase
     end
     tokens
   end
-
 end

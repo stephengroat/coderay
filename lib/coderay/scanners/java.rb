@@ -2,7 +2,6 @@ module CodeRay
 module Scanners
   # Scanner for Java.
   class Java < Scanner
-
     register_for :java
 
     autoload :BuiltinTypes, CodeRay.coderay_path('scanners', 'java', 'builtin_types')
@@ -166,7 +165,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

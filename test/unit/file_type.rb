@@ -4,7 +4,6 @@ require File.expand_path('../../lib/assert_warning', __FILE__)
 require 'coderay/helpers/file_type'
 
 class FileTypeTests < Test::Unit::TestCase
-
   include CodeRay
 
   def test_fetch
@@ -112,5 +111,4 @@ class FileTypeTests < Test::Unit::TestCase
     File.open(tmpfile, 'w') { |f| f.puts '#!/usr/bin/env ruby' }
     assert_equal :ruby, FileType[tmpfile, true]
   end
-
 end

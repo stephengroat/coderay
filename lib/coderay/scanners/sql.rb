@@ -2,7 +2,6 @@ module CodeRay
 module Scanners
   # by Josh Goebel
   class SQL < Scanner
-
     register_for :sql
 
     KEYWORDS = %w(
@@ -161,7 +160,6 @@ module Scanners
       encoder
 
     end
-
   end
 end
 end

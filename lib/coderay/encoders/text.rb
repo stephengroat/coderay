@@ -12,7 +12,6 @@ module Encoders
   #
   # Default: empty String
   class Text < Encoder
-
     register_for :text
 
     FILE_EXTENSION = 'txt'
@@ -38,7 +37,6 @@ module Encoders
       @first = true
       @sep = options[:separator]
     end
-
   end
 end
 end

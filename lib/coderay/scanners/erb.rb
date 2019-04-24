@@ -5,7 +5,6 @@ module Scanners
 
   # Scanner for HTML ERB templates.
   class ERB < Scanner
-
     register_for :erb
     title 'HTML ERB Template'
 
@@ -73,7 +72,6 @@ module Scanners
       encoder
 
     end
-
   end
 end
 end

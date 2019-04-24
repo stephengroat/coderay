@@ -11,7 +11,6 @@ module Encoders
   #
   # See also: Encoders::DebugLint
   class Lint < Debug
-
     register_for :lint
 
     InvalidTokenStream         = Class.new StandardError
@@ -51,7 +50,6 @@ module Encoders
     def finish(options)
       raise 'Some tokens still open at end of token stream: %p' % [@opened] unless @opened.empty?
     end
-
   end
 end
 end

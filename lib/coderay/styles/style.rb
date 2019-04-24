@@ -8,7 +8,6 @@ module CodeRay
       plugin_host Styles
 
       DEFAULT_OPTIONS = { } # :nodoc:
-
     end
   end
 end

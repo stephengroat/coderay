@@ -6,7 +6,6 @@ module Encoders
   #
   # Slow.
   class YAML < Encoder
-
     register_for :yaml
 
     FILE_EXTENSION = 'yaml'
@@ -42,7 +41,6 @@ module Encoders
     def end_line(kind)
       @data << [:end_line, kind]
     end
-
   end
 end
 end

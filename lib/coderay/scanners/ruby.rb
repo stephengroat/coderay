@@ -8,7 +8,6 @@ module Scanners
   # It is optimized for HTML highlighting, and is not very useful for
   # parsing or pretty printing.
   class Ruby < Scanner
-
     register_for :ruby
     file_extension 'rb'
 
@@ -469,7 +468,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

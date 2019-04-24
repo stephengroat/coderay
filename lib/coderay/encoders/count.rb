@@ -4,7 +4,6 @@ module Encoders
   #
   # Text and block tokens are counted.
   class Count < Encoder
-
     register_for :count
 
   protected
@@ -31,7 +30,6 @@ module Encoders
     alias end_group begin_group
     alias begin_line begin_group
     alias end_line begin_group
-
   end
 end
 end

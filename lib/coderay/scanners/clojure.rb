@@ -3,7 +3,6 @@ module CodeRay
   module Scanners
     # Clojure scanner by Licenser.
     class Clojure < Scanner
-
       register_for :clojure
       file_extension 'clj'
 

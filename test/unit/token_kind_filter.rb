@@ -2,7 +2,6 @@ require 'test/unit'
 require 'coderay'
 
 class TokenKindFilterTest < Test::Unit::TestCase
-
   def test_creation
     assert CodeRay::Encoders::TokenKindFilter < CodeRay::Encoders::Encoder
     assert CodeRay::Encoders::TokenKindFilter < CodeRay::Encoders::Filter
@@ -46,5 +45,4 @@ class TokenKindFilterTest < Test::Unit::TestCase
     assert_equal 32, CodeRay::Encoders::TokenKindFilter.new.encode_tokens(tokens, :exclude => :index).count
     assert_equal 32, tokens.token_kind_filter(:exclude => :index).count
   end
-
 end

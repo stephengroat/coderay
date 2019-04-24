@@ -6,7 +6,6 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Div < HTML
-
     FILE_EXTENSION = 'div.html'
 
     register_for :div
@@ -15,7 +14,6 @@ module Encoders
       :css => :style,
       :wrap => :div,
       :line_numbers => false
-
   end
 end
 end

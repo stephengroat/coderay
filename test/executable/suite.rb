@@ -11,7 +11,6 @@ require 'coderay'
 puts "Running CodeRay #{CodeRay::VERSION} executable tests..."
 
 class TestCodeRayExecutable < Test::Unit::TestCase
-
   ROOT_DIR = Pathname.new(File.dirname(__FILE__)) + '..' + '..'
   EXECUTABLE = ROOT_DIR + 'bin' + 'coderay'
   RUBY_COMMAND = 'ruby'
@@ -222,5 +221,4 @@ test
       assert_equal "1\n", output
     end
   end
-
 end

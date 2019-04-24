@@ -1,7 +1,6 @@
 module CodeRay
 module Encoders
   class HTML
-
     # This module is included in the output String of the HTML Encoder.
     #
     # It provides methods like wrap, div, page etc.
@@ -14,7 +13,6 @@ module Encoders
       attr_accessor :css
 
       class << self
-
         # Raises an exception if an object that doesn't respond to to_str is extended by Output,
         # to prevent users from misuse. Use Module#remove_method to disable.
         def extended(o) # :nodoc:
@@ -35,7 +33,6 @@ module Encoders
           sheet = make_stylesheet css
           PAGE.apply 'CSS', sheet
         end
-
       end
 
       def wrapped_in?(element)
@@ -88,7 +85,6 @@ module Encoders
 #-- don't include the templates in docu
 
       class Template < String # :nodoc:
-
         def self.wrap!(str, template, target)
           target = Regexp.new(Regexp.escape("<%#{target}%>"))
           if template =~ target
@@ -107,7 +103,6 @@ module Encoders
             raise "Template target <%%%p%%> not found" % target
           end
         end
-
       end
 
       SPAN = Template.new '<span class="CodeRay"><%CONTENT%></span>'
@@ -154,7 +149,6 @@ body {
 </html>
       PAGE
     end
-
   end
 end
 end

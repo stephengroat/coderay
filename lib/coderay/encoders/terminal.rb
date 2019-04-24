@@ -14,7 +14,6 @@ module CodeRay
     #
     # MIT License (http://www.opensource.org/licenses/mit-license.php)
     class Terminal < Encoder
-
       register_for :terminal
 
       TOKEN_COLORS = {

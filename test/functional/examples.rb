@@ -4,7 +4,6 @@ $:.unshift File.expand_path('../../../lib', __FILE__)
 require 'coderay'
 
 class ExamplesTest < Test::Unit::TestCase
-
   def test_examples
     # output as HTML div (using inline CSS styles)
     div = CodeRay.scan('puts "Hello, world!"', :ruby).div
@@ -125,5 +124,4 @@ Token Types (7):
 </div>
     DIV
   end
-
 end

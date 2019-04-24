@@ -15,7 +15,6 @@ module Encoders
   #    {"type"=>"block", "action"=>"close", "kind"=>"string"},
   #  ]
   class JSON < Encoder
-
     begin
       require 'json'
     rescue LoadError
@@ -75,7 +74,6 @@ module Encoders
     def end_line(kind)
       append :type => 'block', :action => 'end_line', :kind => kind
     end
-
   end
 end
 end

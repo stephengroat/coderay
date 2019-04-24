@@ -1,7 +1,6 @@
 module CodeRay
 module Scanners
   class Taskpaper < Scanner
-
     register_for :taskpaper
     file_extension 'taskpaper'
 
@@ -28,7 +27,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

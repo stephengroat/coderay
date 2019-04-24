@@ -14,7 +14,6 @@ module Encoders
   # A Scanner class should define the token kinds that are not code in the
   # KINDS_NOT_LOC constant, which defaults to [:comment, :doctype].
   class LinesOfCode < TokenKindFilter
-
     register_for :lines_of_code
 
     NON_EMPTY_LINE = /^\s*\S.*$/
@@ -37,7 +36,6 @@ module Encoders
     def finish(options)
       output @tokens.text.scan(NON_EMPTY_LINE).size
     end
-
   end
 end
 end

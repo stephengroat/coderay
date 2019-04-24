@@ -7,7 +7,6 @@ module Encoders
   #
   # See Encoders::HTML for available options.
   class Page < HTML
-
     FILE_EXTENSION = 'html'
 
     register_for :page
@@ -16,7 +15,6 @@ module Encoders
       :css => :class,
       :wrap => :page,
       :line_numbers => :table
-
   end
 end
 end

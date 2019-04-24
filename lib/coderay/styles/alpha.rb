@@ -2,7 +2,6 @@ module CodeRay
 module Styles
   # A colorful theme using CSS 3 colors (with alpha channel).
   class Alpha < Style
-
     register_for :alpha
 
     code_background = 'hsl(0,0%,95%)'
@@ -145,7 +144,6 @@ table.CodeRay td { padding: 2px 4px; vertical-align: top; }
 .change .change { color: #88f }
 .head .head { color: #f4f }
     TOKENS
-
   end
 end
 end

@@ -5,7 +5,6 @@ module Scanners
   # Based on pygments' PythonLexer, see
   # http://dev.pocoo.org/projects/pygments/browser/pygments/lexers/agile.py.
   class Python < Scanner
-
     register_for :python
     file_extension 'py'
 
@@ -279,7 +278,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

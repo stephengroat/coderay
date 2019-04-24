@@ -7,7 +7,6 @@ module Scanners
   #
   # Original by Stefan Walk.
   class PHP < Scanner
-
     register_for :php
     file_extension 'php'
 
@@ -516,7 +515,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

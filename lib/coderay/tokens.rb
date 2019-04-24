@@ -157,6 +157,5 @@ module CodeRay
     def begin_line(kind); push :begin_line, kind end
     def end_line(kind); push :end_line, kind end
     alias tokens concat
-
   end
 end

@@ -5,7 +5,6 @@ $VERBOSE = true
 require File.expand_path('../../lib/assert_warning', __FILE__)
 
 class LinesOfCodeTest < Test::Unit::TestCase
-
   def test_creation
     assert CodeRay::Encoders::LinesOfCode < CodeRay::Encoders::Encoder
     filter = nil
@@ -48,5 +47,4 @@ puts "Hello world!"
     tokens.scanner = ScannerMockup.new
     assert_equal 2, tokens.lines_of_code
   end
-
 end

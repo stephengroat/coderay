@@ -8,7 +8,6 @@ module Scanners
   # {the Lua manual}[http://www.lua.org/manual/5.2/manual.html],
   # which is what this scanner tries to conform to.
   class Lua < Scanner
-
     register_for :lua
     file_extension 'lua'
     title 'Lua'
@@ -272,7 +271,6 @@ module Scanners
 
       encoder
     end
-
   end
 end
 end

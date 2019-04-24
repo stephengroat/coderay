@@ -4,7 +4,6 @@ module Scanners
   #
   # Aliases: +ecmascript+, +ecma_script+, +javascript+
   class JavaScript < Scanner
-
     register_for :java_script
     file_extension 'js'
 
@@ -228,7 +227,6 @@ module Scanners
     def xml_scanner
       @xml_scanner ||= CodeRay.scanner :xml, :tokens => @tokens, :keep_tokens => true, :keep_state => false
     end
-
   end
 end
 end
