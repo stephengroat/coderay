@@ -1,5 +1,4 @@
 module CodeRay
-
   # A little hack to enable CodeRay highlighting in RedCloth.
   #
   # Usage:
@@ -11,7 +10,6 @@ module CodeRay
   #  require 'rubygems'
   # before RedCloth is loaded and before calling CodeRay.for_redcloth.
   module ForRedCloth
-
     def self.install
       gem 'RedCloth', '>= 4.0.3' if defined? gem
       require 'redcloth'
@@ -87,9 +85,7 @@ module CodeRay
     module TextileDoc # :nodoc:
       attr_accessor :filter_coderay
     end
-
   end
-
 end
 
 CodeRay::ForRedCloth.install

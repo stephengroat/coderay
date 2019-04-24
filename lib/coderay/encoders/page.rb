@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   load :html
 
   # Wraps the output into a HTML page, using CSS classes and
@@ -19,6 +18,5 @@ module Encoders
       :line_numbers => :table
 
   end
-
 end
 end

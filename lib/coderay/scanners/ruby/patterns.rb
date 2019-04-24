@@ -1,9 +1,7 @@
 # encoding: utf-8
 module CodeRay
 module Scanners
-
   module Ruby::Patterns # :nodoc: all
-
     KEYWORDS = %w[
       and def end in or unless begin
       defined? ensure module redo super until
@@ -171,8 +169,6 @@ module Scanners
       's' => false,
       'w' => false,
     })
-
   end
-
 end
 end

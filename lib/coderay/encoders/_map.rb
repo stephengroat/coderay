@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   map \
     :loc => :lines_of_code,
     :plain => :text,
@@ -12,6 +11,5 @@ module Encoders
     :yml => :yaml
 
   # No default because Tokens#nonsense should raise NoMethodError.
-
 end
 end

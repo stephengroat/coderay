@@ -7,7 +7,6 @@ require 'test/unit/util/backtracefilter'
 
 module Test
   module Unit
-
     ##
     # Test::Unit::Assertions contains the standard Test::Unit assertions.
     # Assertions is included in Test::Unit::TestCase.
@@ -31,7 +30,6 @@ module Test
     #   end
 
     module Assertions
-
       ##
       # The assertion upon which all other assertions are based. Passes if the
       # block yields true.
@@ -616,7 +614,6 @@ EOM
       end
 
       # :startdoc:
-
     end
   end
 end

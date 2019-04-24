@@ -124,7 +124,6 @@
 # If you want to re-use scanners and encoders (because that is faster), see
 # CodeRay::Duo for the most convenient (and recommended) interface.
 module CodeRay
-
   $CODERAY_DEBUG ||= false
 
   CODERAY_PATH = File.expand_path('../coderay', __FILE__)
@@ -280,5 +279,4 @@ module CodeRay
     end
 
   end
-
 end

@@ -2,7 +2,6 @@
 
 module CodeRay
 module Scanners
-
   # Scanner for the Lua[http://lua.org] programming lanuage.
   #
   # The language’s complete syntax is defined in
@@ -275,6 +274,5 @@ module Scanners
     end
 
   end
-
 end
 end

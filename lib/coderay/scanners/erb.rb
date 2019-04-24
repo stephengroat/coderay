@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   load :html
   load :ruby
 
@@ -76,6 +75,5 @@ module Scanners
     end
 
   end
-
 end
 end

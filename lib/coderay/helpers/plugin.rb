@@ -1,5 +1,4 @@
 module CodeRay
-
   # = Plugin
   #
   #  Plugins have to include this module.
@@ -8,7 +7,6 @@ module CodeRay
   #
   #  See CodeRay::PluginHost for examples.
   module Plugin
-
     attr_reader :plugin_id
 
     # Register this class for the given +id+.
@@ -49,7 +47,5 @@ module CodeRay
         aliases
       end
     end
-
   end
-
 end

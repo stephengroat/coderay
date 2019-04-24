@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for output of the diff command.
   #
   # Alias: +patch+
@@ -216,6 +215,5 @@ module Scanners
     end
 
   end
-
 end
 end

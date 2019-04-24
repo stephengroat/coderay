@@ -1,5 +1,4 @@
 module CodeRay
-
   # = WordList
   #
   # <b>A Hash subclass designed for mapping word lists to token types.</b>
@@ -68,5 +67,4 @@ module CodeRay
     end
 
   end
-
 end

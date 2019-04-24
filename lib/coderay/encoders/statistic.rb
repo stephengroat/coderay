@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # Makes a statistic for the given tokens.
   #
   # Alias: +stats+
@@ -90,6 +89,5 @@ Token Types (%d):
     end
 
   end
-
 end
 end

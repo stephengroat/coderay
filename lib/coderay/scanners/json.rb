@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for JSON (JavaScript Object Notation).
   class JSON < Scanner
 
@@ -93,6 +92,5 @@ module Scanners
     end
 
   end
-
 end
 end

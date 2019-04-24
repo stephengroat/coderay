@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # = XML Encoder
   #
   # Uses REXML. Very slow.
@@ -67,6 +66,5 @@ module Encoders
     end
 
   end
-
 end
 end

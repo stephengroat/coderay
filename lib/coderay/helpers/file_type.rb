@@ -1,5 +1,4 @@
 module CodeRay
-
   # = FileType
   #
   # A simple filetype recognizer.
@@ -15,7 +14,6 @@ module CodeRay
   #  # try the shebang line, too
   #  lang = FileType.fetch file_name, :text, true
   module FileType
-
     UnknownFileType = Class.new Exception
 
     class << self
@@ -145,7 +143,5 @@ module CodeRay
       'Vagrantfile' => :ruby,
       'Appraisals' => :ruby
     }
-
   end
-
 end

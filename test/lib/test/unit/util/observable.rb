@@ -9,7 +9,6 @@ require 'test/unit/util/procwrapper'
 module Test
   module Unit
     module Util
-
       # This is a utility class that allows anything mixing
       # it in to notify a set of listeners about interesting
       # events.

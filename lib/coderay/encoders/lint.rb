@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # = Lint Encoder
   #
   # Checks for:
@@ -54,6 +53,5 @@ module Encoders
     end
 
   end
-
 end
 end

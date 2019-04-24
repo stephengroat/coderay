@@ -1,7 +1,5 @@
 module CodeRay
-
   module Styles
-
     # Base class for styles.
     #
     # Styles are used by Encoders::HTML to colorize tokens.
@@ -12,7 +10,5 @@ module CodeRay
       DEFAULT_OPTIONS = { } # :nodoc:
 
     end
-
   end
-
 end

@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # A scanner for Sass.
   class Sass < CSS
 
@@ -227,6 +226,5 @@ module Scanners
     end
 
   end
-
 end
 end

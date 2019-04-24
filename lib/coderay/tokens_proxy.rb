@@ -1,5 +1,4 @@
 module CodeRay
-
   # The result of a scan operation is a TokensProxy, but should act like Tokens.
   #
   # This proxy makes it possible to use the classic CodeRay.scan.encode API
@@ -51,5 +50,4 @@ module CodeRay
     end
 
   end
-
 end

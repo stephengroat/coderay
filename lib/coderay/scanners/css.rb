@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   class CSS < Scanner
 
     register_for :css
@@ -191,6 +190,5 @@ module Scanners
     end
 
   end
-
 end
 end

@@ -1,5 +1,4 @@
 module CodeRay
-
   # = Duo
   #
   # A Duo is a convenient way to use CodeRay. You just create a Duo,
@@ -77,5 +76,4 @@ module CodeRay
     alias call encode
 
   end
-
 end

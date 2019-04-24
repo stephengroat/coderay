@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # A simple JSON Encoder.
   #
   # Example:
@@ -78,6 +77,5 @@ module Encoders
     end
 
   end
-
 end
 end

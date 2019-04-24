@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # A Filter encoder has another Tokens instance as output.
   # It can be subclass to select, remove, or modify tokens in the stream.
   #
@@ -53,6 +52,5 @@ module Encoders
     end
 
   end
-
 end
 end

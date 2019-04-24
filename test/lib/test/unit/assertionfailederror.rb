@@ -6,7 +6,6 @@
 
 module Test
   module Unit
-
     # Thrown by Test::Unit::Assertions when an assertion fails.
     class AssertionFailedError < StandardError
     end

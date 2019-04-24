@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   class HTML
 
     # This module is included in the output String of the HTML Encoder.
@@ -12,7 +11,6 @@ module Encoders
     #
     # TODO: Rewrite this without monkey patching.
     module Output
-
       attr_accessor :css
 
       class << self
@@ -155,10 +153,8 @@ body {
 </body>
 </html>
       PAGE
-
     end
 
   end
-
 end
 end

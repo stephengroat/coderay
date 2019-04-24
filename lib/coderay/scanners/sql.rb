@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # by Josh Goebel
   class SQL < Scanner
 
@@ -164,6 +163,5 @@ module Scanners
     end
 
   end
-
 end
 end

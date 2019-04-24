@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for Python. Supports Python 3.
   #
   # Based on pygments' PythonLexer, see
@@ -282,6 +281,5 @@ module Scanners
     end
 
   end
-
 end
 end

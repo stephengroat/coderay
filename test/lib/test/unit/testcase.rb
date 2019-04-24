@@ -13,7 +13,6 @@ require 'test/unit/util/backtracefilter'
 
 module Test
   module Unit
-
     # Ties everything together. If you subclass and add your own
     # test methods, it takes care of making them into tests and
     # wrapping those tests into a suite. It also does the

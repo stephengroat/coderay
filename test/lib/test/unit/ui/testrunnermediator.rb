@@ -11,7 +11,6 @@ require 'test/unit/testresult'
 module Test
   module Unit
     module UI
-
       # Provides an interface to write any given UI against,
       # hopefully making it easy to write new UIs.
       class TestRunnerMediator

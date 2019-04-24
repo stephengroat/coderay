@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # HTML Scanner
   #
   # Alias: +xhtml+
@@ -270,6 +269,5 @@ module Scanners
     end
 
   end
-
 end
 end

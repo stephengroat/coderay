@@ -2,7 +2,6 @@
 
 module CodeRay
   module Scanners
-
     # = Scanner
     #
     # The base class for all Scanners.
@@ -332,6 +331,5 @@ bol?: %p,  eos?: %p
       end
 
     end
-
   end
 end

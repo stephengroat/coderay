@@ -6,7 +6,6 @@
 
 module Test
   module Unit
-
     # Encapsulates a test failure. Created by Test::Unit::TestCase
     # when an assertion fails.
     class Failure

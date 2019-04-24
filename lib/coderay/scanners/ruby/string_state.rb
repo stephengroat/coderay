@@ -1,7 +1,6 @@
 # encoding: utf-8
 module CodeRay
 module Scanners
-
   class Ruby
 
     class StringState < Struct.new :type, :interpreted, :delim, :heredoc,
@@ -74,6 +73,5 @@ module Scanners
     end
 
   end
-
 end
 end

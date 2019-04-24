@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   class Go < Scanner
 
     register_for :go
@@ -203,6 +202,5 @@ module Scanners
     end
 
   end
-
 end
 end

@@ -2,7 +2,6 @@ autoload :YAML, 'yaml'
 
 module CodeRay
 module Encoders
-
   # = YAML Encoder
   #
   # Slow.
@@ -45,6 +44,5 @@ module Encoders
     end
 
   end
-
 end
 end

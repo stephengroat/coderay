@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   load :java
 
   # Scanner for Groovy.
@@ -263,6 +262,5 @@ module Scanners
     end
 
   end
-
 end
 end

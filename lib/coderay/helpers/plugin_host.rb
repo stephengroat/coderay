@@ -1,5 +1,4 @@
 module CodeRay
-
   # = PluginHost
   #
   # A simple subclass/subfolder plugin system.
@@ -25,7 +24,6 @@ module CodeRay
   #  # or
   #  Generators::Fancy
   module PluginHost
-
     # Raised if Encoders::[] fails because:
     # * a file could not be found
     # * the requested Plugin is not registered
@@ -215,7 +213,5 @@ module CodeRay
         raise ArgumentError, "Symbol or String expected, but #{id.class} given."
       end
     end
-
   end
-
 end

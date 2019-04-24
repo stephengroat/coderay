@@ -7,7 +7,6 @@
 module Test
   module Unit
     module UI
-
       SILENT = 0
       PROGRESS_ONLY = 1
       NORMAL = 2
@@ -23,7 +22,6 @@ module Test
       # runners.
 
       module TestRunnerUtilities
-
         # Creates a new TestRunner and runs the suite.
         def run(suite, output_level=NORMAL)
           return new(suite, output_level).start

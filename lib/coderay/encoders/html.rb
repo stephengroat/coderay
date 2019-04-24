@@ -2,7 +2,6 @@ require 'set'
 
 module CodeRay
 module Encoders
-
   # = HTML Encoder
   #
   # This is CodeRay's most important highlighter:
@@ -328,6 +327,5 @@ module Encoders
       end
     end
   end
-
 end
 end

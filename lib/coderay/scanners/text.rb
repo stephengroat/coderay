@@ -1,6 +1,5 @@
 module CodeRay
   module Scanners
-
     # Scanner for plain text.
     #
     # Yields just one token of the kind :plain.
@@ -21,6 +20,5 @@ module CodeRay
       end
 
     end
-
   end
 end

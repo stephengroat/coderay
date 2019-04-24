@@ -1,6 +1,5 @@
 module CodeRay
   module Encoders
-
     # = Encoder
     #
     # The Encoder base class. Together with Scanner and
@@ -185,6 +184,5 @@ module CodeRay
       public :tokens
 
     end
-
   end
 end

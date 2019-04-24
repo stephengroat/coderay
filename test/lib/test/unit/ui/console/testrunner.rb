@@ -11,7 +11,6 @@ module Test
   module Unit
     module UI
       module Console
-
         # Runs a Test::Unit::TestSuite on the console.
         class TestRunner
           extend TestRunnerUtilities

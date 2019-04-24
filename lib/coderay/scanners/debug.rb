@@ -2,7 +2,6 @@ require 'set'
 
 module CodeRay
 module Scanners
-
   # = Debug Scanner
   #
   # Interprets the output of the Encoders::Debug encoder (basically the inverse function).
@@ -70,6 +69,5 @@ module Scanners
     end
 
   end
-
 end
 end

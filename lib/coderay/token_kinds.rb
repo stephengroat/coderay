@@ -1,5 +1,4 @@
 module CodeRay
-
   # A Hash of all known token kinds and their associated CSS classes.
   TokenKinds = Hash.new(false)
 

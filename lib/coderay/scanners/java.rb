@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for Java.
   class Java < Scanner
 
@@ -169,6 +168,5 @@ module Scanners
     end
 
   end
-
 end
 end

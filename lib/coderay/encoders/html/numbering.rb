@@ -1,10 +1,8 @@
 module CodeRay
 module Encoders
-
   class HTML
 
     module Numbering # :nodoc:
-
       def self.number!(output, mode = :table, options = {})
         return self unless mode
 
@@ -99,10 +97,8 @@ module Encoders
 
         output
       end
-
     end
 
   end
-
 end
 end

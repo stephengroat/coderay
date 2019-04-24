@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   class Taskpaper < Scanner
 
     register_for :taskpaper
@@ -31,6 +30,5 @@ module Scanners
     end
 
   end
-
 end
 end

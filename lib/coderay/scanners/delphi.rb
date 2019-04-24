@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for the Delphi language (Object Pascal).
   #
   # Alias: +pascal+
@@ -139,6 +138,5 @@ module Scanners
     end
 
   end
-
 end
 end

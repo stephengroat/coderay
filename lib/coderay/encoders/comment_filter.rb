@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   load :token_kind_filter
 
   # A simple Filter that removes all tokens of the :comment kind.
@@ -20,6 +19,5 @@ module Encoders
       :exclude => [:comment, :docstring]
 
   end
-
 end
 end

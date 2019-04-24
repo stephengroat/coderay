@@ -7,7 +7,6 @@ require 'test/unit/util/observable'
 
 module Test
   module Unit
-
     # Collects Test::Unit::Failure and Test::Unit::Error so that
     # they can be displayed to the user. To this end, observers
     # can be added to it, allowing the dynamic updating of, say, a

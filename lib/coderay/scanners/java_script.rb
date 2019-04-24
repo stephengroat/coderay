@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for JavaScript.
   #
   # Aliases: +ecmascript+, +ecma_script+, +javascript+
@@ -231,6 +230,5 @@ module Scanners
     end
 
   end
-
 end
 end

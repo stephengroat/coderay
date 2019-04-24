@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   class HTML
     class CSS # :nodoc:
 
@@ -60,6 +59,5 @@ module Encoders
 
     end
   end
-
 end
 end

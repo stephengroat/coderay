@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # This scanner is really complex, since Ruby _is_ a complex language!
   #
   # It tries to highlight 100% of all common code,
@@ -472,6 +471,5 @@ module Scanners
     end
 
   end
-
 end
 end

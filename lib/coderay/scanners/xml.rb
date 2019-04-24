@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   load :html
 
   # Scanner for XML.
@@ -12,6 +11,5 @@ module Scanners
     file_extension 'xml'
 
   end
-
 end
 end

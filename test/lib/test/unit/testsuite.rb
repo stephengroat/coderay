@@ -6,7 +6,6 @@
 
 module Test
   module Unit
-
     # A collection of tests which can be #run.
     #
     # Note: It is easy to confuse a TestSuite instance with

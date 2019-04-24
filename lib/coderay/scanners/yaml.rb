@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for YAML.
   #
   # Based on the YAML scanner from Syntax by Jamis Buck.
@@ -135,6 +134,5 @@ module Scanners
     end
 
   end
-
 end
 end

@@ -8,7 +8,6 @@ require 'test/unit/util/backtracefilter'
 
 module Test
   module Unit
-
     # Encapsulates an error in a test. Created by
     # Test::Unit::TestCase when it rescues an exception thrown
     # during the processing of a test.

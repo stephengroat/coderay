@@ -1,7 +1,6 @@
 # encoding: utf-8
 module CodeRay
   module Scanners
-
     # Clojure scanner by Licenser.
     class Clojure < Scanner
 

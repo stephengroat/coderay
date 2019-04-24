@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   load :filter
 
   # A Filter that selects tokens based on their token kind.
@@ -106,6 +105,5 @@ module Encoders
     end
 
   end
-
 end
 end

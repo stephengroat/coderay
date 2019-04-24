@@ -1,5 +1,4 @@
 module CodeRay
-
   # The Tokens class represents a list of tokens returned from
   # a Scanner. It's actually just an Array with a few helper methods.
   #
@@ -160,5 +159,4 @@ module CodeRay
     alias tokens concat
 
   end
-
 end

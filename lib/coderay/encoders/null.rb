@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # = Null Encoder
   #
   # Does nothing and returns an empty string.
@@ -13,6 +12,5 @@ module Encoders
     end
 
   end
-
 end
 end

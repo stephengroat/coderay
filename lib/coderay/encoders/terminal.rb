@@ -1,6 +1,5 @@
 module CodeRay
   module Encoders
-
     # Outputs code highlighted for a color terminal.
     #
     # Note: This encoder is in beta. It currently doesn't use the Styles.

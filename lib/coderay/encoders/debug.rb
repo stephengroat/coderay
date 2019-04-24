@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # = Debug Encoder
   #
   # Fast encoder producing simple debug output.
@@ -44,6 +43,5 @@ module Encoders
     end
 
   end
-
 end
 end

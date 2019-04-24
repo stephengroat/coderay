@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # Concats the tokens into a single string, resulting in the original
   # code string if no tokens were removed.
   #
@@ -41,6 +40,5 @@ module Encoders
     end
 
   end
-
 end
 end

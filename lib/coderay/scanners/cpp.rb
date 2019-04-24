@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for C++.
   #
   # Aliases: +cplusplus+, c++
@@ -212,6 +211,5 @@ module Scanners
     end
 
   end
-
 end
 end

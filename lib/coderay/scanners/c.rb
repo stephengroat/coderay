@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   # Scanner for C.
   class C < Scanner
 
@@ -184,6 +183,5 @@ module Scanners
     end
 
   end
-
 end
 end

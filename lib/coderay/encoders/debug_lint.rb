@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   load :lint
 
   # = Debug Lint Encoder
@@ -58,6 +57,5 @@ module Encoders
     end
 
   end
-
 end
 end

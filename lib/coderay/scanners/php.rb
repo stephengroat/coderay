@@ -1,7 +1,6 @@
 # encoding: utf-8
 module CodeRay
 module Scanners
-
   load :html
 
   # Scanner for PHP.
@@ -26,7 +25,6 @@ module Scanners
     end
 
     module Words # :nodoc:
-
       # according to http://www.php.net/manual/en/reserved.keywords.php
       KEYWORDS = %w[
         abstract and array as break case catch class clone const continue declare default do else elseif
@@ -195,7 +193,6 @@ module Scanners
     end
 
     module RE # :nodoc:
-
       PHP_START = /
         <script\s+[^>]*?language\s*=\s*"php"[^>]*?> |
         <script\s+[^>]*?language\s*=\s*'php'[^>]*?> |
@@ -226,7 +223,6 @@ module Scanners
         [=!]=?=? | <> |   # comparison and assignment
         <<=? | >>=? | [<>]=?  # comparison and shift
       /x
-
     end
 
   protected
@@ -522,6 +518,5 @@ module Scanners
     end
 
   end
-
 end
 end

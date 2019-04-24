@@ -2,7 +2,6 @@ require 'set'
 
 module CodeRay
 module Scanners
-
   # = Raydebug Scanner
   #
   # Highlights the output of the Encoders::Debug encoder.
@@ -70,6 +69,5 @@ module Scanners
     end
 
   end
-
 end
 end

@@ -1,6 +1,5 @@
 module CodeRay
 module Styles
-
   # A colorful theme using CSS 3 colors (with alpha channel).
   class Alpha < Style
 
@@ -148,6 +147,5 @@ table.CodeRay td { padding: 2px 4px; vertical-align: top; }
     TOKENS
 
   end
-
 end
 end

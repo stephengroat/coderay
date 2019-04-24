@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # Returns the number of tokens.
   #
   # Text and block tokens are counted.
@@ -34,6 +33,5 @@ module Encoders
     alias end_line begin_group
 
   end
-
 end
 end

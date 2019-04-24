@@ -1,8 +1,6 @@
 module CodeRay
 module Scanners
-
   module Java::BuiltinTypes # :nodoc:
-
     #:nocov:
     List = %w[
       AbstractAction AbstractBorder AbstractButton AbstractCellEditor AbstractCollection
@@ -414,8 +412,6 @@ module Scanners
       XPathVariableResolver ZipEntry ZipException ZipFile ZipInputStream ZipOutputStream ZoneView
     ]
     #:nocov:
-
   end
-
 end
 end

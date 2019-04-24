@@ -1,6 +1,5 @@
 module CodeRay
 module Scanners
-
   map \
     :'c++' => :cpp,
     :cplusplus => :cpp,
@@ -19,6 +18,5 @@ module Scanners
     :yml => :yaml
 
   default :text
-
 end
 end

@@ -7,7 +7,6 @@
 module Test
   module Unit
     module Util
-
       # Allows the storage of a Proc passed through '&' in a
       # hash.
       #

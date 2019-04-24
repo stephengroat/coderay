@@ -1,6 +1,5 @@
 module CodeRay
 module Encoders
-
   # Counts the LoC (Lines of Code). Returns an Integer >= 0.
   #
   # Alias: +loc+
@@ -40,6 +39,5 @@ module Encoders
     end
 
   end
-
 end
 end
