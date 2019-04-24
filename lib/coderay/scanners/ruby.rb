@@ -18,7 +18,7 @@ module Scanners
       StringState.new :string, true, '"'
     end
 
-  protected
+    protected
 
     def setup
       @state = :initial

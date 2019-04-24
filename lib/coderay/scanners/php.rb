@@ -12,7 +12,7 @@ module Scanners
 
     KINDS_NOT_LOC = HTML::KINDS_NOT_LOC
 
-  protected
+    protected
 
     def setup
       @html_scanner = CodeRay.scanner :html, :tokens => @tokens, :keep_tokens => true, :keep_state => true
@@ -224,7 +224,7 @@ module Scanners
       /x
     end
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
 

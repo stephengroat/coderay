@@ -43,7 +43,7 @@ module Scanners
       AttributeSelector = /\[[^\]]*\]?/
     end
 
-  protected
+    protected
 
     def setup
       @state = :initial

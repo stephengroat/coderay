@@ -12,7 +12,7 @@ module Scanners
       :inline_diff => true
     }
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
 
@@ -197,7 +197,7 @@ module Scanners
       encoder
     end
 
-  private
+    private
 
     def diff(a, b)
       # i will be the index of the leftmost difference from the left.

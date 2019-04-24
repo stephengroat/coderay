@@ -10,7 +10,7 @@ module Encoders
 
     FILE_EXTENSION = 'yaml'
 
-  protected
+    protected
     def setup(options)
       super
 
@@ -21,7 +21,7 @@ module Encoders
       output ::YAML.dump(@data)
     end
 
-  public
+    public
     def text_token(text, kind)
       @data << [text, kind]
     end

@@ -9,7 +9,7 @@ module Scanners
     register_for :debug
     title 'CodeRay Token Dump Import'
 
-  protected
+    protected
 
     def setup
       super

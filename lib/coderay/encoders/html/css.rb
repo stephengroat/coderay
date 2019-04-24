@@ -29,7 +29,7 @@ module Encoders
         return style
       end
 
-    private
+      private
 
       CSS_CLASS_PATTERN = /
         (                    # $1 = selectors

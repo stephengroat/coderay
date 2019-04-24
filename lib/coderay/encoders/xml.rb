@@ -16,7 +16,7 @@ module Encoders
       :transitive => false
     }
 
-  protected
+    protected
     def setup(options)
       super
 
@@ -32,7 +32,7 @@ module Encoders
       super
     end
 
-  public
+    public
     def text_token(text, kind)
       if kind == :space
         token = @node

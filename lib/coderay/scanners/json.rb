@@ -14,7 +14,7 @@ module Scanners
     UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x # :nodoc:
     KEY = / (?> (?: [^\\"]+ | \\. )* ) " \s* : /x
 
-  protected
+    protected
 
     def setup
       @state = :initial

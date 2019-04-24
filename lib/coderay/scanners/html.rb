@@ -63,7 +63,7 @@ module Scanners
       @plain_string_content = nil
     end
 
-  protected
+    protected
 
     def setup
       @state = :initial

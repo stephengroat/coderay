@@ -39,7 +39,7 @@ class CodeStatistics
     print_code_test_stats
   end
 
-private
+  private
 
   DEFAULT_FILE_PATTERN = /\.rb$/
 

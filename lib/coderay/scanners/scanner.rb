@@ -74,7 +74,7 @@ module CodeRay
           @plugin_id
         end
 
-      protected
+        protected
 
         def encode_with_encoding(code, target_encoding)
           if code.encoding == target_encoding
@@ -222,7 +222,7 @@ module CodeRay
           end
       end
 
-    protected
+      protected
 
       # Can be implemented by subclasses to do some initialization
       # that has to be done once per instance.

@@ -10,7 +10,7 @@ module Scanners
     file_extension 'raydebug'
     title 'CodeRay Token Dump'
 
-  protected
+    protected
 
     def setup
       super

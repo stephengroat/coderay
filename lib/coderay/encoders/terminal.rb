@@ -126,7 +126,7 @@ module CodeRay
       TOKEN_COLORS[:method] = TOKEN_COLORS[:function]
       TOKEN_COLORS[:escape] = TOKEN_COLORS[:delimiter]
 
-    protected
+      protected
 
       def setup(options)
         super
@@ -134,7 +134,7 @@ module CodeRay
         @color_scopes = [TOKEN_COLORS]
       end
 
-    public
+      public
 
       def text_token(text, kind)
         if color = @color_scopes.last[kind]
@@ -172,7 +172,7 @@ module CodeRay
         end_group kind
       end
 
-    private
+      private
 
       def open_token(kind)
         if color = @color_scopes.last[kind]

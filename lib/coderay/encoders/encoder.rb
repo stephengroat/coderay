@@ -132,7 +132,7 @@ module CodeRay
       def end_line(kind)
       end
 
-    protected
+      protected
 
       # Called with merged options before encoding starts.
       # Sets @out to an empty string.

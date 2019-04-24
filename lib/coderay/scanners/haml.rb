@@ -10,7 +10,7 @@ module Scanners
 
     KINDS_NOT_LOC = HTML::KINDS_NOT_LOC
 
-  protected
+    protected
 
     def setup
       super

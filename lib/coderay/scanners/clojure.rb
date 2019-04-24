@@ -138,7 +138,7 @@ module CodeRay
       NUM2 = /#{PREFIX2}#{COMPLEX2}/
       NUM = /#{NUM10}|#{NUM16}|#{NUM8}|#{NUM2}/
 
-    protected
+      protected
 
       def scan_tokens(encoder, options)
 

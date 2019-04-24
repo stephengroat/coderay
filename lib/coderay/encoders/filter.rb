@@ -17,7 +17,7 @@ module Encoders
   class Filter < Encoder
     register_for :filter
 
-  protected
+    protected
     def setup(options)
       super
 
@@ -28,7 +28,7 @@ module Encoders
       output @tokens
     end
 
-  public
+    public
 
     def text_token(text, kind) # :nodoc:
       @tokens.text_token text, kind

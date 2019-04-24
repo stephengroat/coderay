@@ -38,7 +38,7 @@ module Scanners
     NAME_FOLLOWS = WordList::CaseIgnoring.new(false).
       add(%w(procedure function .)) # :nodoc:
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
 

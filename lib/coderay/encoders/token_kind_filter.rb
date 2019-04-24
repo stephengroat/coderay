@@ -29,7 +29,7 @@ module Encoders
       :include => :all
     }
 
-  protected
+    protected
     def setup(options)
       super
 
@@ -49,7 +49,7 @@ module Encoders
       !(@exclude == :all || @exclude.include?(kind))
     end
 
-  public
+    public
 
     # Add the token to the output stream if +kind+ matches the conditions.
     def text_token(text, kind)

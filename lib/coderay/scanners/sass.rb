@@ -5,7 +5,7 @@ module Scanners
     register_for :sass
     file_extension 'sass'
 
-  protected
+    protected
 
     def setup
       @state = :initial

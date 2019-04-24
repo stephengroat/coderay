@@ -30,7 +30,7 @@ module Encoders
       end if @sep
     end
 
-  protected
+    protected
     def setup(options)
       super
 

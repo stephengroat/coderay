@@ -32,7 +32,7 @@ module Scanners
       '/' => /[^\\$\/\n]+/
     } # :nodoc:
 
-  protected
+    protected
 
     def setup
       @state = :initial

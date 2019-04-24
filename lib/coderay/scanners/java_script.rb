@@ -50,7 +50,7 @@ module Scanners
       '"' => / (?> [^\\"]* (?: \\. [^\\"]* )* ) " \s* : /mx
     }  # :nodoc:
 
-  protected
+    protected
 
     def setup
       @state = :initial
@@ -217,7 +217,7 @@ module Scanners
       encoder
     end
 
-  protected
+    protected
 
     def reset_instance
       super

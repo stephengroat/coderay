@@ -96,7 +96,7 @@ module Scanners
       [ \t]* u?r? ("""|''')
     /x  # :nodoc:
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
 

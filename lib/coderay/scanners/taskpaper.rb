@@ -4,7 +4,7 @@ module Scanners
     register_for :taskpaper
     file_extension 'taskpaper'
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
       until eos?

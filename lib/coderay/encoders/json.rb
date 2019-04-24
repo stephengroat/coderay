@@ -32,7 +32,7 @@ module Encoders
     register_for :json
     FILE_EXTENSION = 'json'
 
-  protected
+    protected
     def setup(options)
       super
 
@@ -54,7 +54,7 @@ module Encoders
       @out << data.to_json
     end
 
-  public
+    public
     def text_token(text, kind)
       append :type => 'text', :text => text, :kind => kind
     end

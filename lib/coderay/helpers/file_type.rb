@@ -58,7 +58,7 @@ module CodeRay
         end
       end
 
-    protected
+      protected
 
       def type_from_shebang(filename)
         return unless File.exist? filename

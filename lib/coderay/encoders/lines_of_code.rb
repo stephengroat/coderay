@@ -18,7 +18,7 @@ module Encoders
 
     NON_EMPTY_LINE = /^\s*\S.*$/
 
-  protected
+    protected
 
     def setup(options)
       if scanner

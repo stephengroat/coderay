@@ -162,7 +162,7 @@ module CodeRay
       end
     end
 
-  protected
+    protected
 
     # Return a plugin hash that automatically loads plugins.
     def make_plugin_hash

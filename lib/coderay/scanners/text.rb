@@ -11,7 +11,7 @@ module CodeRay
 
       KINDS_NOT_LOC = [:plain] # :nodoc:
 
-    protected
+      protected
 
       def scan_tokens(encoder, options)
         encoder.text_token string, :plain

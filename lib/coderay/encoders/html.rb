@@ -123,7 +123,7 @@ module Encoders
 
     attr_reader :css
 
-  protected
+    protected
 
     def self.make_html_escape_hash
       {
@@ -214,7 +214,7 @@ module Encoders
       super
     end
 
-  public
+    public
 
     def text_token(text, kind)
       style = @span_for_kinds[@last_opened ? [kind, *@opened] : kind]
@@ -261,7 +261,7 @@ module Encoders
       close_span
     end
 
-  protected
+    protected
 
     def check_options!(options)
       unless [false, nil, :debug, :info, :info_long].include? options[:hint]

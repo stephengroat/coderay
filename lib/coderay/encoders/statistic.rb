@@ -10,7 +10,7 @@ module Encoders
 
     TypeStats = Struct.new :count, :size # :nodoc:
 
-  protected
+    protected
 
     def setup(options)
       super
@@ -55,7 +55,7 @@ Token Types (%d):
       super
     end
 
-  public
+    public
 
     def text_token(text, kind)
       @real_token_count += 1 unless kind == :space

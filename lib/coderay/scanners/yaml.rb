@@ -9,7 +9,7 @@ module Scanners
 
     KINDS_NOT_LOC = :all
 
-  protected
+    protected
 
     def scan_tokens(encoder, options)
 

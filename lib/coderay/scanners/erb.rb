@@ -26,7 +26,7 @@ module Scanners
       <%(?!%)
     /x  # :nodoc:
 
-  protected
+    protected
 
     def setup
       @ruby_scanner = CodeRay.scanner :ruby, :tokens => @tokens, :keep_tokens => true
