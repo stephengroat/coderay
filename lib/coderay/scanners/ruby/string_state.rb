@@ -12,7 +12,7 @@ module Scanners
         [ ]
         < >
         { }
-      ] ].each { |k,v| k.freeze; v.freeze } # debug, if I try to change it with <<
+      ] ].each { |k, v| k.freeze; v.freeze } # debug, if I try to change it with <<
       
       STRING_PATTERN = Hash.new do |h, k|
         delim, interpreted = *k

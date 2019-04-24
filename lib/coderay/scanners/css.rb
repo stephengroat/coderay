@@ -77,9 +77,9 @@ module Scanners
               next
             elsif match = scan(RE::AttributeSelector)
               # TODO: Improve highlighting inside of attribute selectors.
-              encoder.text_token match[0,1], :operator
+              encoder.text_token match[0, 1], :operator
               encoder.text_token match[1..-2], :attribute_name if match.size > 2
-              encoder.text_token match[-1,1], :operator if match[-1] == ?]
+              encoder.text_token match[-1, 1], :operator if match[-1] == ?]
               next
             elsif match = scan(/@media/)
               encoder.text_token match, :directive

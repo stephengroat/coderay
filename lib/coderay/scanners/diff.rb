@@ -77,9 +77,9 @@ module Scanners
             else
               encoder.begin_group :change
             end
-            encoder.text_token match[0,2], :change
+            encoder.text_token match[0, 2], :change
             encoder.text_token match[2...-2], :plain
-            encoder.text_token match[-2,2], :change
+            encoder.text_token match[-2, 2], :change
             encoder.end_group :change unless line_kind
             next unless match = scan(/.+/)
             if options[:highlight_code]

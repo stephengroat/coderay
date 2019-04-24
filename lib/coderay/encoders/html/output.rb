@@ -94,7 +94,7 @@ module Encoders
         def self.wrap! str, template, target
           target = Regexp.new(Regexp.escape("<%#{target}%>"))
           if template =~ target
-            str[0,0] = $`
+            str[0, 0] = $`
             str << $'
           else
             raise "Template target <%%%p%%> not found" % target

@@ -53,7 +53,7 @@ module CodeRay
     :namespace => 'namespace', # Clojure, Java, Taskpaper
     :octal => 'octal', # lots of scanners
     :predefined => 'predefined', # predefined function: lots of scanners
-    :predefined_constant => 'predefined-constant',# lots of scanners
+    :predefined_constant => 'predefined-constant', # lots of scanners
     :predefined_type => 'predefined-type', # C, Java, PHP
     :preprocessor => 'preprocessor',       # C, Delphi, HTML
     :pseudo_class => 'pseudo-class',       # CSS

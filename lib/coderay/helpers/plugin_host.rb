@@ -60,8 +60,8 @@ module CodeRay
     # underscore form (eg. LinesOfCode becomes lines_of_code).
     def const_missing const
       id = const.to_s.
-        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-        gsub(/([a-z\d])([A-Z])/,'\1_\2').
+        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+        gsub(/([a-z\d])([A-Z])/, '\1_\2').
         downcase
       load id
     end
