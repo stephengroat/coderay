@@ -33,7 +33,7 @@ module CodeRay
             '&amp;' => '&',
             '&quot;' => '"',
             '&gt;' => '>',
-            '&lt;' => '<',
+            '&lt;' => '<'
           }
           html.gsub(/&(?:amp|quot|[gl]t);/) { |entity| replacements[entity] }
         end

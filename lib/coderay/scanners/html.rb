@@ -54,7 +54,7 @@ module Scanners
 
     PLAIN_STRING_CONTENT = {
       "'" => /[^&'>\n]+/,
-      '"' => /[^&">\n]+/,
+      '"' => /[^&">\n]+/
     } # :nodoc:
 
     def reset

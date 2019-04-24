@@ -39,7 +39,7 @@ module Test
         :tk => proc do |r|
           require 'test/unit/ui/tk/testrunner'
           Test::Unit::UI::Tk::TestRunner
-        end,
+        end
       }
 
       OUTPUT_LEVELS = [
@@ -65,7 +65,7 @@ module Test
           c.base = r.base
           $:.push(r.base) if r.base
           c.collect(*(r.to_run.empty? ? ['.'] : r.to_run))
-        end,
+        end
       }
 
       attr_reader :suite

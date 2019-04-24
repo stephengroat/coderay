@@ -58,7 +58,7 @@ module Scanners
 
     QUOTE_TO_TYPE = {
       '`' => :shell,
-      '/' => :regexp,
+      '/' => :regexp
     }
     QUOTE_TO_TYPE.default = :string
 
@@ -161,13 +161,13 @@ module Scanners
       'I' => :symbol,
       'r' => :regexp,
       's' => :symbol,
-      'x' => :shell,
+      'x' => :shell
     })
     FANCY_STRING_INTERPRETED = Hash.new(true).merge({
       'i' => false,
       'q' => false,
       's' => false,
-      'w' => false,
+      'w' => false
     })
   end
 end

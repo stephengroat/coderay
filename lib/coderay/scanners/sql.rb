@@ -58,7 +58,7 @@ module Scanners
     STRING_CONTENT_PATTERN = {
       '"' => / (?: [^\\"] | "" )+ /x,
       "'" => / (?: [^\\'] | '' )+ /x,
-      '`' => / (?: [^\\`] | `` )+ /x,
+      '`' => / (?: [^\\`] | `` )+ /x
     }
 
     def scan_tokens(encoder, options)

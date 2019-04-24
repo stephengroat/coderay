@@ -13,7 +13,7 @@ module Encoders
     DEFAULT_OPTIONS = {
       :tab_width => 8,
       :pretty => -1,
-      :transitive => false,
+      :transitive => false
     }
 
   protected

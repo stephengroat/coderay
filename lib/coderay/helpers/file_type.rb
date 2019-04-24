@@ -124,7 +124,7 @@ module CodeRay
       'xhtml' => :html,
       'xml' => :xml,
       'yaml' => :yaml,
-      'yml' => :yaml,
+      'yml' => :yaml
     }
     for cpp_alias in %w[cc cpp cp cxx c++ C hh hpp h++ cu]
       TypeFromExt[cpp_alias] = :cpp

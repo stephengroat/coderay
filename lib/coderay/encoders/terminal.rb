@@ -25,7 +25,7 @@ module CodeRay
         :binary => {
           :self => "\e[31m",
           :char => "\e[1;31m",
-          :delimiter => "\e[1;31m",
+          :delimiter => "\e[1;31m"
         },
         :char => {
           :self => "\e[35m",
@@ -37,7 +37,7 @@ module CodeRay
         :comment => {
           :self => "\e[1;30m",
           :char => "\e[37m",
-          :delimiter => "\e[37m",
+          :delimiter => "\e[37m"
         },
         :constant => "\e[1;34;4m",
         :decorator => "\e[35m",
@@ -61,7 +61,7 @@ module CodeRay
         :key => {
           :self => "\e[35m",
           :char => "\e[1;35m",
-          :delimiter => "\e[1;35m",
+          :delimiter => "\e[1;35m"
         },
         :keyword => "\e[32m",
         :label => "\e[1;33m",
@@ -77,25 +77,25 @@ module CodeRay
           :self => "\e[35m",
           :delimiter => "\e[1;35m",
           :modifier => "\e[35m",
-          :char => "\e[1;35m",
+          :char => "\e[1;35m"
         },
         :reserved => "\e[32m",
         :shell => {
           :self => "\e[33m",
           :char => "\e[1;33m",
           :delimiter => "\e[1;33m",
-          :escape => "\e[1;33m",
+          :escape => "\e[1;33m"
         },
         :string => {
           :self => "\e[31m",
           :modifier => "\e[1;31m",
           :char => "\e[1;35m",
           :delimiter => "\e[1;31m",
-          :escape => "\e[1;31m",
+          :escape => "\e[1;31m"
         },
         :symbol => {
           :self => "\e[33m",
-          :delimiter => "\e[1;33m",
+          :delimiter => "\e[1;33m"
         },
         :tag => "\e[32m",
         :type => "\e[1;34m",
@@ -105,21 +105,21 @@ module CodeRay
         :insert => {
           :self => "\e[42m",
           :insert => "\e[1;32;42m",
-          :eyecatcher => "\e[102m",
+          :eyecatcher => "\e[102m"
         },
         :delete => {
           :self => "\e[41m",
           :delete => "\e[1;31;41m",
-          :eyecatcher => "\e[101m",
+          :eyecatcher => "\e[101m"
         },
         :change => {
           :self => "\e[44m",
-          :change => "\e[37;44m",
+          :change => "\e[37;44m"
         },
         :head => {
           :self => "\e[45m",
           :filename => "\e[37;45m"
-        },
+        }
       }
 
       TOKEN_COLORS[:keyword] = TOKEN_COLORS[:reserved]

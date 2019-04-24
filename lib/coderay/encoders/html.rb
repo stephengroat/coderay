@@ -114,7 +114,7 @@ module Encoders
       :bold_every => 10,
       :highlight_lines => nil,
 
-      :hint => false,
+      :hint => false
     }
 
     autoload :Output,    CodeRay.coderay_path('encoders', 'html', 'output')
@@ -130,7 +130,7 @@ module Encoders
         '&' => '&amp;',
         '"' => '&quot;',
         '>' => '&gt;',
-        '<' => '&lt;',
+        '<' => '&lt;'
         # "\t" => will be set to ' ' * options[:tab_width] during setup
       }.tap do |hash|
         # Escape ASCII control codes except \x9 == \t and \xA == \n.
