@@ -29,12 +29,12 @@ module CodeRay
         ext2 = filename.to_s[/\.(.*)/, 1] # from first dot
 
         type =
-          TypeFromExt[ext] ||
-          TypeFromExt[ext.downcase] ||
-          (TypeFromExt[ext2] if ext2) ||
-          (TypeFromExt[ext2.downcase] if ext2) ||
-          TypeFromName[name] ||
-          TypeFromName[name.downcase]
+          TYPE_FROM_EXT[ext] ||
+          TYPE_FROM_EXT[ext.downcase] ||
+          (TYPE_FROM_EXT[ext2] if ext2) ||
+          (TYPE_FROM_EXT[ext2.downcase] if ext2) ||
+          TYPE_FROM_NAME[name] ||
+          TYPE_FROM_NAME[name.downcase]
         type ||= type_from_shebang(filename) if read_shebang
 
         type
@@ -64,7 +64,7 @@ module CodeRay
 
         File.open filename, 'r' do |f|
           if first_line = f.gets
-            if type = first_line[TypeFromShebang]
+            if type = first_line[TYPE_FROM_SHEBANG]
               type.to_sym
             end
           end
@@ -72,7 +72,7 @@ module CodeRay
       end
     end
 
-    TypeFromExt = {
+    TYPE_FROM_EXT = {
       'c' => :c,
       'cfc' => :xml,
       'cfm' => :xml,
@@ -128,9 +128,9 @@ module CodeRay
       'cc' => :cpp, 'cpp' => :cpp, 'cp' => :cpp, 'cxx' => :cpp, 'c++' => :cpp, 'C' => :cpp, 'hh' => :cpp, 'hpp' => :cpp, 'h++' => :cpp, 'cu' => :cpp
     }.freeze
 
-    TypeFromShebang = /\b(?:ruby|perl|python|sh)\b/.freeze
+    TYPE_FROM_SHEBANG = /\b(?:ruby|perl|python|sh)\b/.freeze
 
-    TypeFromName = {
+    TYPE_FROM_NAME = {
       'Capfile' => :ruby,
       'Rakefile' => :ruby,
       'Rantfile' => :ruby,
