@@ -39,10 +39,10 @@ module Encoders
               end
             end
           elsif bold_every.is_a? Integer
-            raise ArgumentError, ":bolding can't be 0." if bold_every == 0
+            raise ArgumentError, ":bolding can't be 0." if bold_every.zero?
 
             proc do |line|
-              if line % bold_every == 0
+              if (line % bold_every).zero?
                 "<strong>#{anchoring[line]}</strong>" # every bold_every-th number in bold
               else
                 anchoring[line]

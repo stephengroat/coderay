@@ -131,7 +131,7 @@ module Scanners
                   inline_block_curly_depth += 1
                 when '}'
                   inline_block_curly_depth -= 1
-                  if inline_block_curly_depth == 0 # closing brace of inline block reached
+                  if inline_block_curly_depth.zero? # closing brace of inline block reached
                     state, inline_block_curly_depth, heredocs = inline_block_stack.pop
                     inline_block_stack = nil if inline_block_stack.empty?
                     heredocs = nil if heredocs && heredocs.empty?

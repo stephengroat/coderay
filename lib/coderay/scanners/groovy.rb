@@ -115,7 +115,7 @@ module Scanners
             value_expected = after_def = false
             if !inline_block_stack.empty? && match == '}'
               inline_block_paren_depth -= 1
-              if inline_block_paren_depth == 0 # closing brace of inline block reached
+              if inline_block_paren_depth.zero? # closing brace of inline block reached
                 encoder.text_token match, :inline_delimiter
                 encoder.end_group :inline
                 state, string_delimiter, inline_block_paren_depth = inline_block_stack.pop

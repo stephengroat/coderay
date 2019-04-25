@@ -107,7 +107,7 @@ module Scanners
               brace_depth = 0
               encoder.text_token(match, :delimiter)
               encoder.end_group(:map)
-            elsif brace_depth == 0 # Mismatched brace
+            elsif brace_depth.zero? # Mismatched brace
               encoder.text_token(match, :error)
             else
               brace_depth -= 1
