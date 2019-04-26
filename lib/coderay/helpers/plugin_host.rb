@@ -170,8 +170,8 @@ module CodeRay
         path = path_to id
         begin
           require path
-        rescue LoadError => boom
-          raise PluginNotFound, format('%p could not load plugin %p: %s', self, id, boom) unless h.key?(:default)
+        rescue LoadError => e
+          raise PluginNotFound, format('%p could not load plugin %p: %s', self, id, e) unless h.key?(:default)
 
           h[:default] if h.key?(:default)
         else
