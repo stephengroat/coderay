@@ -280,7 +280,7 @@ surrounding code:
       MESSAGE
 
       def raise_inspect_arguments(message, tokens, state, ambit)
-        [File.basename(caller[0]),
+        [File.basename(caller(1..1).first),
          message,
          tokens_size(tokens),
          tokens_last(tokens, 10).map(&:inspect).join("\n"),
