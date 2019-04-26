@@ -28,9 +28,9 @@ module Test
         def ==(other)
           case other
           when ProcWrapper
-              @a_proc == other.to_proc
+            @a_proc == other.to_proc
           else
-              super
+            super
           end
         end
         alias eql? ==

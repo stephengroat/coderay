@@ -8,9 +8,9 @@ module Test
       def filter=(filters)
         @filters = case filters
                    when Proc
-            [filters]
+                     [filters]
                    when Array
-            filters
+                     filters
         end
       end
 

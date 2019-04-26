@@ -27,3 +27,6 @@ Metrics/AbcSize:
 
 Lint/AssignmentInCondition:
   Enabled: false
+
+Layout/IndentHeredoc:
+  Enabled: false

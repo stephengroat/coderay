@@ -1,5 +1,5 @@
 module CodeRay
-module Styles
-  default :alpha
-end
+  module Styles
+    default :alpha
+  end
 end

@@ -1,32 +1,32 @@
 module CodeRay
-module Scanners
-  class Taskpaper < Scanner
-    register_for :taskpaper
-    file_extension 'taskpaper'
+  module Scanners
+    class Taskpaper < Scanner
+      register_for :taskpaper
+      file_extension 'taskpaper'
 
-    protected
+      protected
 
-    def scan_tokens(encoder, _options)
-      until eos?
-        if match = scan(/\S.*:.*$/)                  # project
-          encoder.text_token(match, :namespace)
-        elsif match = scan(/-.+@done.*/)             # completed task
-          encoder.text_token(match, :done)
-        elsif match = scan(/-(?:[^@\n]+|@(?!due))*/) # task
-          encoder.text_token(match, :plain)
-        elsif match = scan(/@due.*/)                 # comment
-          encoder.text_token(match, :important)
-        elsif match = scan(/.+/)                     # comment
-          encoder.text_token(match, :comment)
-        elsif match = scan(/\s+/)                    # space
-          encoder.text_token(match, :space)
-        else                                         # other
-          encoder.text_token getch, :error
+      def scan_tokens(encoder, _options)
+        until eos?
+          if match = scan(/\S.*:.*$/)                  # project
+            encoder.text_token(match, :namespace)
+          elsif match = scan(/-.+@done.*/)             # completed task
+            encoder.text_token(match, :done)
+          elsif match = scan(/-(?:[^@\n]+|@(?!due))*/) # task
+            encoder.text_token(match, :plain)
+          elsif match = scan(/@due.*/)                 # comment
+            encoder.text_token(match, :important)
+          elsif match = scan(/.+/)                     # comment
+            encoder.text_token(match, :comment)
+          elsif match = scan(/\s+/)                    # space
+            encoder.text_token(match, :space)
+          else                                         # other
+            encoder.text_token getch, :error
+          end
         end
-      end
 
-      encoder
+        encoder
+      end
     end
   end
-end
 end

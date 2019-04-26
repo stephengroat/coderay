@@ -113,9 +113,9 @@ EOT
       def assert_raise(*args)
         _wrap_assertion do
           message = if Module === args.last
-            ''
+                      ''
                     else
-            args.pop
+                      args.pop
                     end
           exceptions, modules = _check_exception_class(args)
           expected = args.size == 1 ? args.first : args
@@ -230,9 +230,9 @@ EOT
         _wrap_assertion do
           pattern = case pattern
                     when String
-              Regexp.new(Regexp.escape(pattern))
+                      Regexp.new(Regexp.escape(pattern))
                     else
-              pattern
+                      pattern
           end
           full_message = build_message(message, "<?> expected to be =~\n<?>.", string, pattern)
           assert_block(full_message) { string =~ pattern }
@@ -295,9 +295,9 @@ EOT
       def assert_nothing_raised(*args)
         _wrap_assertion do
           message = if Module === args.last
-            ''
+                      ''
                     else
-            args.pop
+                      args.pop
                     end
           exceptions, modules = _check_exception_class(args)
           begin
@@ -594,7 +594,7 @@ EOT
         def convert(object)
           case object
           when Exception
-              <<EOM.chop
+            <<EOM.chop
 Class: <#{convert(object.class)}>
 Message: <#{convert(object.message)}>
 ---Backtrace---
@@ -602,19 +602,19 @@ Message: <#{convert(object.message)}>
 ---------------
 EOM
           else
-              if self.class.use_pp
-                unless defined?(PP)
-                  begin
-                    require 'pp'
-                  rescue LoadError
-                    self.class.use_pp = false
-                    return object.inspect
-                  end
+            if self.class.use_pp
+              unless defined?(PP)
+                begin
+                  require 'pp'
+                rescue LoadError
+                  self.class.use_pp = false
+                  return object.inspect
                 end
-                PP.pp(object, '').chomp
-              else
-                object.inspect
               end
+              PP.pp(object, '').chomp
+            else
+              object.inspect
+            end
           end
         end
 

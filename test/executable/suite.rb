@@ -17,28 +17,28 @@ class TestCodeRayExecutable < Test::Unit::TestCase
   EXE_COMMAND =
     format(if RUBY_PLATFORM === 'java' && `ruby --ng -e '' 2> /dev/null` && $CHILD_STATUS.success?
       # use Nailgun
-      "#{RUBY_COMMAND}--ng -I%s %s"
+             "#{RUBY_COMMAND}--ng -I%s %s"
            else
-      "#{RUBY_COMMAND} -I%s %s"
+             "#{RUBY_COMMAND} -I%s %s"
     end, ROOT_DIR + 'lib', EXECUTABLE)
 
   def coderay(args, options = {})
     command = if options[:fake_tty]
-      "#{EXE_COMMAND} #{args} --tty"
+                "#{EXE_COMMAND} #{args} --tty"
               else
-      "#{EXE_COMMAND} #{args}"
+                "#{EXE_COMMAND} #{args}"
               end
 
     puts command if $DEBUG
 
     output = if options[:input]
-      IO.popen "#{command} 2>&1", 'r+' do |io|
-        io.write options[:input]
-        io.close_write
-        io.read
-      end
+               IO.popen "#{command} 2>&1", 'r+' do |io|
+                 io.write options[:input]
+                 io.close_write
+                 io.read
+               end
              else
-      `#{command} 2>&1`
+               `#{command} 2>&1`
              end
 
     if output[EXECUTABLE.to_s]

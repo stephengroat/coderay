@@ -34,9 +34,9 @@ module Test
       # Returns a verbose version of the error description.
       def long_display
         location_display = if location.size == 1
-          location[0].sub(/\A(.+:\d+).*/, ' [\\1]')
+                             location[0].sub(/\A(.+:\d+).*/, ' [\\1]')
                            else
-          "\n    [#{location.join("\n     ")}]"
+                             "\n    [#{location.join("\n     ")}]"
         end
         "Failure:\n#{@test_name}#{location_display}:\n#{@message}"
       end

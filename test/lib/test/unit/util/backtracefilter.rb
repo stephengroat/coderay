@@ -10,9 +10,9 @@ module Test
           return ['No backtrace'] unless backtrace
 
           split_p = if prefix
-            prefix.split(TESTUNIT_FILE_SEPARATORS)
+                      prefix.split(TESTUNIT_FILE_SEPARATORS)
                     else
-            TESTUNIT_PREFIX
+                      TESTUNIT_PREFIX
           end
           match = proc do |e|
             split_e = e.split(TESTUNIT_FILE_SEPARATORS)[0, split_p.size]

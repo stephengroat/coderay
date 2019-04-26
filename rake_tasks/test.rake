@@ -5,7 +5,7 @@ namespace :test do
     ruby './test/functional/for_redcloth.rb' unless begin
                                                        ''.chop!
                                                     rescue StandardError
-                                                       true
+                                                      true
                                                      end
   end
 

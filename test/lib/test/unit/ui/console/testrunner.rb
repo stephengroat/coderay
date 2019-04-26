@@ -23,9 +23,9 @@ module Test
           # STDOUT.
           def initialize(suite, output_level = NORMAL, io = STDOUT)
             @suite = if suite.respond_to?(:suite)
-              suite.suite
+                       suite.suite
                      else
-              suite
+                       suite
                      end
             @output_level = output_level
             @io = io

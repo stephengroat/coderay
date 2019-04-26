@@ -153,20 +153,20 @@ module CodeRay
     end
 
     alias text_token push
-    def begin_group(kind) 
-      push :begin_group, kind 
+    def begin_group(kind)
+      push :begin_group, kind
     end
 
-    def end_group(kind) 
-      push :end_group, kind 
+    def end_group(kind)
+      push :end_group, kind
     end
 
-    def begin_line(kind) 
-      push :begin_line, kind 
+    def begin_line(kind)
+      push :begin_line, kind
     end
 
-    def end_line(kind) 
-      push :end_line, kind 
+    def end_line(kind)
+      push :end_line, kind
     end
     alias tokens concat
   end

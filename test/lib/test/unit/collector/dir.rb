@@ -54,7 +54,7 @@ module Test
           sub_suites = []
           path = realdir(name)
           if @file.directory?(path)
-      dir_name = name unless name == '.'
+            dir_name = name unless name == '.'
       @dir.entries(path).each do |e|
         next if e == '.' || e == '..'
 

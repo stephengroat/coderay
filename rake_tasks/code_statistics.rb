@@ -146,9 +146,9 @@ class CodeStatistics
                  end
 
     name = if name[TEST_TYPES]
-      "T #{name}"
+             "T #{name}"
            else
-      "  #{name}"
+             "  #{name}"
            end
 
     line = format('| %-25s | %5d | %5d | %5d | %8d | %7d | %7d | %7d | %3d | %5d |', (

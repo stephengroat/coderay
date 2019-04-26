@@ -6,9 +6,9 @@ Gem::Specification.new do |s|
   s.name = 'coderay'
 
   s.version = if ENV['RELEASE']
-    CodeRay::VERSION
+                CodeRay::VERSION
               else
-    "#{CodeRay::VERSION}.rc#{ENV['RC'] || 1}"
+                "#{CodeRay::VERSION}.rc#{ENV['RC'] || 1}"
               end
 
   s.authors     = ['Kornelius Kalnbach']

@@ -49,9 +49,9 @@ module CodeRay
           return code if code.empty?
 
           code = if code.respond_to? :encoding
-            encode_with_encoding code, encoding
+                   encode_with_encoding code, encoding
                  else
-            to_unix code
+                   to_unix code
                  end
           # code = code.dup if code.eql? original
           code

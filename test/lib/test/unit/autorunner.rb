@@ -145,9 +145,9 @@ module Test
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new(Regexp.last_match(1)) : n)
             @filters << case n
                         when Regexp
-              proc { |t| n =~ t.method_name ? true : nil }
+                          proc { |t| n =~ t.method_name ? true : nil }
                         else
-              proc { |t| n == t.method_name ? true : nil }
+                          proc { |t| n == t.method_name ? true : nil }
                         end
           end
 
@@ -157,9 +157,9 @@ module Test
             n = (%r{\A/(.*)/\Z} =~ n ? Regexp.new(Regexp.last_match(1)) : n)
             @filters << case n
                         when Regexp
-              proc { |t| n =~ t.class.name ? true : nil }
+                          proc { |t| n =~ t.class.name ? true : nil }
                         else
-              proc { |t| n == t.class.name ? true : nil }
+                          proc { |t| n == t.class.name ? true : nil }
                         end
           end
 

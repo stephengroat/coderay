@@ -1,25 +1,25 @@
 module CodeRay
-module Encoders
-  # Makes a statistic for the given tokens.
-  #
-  # Alias: +stats+
-  class Statistic < Encoder
-    register_for :statistic
+  module Encoders
+    # Makes a statistic for the given tokens.
+    #
+    # Alias: +stats+
+    class Statistic < Encoder
+      register_for :statistic
 
-    attr_reader :type_stats, :real_token_count # :nodoc:
+      attr_reader :type_stats, :real_token_count # :nodoc:
 
-    TypeStats = Struct.new :count, :size # :nodoc:
+      TypeStats = Struct.new :count, :size # :nodoc:
 
-    protected
+      protected
 
-    def setup(options)
-      super
+      def setup(options)
+        super
 
-      @type_stats = Hash.new { |h, k| h[k] = TypeStats.new 0, 0 }
-      @real_token_count = 0
-    end
+        @type_stats = Hash.new { |h, k| h[k] = TypeStats.new 0, 0 }
+        @real_token_count = 0
+      end
 
-    STATS = <<-STATS.freeze  # :nodoc:
+      STATS = <<-STATS.freeze  # :nodoc:
 
 Code Statistics
 
@@ -33,56 +33,56 @@ Token Types (%d):
 %s
     STATS
 
-    TOKEN_TYPES_ROW = <<-TKR.freeze  # :nodoc:
+      TOKEN_TYPES_ROW = <<-TKR.freeze  # :nodoc:
   %-20s  %8d  %6.2f %%   %5.1f
-    TKR
+      TKR
 
-    def finish(options)
-      all = @type_stats['TOTAL']
-      all_count = all.count
-      all_size = all.size
-      @type_stats.each do |_type, stat|
-        stat.size /= stat.count.to_f
+      def finish(options)
+        all = @type_stats['TOTAL']
+        all_count = all.count
+        all_size = all.size
+        @type_stats.each do |_type, stat|
+          stat.size /= stat.count.to_f
+        end
+        types_stats = @type_stats.sort_by { |k, v| [-v.count, k.to_s] }.map do |k, v|
+          format(TOKEN_TYPES_ROW, k, v.count, 100.0 * v.count / all_count, v.size)
+        end.join
+        @out << format(STATS, all_count, @real_token_count, all_size, @type_stats.delete_if { |k, _v| k.is_a? String }.size, types_stats)
+
+        super
       end
-      types_stats = @type_stats.sort_by { |k, v| [-v.count, k.to_s] }.map do |k, v|
-        format(TOKEN_TYPES_ROW, k, v.count, 100.0 * v.count / all_count, v.size)
-      end.join
-      @out << format(STATS, all_count, @real_token_count, all_size, @type_stats.delete_if { |k, _v| k.is_a? String }.size, types_stats)
 
-      super
-    end
+      public
 
-    public
+      def text_token(text, kind)
+        @real_token_count += 1 unless kind == :space
+        @type_stats[kind].count += 1
+        @type_stats[kind].size += text.size
+        @type_stats['TOTAL'].size += text.size
+        @type_stats['TOTAL'].count += 1
+      end
 
-    def text_token(text, kind)
-      @real_token_count += 1 unless kind == :space
-      @type_stats[kind].count += 1
-      @type_stats[kind].size += text.size
-      @type_stats['TOTAL'].size += text.size
-      @type_stats['TOTAL'].count += 1
-    end
+      def begin_group(kind)
+        block_token ':begin_group', kind
+      end
 
-    def begin_group(kind)
-      block_token ':begin_group', kind
-    end
+      def end_group(kind)
+        block_token ':end_group', kind
+      end
 
-    def end_group(kind)
-      block_token ':end_group', kind
-    end
+      def begin_line(kind)
+        block_token ':begin_line', kind
+      end
 
-    def begin_line(kind)
-      block_token ':begin_line', kind
-    end
+      def end_line(kind)
+        block_token ':end_line', kind
+      end
 
-    def end_line(kind)
-      block_token ':end_line', kind
-    end
-
-    def block_token(action, kind)
-      @type_stats['TOTAL'].count += 1
-      @type_stats[action].count += 1
-      @type_stats[kind].count += 1
+      def block_token(action, kind)
+        @type_stats['TOTAL'].count += 1
+        @type_stats[action].count += 1
+        @type_stats[kind].count += 1
+      end
     end
   end
-end
 end
