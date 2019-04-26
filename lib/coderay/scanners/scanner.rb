@@ -157,8 +157,8 @@ module CodeRay
       def tokenize(source = nil, options = {})
         options = @options.merge(options)
 
-        set_tokens_from_options options
-        set_string_from_source source
+        tokens_from_options options
+        string_from_source source
 
         begin
           scan_tokens @tokens, options
@@ -229,7 +229,7 @@ module CodeRay
       # scan.
       def setup; end
 
-      def set_string_from_source(source)
+      def string_from_source(source)
         case source
         when Array
           self.string = self.class.normalize(source.join)
@@ -240,7 +240,7 @@ module CodeRay
         end
       end
 
-      def set_tokens_from_options(options)
+      def tokens_from_options(options)
         @tokens = options[:tokens] || @tokens || Tokens.new
         @tokens.scanner = self if @tokens.respond_to? :scanner=
       end
