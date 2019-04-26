@@ -18,7 +18,7 @@ module CodeRay
 
         until eos?
 
-          if bol? && (match = scan(/(?>( +)?(\/[\*\/])(.+)?)(?=\n)/))
+          if bol? && (match = scan(%r{(?>( +)?(/[\*/])(.+)?)(?=\n)}))
             encoder.text_token self[1], :space if self[1]
             encoder.begin_group :comment
             encoder.text_token self[2], :delimiter
@@ -128,7 +128,7 @@ module CodeRay
             encoder.text_token match, :include
             value_expected = true
 
-          elsif match = scan(/\/\*(?:.*?\*\/|.*)|\/\/.*/)
+          elsif match = scan(%r{/\*(?:.*?\*/|.*)|//.*})
             encoder.text_token match, :comment
 
           elsif match = scan(/#\{/)
@@ -190,7 +190,7 @@ module CodeRay
             encoder.text_token match, :directive
             value_expected = true
 
-          elsif match = scan(/ == | != | [-+*\/>~:;,.=()] /x)
+          elsif match = scan(%r{ == | != | [-+*/>~:;,.=()] }x)
             if match == ':'
               value_expected = true
             elsif match == ';'

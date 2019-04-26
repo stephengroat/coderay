@@ -63,15 +63,15 @@ module CodeRay
       ESCAPE = / [abfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
       UNICODE_ESCAPE = / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} | N\{[-\w ]+\} /x.freeze # :nodoc:
 
-      OPERATOR = /
+      OPERATOR = %r{
         \.\.\. |          # ellipsis
         \.(?!\d) |        # dot but not decimal point
         [,;:()\[\]{}] |   # simple delimiters
-        \/\/=? | \*\*=? | # special math
-        [-+*\/%&|^]=? |   # ordinary math and binary logic
+        //=? | \*\*=? | # special math
+        [-+*/%&|^]=? |   # ordinary math and binary logic
         [~`] |            # binary complement and inspection
         <<=? | >>=? | [<>=]=? | !=  # comparison and assignment
-      /x.freeze # :nodoc:
+      }x.freeze # :nodoc:
 
       STRING_DELIMITER_REGEXP = Hash.new do |h, delimiter|
         h[delimiter] = Regexp.union delimiter # :nodoc:

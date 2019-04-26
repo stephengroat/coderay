@@ -35,7 +35,7 @@ module CodeRay
                                            .add(['style'], :style)
 
       ATTR_NAME = /[\w.:-]+/.freeze # :nodoc:
-      TAG_END = /\/?>/.freeze # :nodoc:
+      TAG_END = %r{/?>}.freeze # :nodoc:
       HEX = /[0-9a-fA-F]/.freeze # :nodoc:
       ENTITY = /
         &
@@ -119,7 +119,7 @@ module CodeRay
                 encoder.text_token match, :preprocessor
               elsif match = scan(/<\?(?:.*?\?>|.*)/m)
                 encoder.text_token match, :comment
-              elsif match = scan(/<\/[-\w.:]*>?/m)
+              elsif match = scan(%r{</[-\w.:]*>?}m)
                 in_tag = nil
                 encoder.text_token match, :tag
               elsif match = scan(/<(?:(script|style)|[-\w.:]+)(>)?/m)
@@ -227,7 +227,7 @@ module CodeRay
                   closing = self[3]
                   encoder.text_token self[1], :comment
                 else
-                  code = scan_until(/(?=(?:\n\s*)?<\/#{in_tag}>)|\z/)
+                  code = scan_until(%r{(?=(?:\n\s*)?</#{in_tag}>)|\z})
                   closing = false
                 end
                 unless code.empty?

@@ -50,7 +50,7 @@ module CodeRay
         end
 
         def apply_title!(title)
-          sub!(/(<title>)(<\/title>)/) { Regexp.last_match(1) + title + Regexp.last_match(2) }
+          sub!(%r{(<title>)(</title>)}) { Regexp.last_match(1) + title + Regexp.last_match(2) }
           self
         end
 

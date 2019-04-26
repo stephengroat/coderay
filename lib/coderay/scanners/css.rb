@@ -116,7 +116,7 @@ module CodeRay
 
             end
 
-          elsif match = scan(/\/\*(?:.*?\*\/|\z)/m)
+          elsif match = scan(%r{/\*(?:.*?\*/|\z)}m)
             encoder.text_token match, :comment
 
           elsif match = scan(/\{/)
@@ -163,7 +163,7 @@ module CodeRay
           elsif match = scan(RE::AtKeyword)
             encoder.text_token match, :directive
 
-          elsif match = scan(/ [+>~:;,.=()\/] /x)
+          elsif match = scan(%r{ [+>~:;,.=()/] }x)
             if match == ':'
               value_expected = true
             elsif match == ';'

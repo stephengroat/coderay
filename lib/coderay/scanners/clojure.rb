@@ -89,8 +89,8 @@ module CodeRay
                                         .add(%w[ns], :namespace)
                                         .add(%w[defprotocol defrecord], :class)
 
-      BASIC_IDENTIFIER = /[a-zA-Z$%*\/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!\/_?<>\-\#]*/.freeze
-      IDENTIFIER = /(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:\/#{BASIC_IDENTIFIER})?\.?)|\.\.?/.freeze
+      BASIC_IDENTIFIER = %r{[a-zA-Z$%*/_+!?&<>\-=]=?[a-zA-Z0-9$&*+!/_?<>\-\#]*}.freeze
+      IDENTIFIER = %r{(?!-\d)(?:(?:#{BASIC_IDENTIFIER}\.)*#{BASIC_IDENTIFIER}(?:/#{BASIC_IDENTIFIER})?\.?)|\.\.?}.freeze
       SYMBOL = /::?#{IDENTIFIER}/o.freeze
       DIGIT = /\d/.freeze
       DIGIT10 = DIGIT
@@ -115,10 +115,10 @@ module CodeRay
       UINT8 = /#{DIGIT8}+#*/.freeze
       UINT2 = /#{DIGIT2}+#*/.freeze
       DECIMAL = /#{DIGIT10}+#+\.#*#{SUFFIX}|#{DIGIT10}+\.#{DIGIT10}*#*#{SUFFIX}|\.#{DIGIT10}+#*#{SUFFIX}|#{UINT10}#{EXP}/.freeze
-      UREAL10 = /#{UINT10}\/#{UINT10}|#{DECIMAL}|#{UINT10}/.freeze
-      UREAL16 = /#{UINT16}\/#{UINT16}|#{UINT16}/.freeze
-      UREAL8 = /#{UINT8}\/#{UINT8}|#{UINT8}/.freeze
-      UREAL2 = /#{UINT2}\/#{UINT2}|#{UINT2}/.freeze
+      UREAL10 = %r{#{UINT10}/#{UINT10}|#{DECIMAL}|#{UINT10}}.freeze
+      UREAL16 = %r{#{UINT16}/#{UINT16}|#{UINT16}}.freeze
+      UREAL8 = %r{#{UINT8}/#{UINT8}|#{UINT8}}.freeze
+      UREAL2 = %r{#{UINT2}/#{UINT2}|#{UINT2}}.freeze
       REAL10 = /#{SIGN}#{UREAL10}/.freeze
       REAL16 = /#{SIGN}#{UREAL16}/.freeze
       REAL8 = /#{SIGN}#{UREAL8}/.freeze
@@ -177,7 +177,7 @@ module CodeRay
               encoder.begin_group state
               encoder.text_token match, :delimiter
             elsif (match = scan(/#{NUM}/o)) && !matched.empty?
-              encoder.text_token match, match[/[.e\/]/i] ? :float : :integer
+              encoder.text_token match, match[%r{[.e/]}i] ? :float : :integer
             else
               encoder.text_token getch, :error
             end

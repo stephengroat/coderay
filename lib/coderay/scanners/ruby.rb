@@ -179,7 +179,7 @@ module CodeRay
                 value_expected = false
                 encoder.text_token match, :instance_variable
 
-              elsif value_expected && match = scan(/\//)
+              elsif value_expected && match = scan(%r{/})
                 encoder.begin_group :regexp
                 encoder.text_token match, :delimiter
                 state = self.class::StringState.new :regexp, true, '/'
@@ -196,7 +196,7 @@ module CodeRay
                 end
                 value_expected = false
 
-              elsif match = scan(/ [-+!~^\/]=? | [:;] | &\. | [*|&]{1,2}=? | >>? /x)
+              elsif match = scan(%r{ [-+!~^/]=? | [:;] | &\. | [*|&]{1,2}=? | >>? }x)
                 value_expected = true
                 encoder.text_token match, :operator
 

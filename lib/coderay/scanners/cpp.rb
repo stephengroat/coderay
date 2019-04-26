@@ -78,7 +78,7 @@ module CodeRay
               match << scan_until(/ ^\# (?:elif|else|endif) .*? $ | \z /xm) unless eos?
               encoder.text_token match, :comment
 
-            elsif match = scan(/ [-+*=<>?:;,!&^|()\[\]{}~%]+ | \/=? | \.(?!\d) /x)
+            elsif match = scan(%r{ [-+*=<>?:;,!&^|()\[\]{}~%]+ | /=? | \.(?!\d) }x)
               label_expected = match =~ /[;\{\}]/
               if case_expected
                 label_expected = true if match == ':'

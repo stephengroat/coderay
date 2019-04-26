@@ -74,7 +74,7 @@ module CodeRay
             when match = scan(/[,{}\[\]]/)
               encoder.text_token match, :operator
               next
-            when state == :initial && match = scan(/[-\w.()\/ ]*\S(?= *:(?: |$))/)
+            when state == :initial && match = scan(%r{[-\w.()/ ]*\S(?= *:(?: |$))})
               encoder.text_token match, :key
               key_indent = column(pos - match.size) - 1
               state = :colon
@@ -88,7 +88,7 @@ module CodeRay
               key_indent = column(pos - match.size) - 1
               state = :colon
               next
-            when match = scan(/(![\w\/]+)(:([\w:]+))?/)
+            when match = scan(%r{(![\w/]+)(:([\w:]+))?})
               encoder.text_token self[1], :type
               if self[2]
                 encoder.text_token ':', :operator

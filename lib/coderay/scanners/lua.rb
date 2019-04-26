@@ -130,7 +130,7 @@ module CodeRay
             elsif match = scan(/-? (?:0x\h+ (?:p[+\-]?\d+)? | \d+ (?:e[+\-]?\d+)?)/ix) # hexadecimal constants have no E power, decimal ones no P power
               encoder.text_token(match, :integer)
 
-            elsif match = scan(/[\+\-\*\/%^\#=~<>\(\)\[\]:;,] | \.(?!\d)/x) # Operators
+            elsif match = scan(%r{[\+\-\*/%^\#=~<>\(\)\[\]:;,] | \.(?!\d)}x) # Operators
               encoder.text_token(match, :operator)
 
             elsif match = scan(/\s+/) # Space

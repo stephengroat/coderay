@@ -208,19 +208,19 @@ module CodeRay
         IDENTIFIER = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : Regexp.new('[a-z_\x7f-\xFF][a-z0-9_\x7f-\xFF]*', true)
         VARIABLE = /\$#{IDENTIFIER}/.freeze
 
-        OPERATOR = /
+        OPERATOR = %r{
           \.(?!\d)=? |      # dot that is not decimal point, string concatenation
           && | \|\| |       # logic
           :: | -> | => |    # scope, member, dictionary
           \\(?!\n) |        # namespace
           \+\+ | -- |       # increment, decrement
           [,;?:()\[\]{}] |  # simple delimiters
-          [-+*\/%&|^]=? |   # ordinary math, binary logic, assignment shortcuts
+          [-+*/%&|^]=? |   # ordinary math, binary logic, assignment shortcuts
           [~$] |            # whatever
           =& |              # reference assignment
           [=!]=?=? | <> |   # comparison and assignment
           <<=? | >>=? | [<>]=?  # comparison and shift
-        /x.freeze
+        }x.freeze
       end
 
       protected

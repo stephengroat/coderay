@@ -50,7 +50,7 @@ module CodeRay
                                          .add(PREDEFINED_FUNCTIONS, :predefined)
                                          .add(DIRECTIVES, :directive)
 
-      ESCAPE = / [rbfntv\n\\\/'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | . /mx.freeze
+      ESCAPE = %r{ [rbfntv\n\\/'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | . }mx.freeze
       UNICODE_ESCAPE =  / u[a-fA-F0-9]{4} | U[a-fA-F0-9]{8} /x.freeze
 
       STRING_PREFIXES = /[xnb]|_\w+/i.freeze
@@ -80,7 +80,7 @@ module CodeRay
             elsif match = scan(%r{ /\* (!)? (?: .*? \*/ | .* ) }mx)
               encoder.text_token match, self[1] ? :directive : :comment
 
-            elsif match = scan(/ [*\/=<>:;,!&^|()\[\]{}~%] | [-+\.](?!\d) /x)
+            elsif match = scan(%r{ [*/=<>:;,!&^|()\[\]{}~%] | [-+\.](?!\d) }x)
               name_expected = true if match == '.' && check(/[A-Za-z_]/)
               encoder.text_token match, :operator
 

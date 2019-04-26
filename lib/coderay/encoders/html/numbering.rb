@@ -54,7 +54,7 @@ module CodeRay
 
           if position_of_last_newline = output.rindex(RUBY_VERSION >= '1.9' ? /\n/ : "\n")
             after_last_newline = output[position_of_last_newline + 1..-1]
-            ends_with_newline = after_last_newline[/\A(?:<\/span>)*\z/]
+            ends_with_newline = after_last_newline[%r{\A(?:</span>)*\z}]
 
             line_count = if ends_with_newline
                            output.count("\n")
@@ -81,7 +81,7 @@ module CodeRay
             line_numbers << "\n"
             line_numbers_table_template = Output::TABLE.apply('LINE_NUMBERS', line_numbers)
 
-            output.gsub!(/<\/div>\n/, '</div>')
+            output.gsub!(%r{</div>\n}, '</div>')
             output.wrap_in! line_numbers_table_template
             output.wrapped_in = :div
 

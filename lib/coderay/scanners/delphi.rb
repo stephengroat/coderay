@@ -52,7 +52,7 @@ module CodeRay
               encoder.text_token match, :space
               next
 
-            elsif match = scan(%r! \{ \$ [^}]* \}? | \(\* \$ (?: .*? \*\) | .* ) !mx)
+            elsif match = scan(/ \{ \$ [^}]* \}? | \(\* \$ (?: .*? \*\) | .* ) /mx)
               encoder.text_token match, :preprocessor
               next
 
@@ -60,7 +60,7 @@ module CodeRay
               encoder.text_token match, :comment
               next
 
-            elsif match = scan(/ <[>=]? | >=? | :=? | [-+=*\/;,@\^|\(\)\[\]] | \.\. /x)
+            elsif match = scan(%r{ <[>=]? | >=? | :=? | [-+=*/;,@\^|\(\)\[\]] | \.\. }x)
               encoder.text_token match, :operator
 
             elsif match = scan(/\./)

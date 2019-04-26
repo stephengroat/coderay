@@ -134,7 +134,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
       target = File.read(target_file)
       assert_not_equal source, target[pre, 1]
       assert_equal 6, target[pre, 1].scan(tag).size
-      assert_match %r{\A<!DOCTYPE html>\n<html>\n<head>}, target
+      assert_match /\A<!DOCTYPE html>\n<html>\n<head>/, target
     end
   end
 
@@ -199,7 +199,7 @@ class TestCodeRayExecutable < Test::Unit::TestCase
 
     source = File.read source_file
 
-    span_tags = /<\/?span[^>]*>/
+    span_tags = %r{</?span[^>]*>}
 
     should 'just respect the output type and include span tags' do
       target = coderay(command)

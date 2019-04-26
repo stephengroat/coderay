@@ -21,7 +21,7 @@ module CodeRay
 
       ESCAPE = / [bfnrtv$\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} /x.freeze # :nodoc:
       UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x.freeze # :nodoc: no 4-byte unicode chars? U[a-fA-F0-9]{8}
-      REGEXP_ESCAPE = / [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | \d | [bBdDsSwW\/] /x.freeze # :nodoc:
+      REGEXP_ESCAPE = %r{ [bfnrtv\n\\'"] | x[a-fA-F0-9]{1,2} | [0-7]{1,3} | \d | [bBdDsSwW/] }x.freeze # :nodoc:
 
       # TODO: interpretation inside ', ", /
       STRING_CONTENT_PATTERN = {
@@ -29,7 +29,7 @@ module CodeRay
         '"' => /[^\\$"\n]+/,
         "'''" => /(?>[^\\']+|'(?!''))+/,
         '"""' => /(?>[^\\$"]+|"(?!""))+/,
-        '/' => /[^\\$\/\n]+/
+        '/' => %r{[^\\$/\n]+}
       }.freeze # :nodoc:
 
       protected
@@ -151,7 +151,7 @@ module CodeRay
               string_delimiter = match
               encoder.text_token match, :delimiter
 
-            elsif value_expected && match = scan(/\//)
+            elsif value_expected && match = scan(%r{/})
               after_def = value_expected = false
               encoder.begin_group :regexp
               state = :regexp
@@ -162,7 +162,7 @@ module CodeRay
               after_def = value_expected = false
               encoder.text_token match, :annotation
 
-            elsif match = scan(/\//)
+            elsif match = scan(%r{/})
               after_def = false
               value_expected = true
               encoder.text_token match, :operator
@@ -176,7 +176,7 @@ module CodeRay
             if match = scan(STRING_CONTENT_PATTERN[string_delimiter])
               encoder.text_token match, :content
 
-            elsif match = scan(state == :multiline_string ? /'''|"""/ : /["'\/]/)
+            elsif match = scan(state == :multiline_string ? /'''|"""/ : %r{["'/]})
               encoder.text_token match, :delimiter
               if state == :regexp
                 # TODO: regexp modifiers? s, m, x, i?

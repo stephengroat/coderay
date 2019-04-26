@@ -10,7 +10,7 @@ module CodeRay
         error integer operator value
       ].freeze # :nodoc:
 
-      ESCAPE = / [bfnrt\\"\/] /x.freeze # :nodoc:
+      ESCAPE = %r{ [bfnrt\\"/] }x.freeze # :nodoc:
       UNICODE_ESCAPE = / u[a-fA-F0-9]{4} /x.freeze # :nodoc:
       KEY = / (?> (?: [^\\"]+ | \\. )* ) " \s* : /x.freeze
 

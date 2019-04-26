@@ -35,23 +35,23 @@ module CodeRay
       IDENT = 'ä'[/[[:alpha:]]/] == 'ä' ? Regexp.new('[[:alpha:]_[^\0-\177]][[:alnum:]_[^\0-\177]]*') : /[^\W\d]\w*/
 
       METHOD_NAME = / #{IDENT} [?!]? /ox.freeze
-      METHOD_NAME_OPERATOR = /
+      METHOD_NAME_OPERATOR = %r{
         \*\*?           # multiplication and power
         | [-+~]@?       # plus, minus, tilde with and without at sign
-        | [\/%&|^`]     # division, modulo or format strings, and, or, xor, system
+        | [/%&|^`]     # division, modulo or format strings, and, or, xor, system
         | \[\]=?        # array getter and setter
         | << | >>       # append or shift left, shift right
         | <=?>? | >=?   # comparison, rocket operator
         | ===? | =~     # simple equality, case equality, match
         | ![~=@]?       # negation with and without at sign, not-equal and not-match
-      /ox.freeze
+      }ox.freeze
       METHOD_SUFFIX = / (?: [?!] | = (?![~>]|=(?!>)) ) /x.freeze
       METHOD_NAME_EX = / #{IDENT} #{METHOD_SUFFIX}? | #{METHOD_NAME_OPERATOR} /ox.freeze
       METHOD_AFTER_DOT = / #{IDENT} [?!]? | #{METHOD_NAME_OPERATOR} /ox.freeze
       INSTANCE_VARIABLE = / @ #{IDENT} /ox.freeze
       CLASS_VARIABLE = / @@ #{IDENT} /ox.freeze
       OBJECT_VARIABLE = / @@? #{IDENT} /ox.freeze
-      GLOBAL_VARIABLE = / \$ (?: #{IDENT} | [1-9]\d* | 0\w* | [~&+`'=\/,;_.<>!@$?*":\\] | -[a-zA-Z_0-9] ) /ox.freeze
+      GLOBAL_VARIABLE = %r{ \$ (?: #{IDENT} | [1-9]\d* | 0\w* | [~&+`'=/,;_.<>!@$?*":\\] | -[a-zA-Z_0-9] ) }ox.freeze
       PREFIX_VARIABLE = / #{GLOBAL_VARIABLE} | #{OBJECT_VARIABLE} /ox.freeze
       VARIABLE = / @?@? #{IDENT} | #{GLOBAL_VARIABLE} /ox.freeze
 
@@ -109,15 +109,15 @@ module CodeRay
 
       # NOTE: This is not completely correct, but
       # nobody needs heredoc delimiters ending with \n.
-      HEREDOC_OPEN = /
+      HEREDOC_OPEN = %r{
         << ([-~])?           # $1 = float
         (?:
           ( [A-Za-z_0-9]+ )  # $2 = delim
         |
-          ( ["'`\/] )        # $3 = quote, type
+          ( ["'`/] )        # $3 = quote, type
           ( [^\n]*? ) \3     # $4 = delim
         )
-      /mx.freeze
+      }mx.freeze
 
       RUBYDOC = /
         =begin (?!\S)
@@ -135,15 +135,15 @@ module CodeRay
 
       # Checks for a valid value to follow. This enables
       # value_expected in method calls without parentheses.
-      VALUE_FOLLOWS = /
+      VALUE_FOLLOWS = %r{
         (?>[ \t\f\v]+)
         (?:
-          [%\/][^\s=]
+          [%/][^\s=]
         | <<-?\S
         | [-+] \d
         | #{CHARACTER}
         )
-      /ox.freeze
+      }ox.freeze
       KEYWORDS_EXPECTING_VALUE = WordList.new.add(%w[
                                                     and end in or unless begin
                                                     defined? ensure redo super until

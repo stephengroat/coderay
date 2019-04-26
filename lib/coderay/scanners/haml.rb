@@ -31,7 +31,7 @@ module CodeRay
               next
             end
 
-            if match = scan(/(?>( *)(\/(?!\[if)|-\#|:javascript|:ruby|:\w+) *)(?=\n)/)
+            if match = scan(%r{(?>( *)(/(?!\[if)|-\#|:javascript|:ruby|:\w+) *)(?=\n)})
               encoder.text_token match, :comment
 
               code = self[2]
@@ -57,7 +57,7 @@ module CodeRay
               encoder.text_token match, :space
             end
 
-            if match = scan(/\/.*/)
+            if match = scan(%r{/.*})
               encoder.text_token match, :comment
               next
             end
@@ -72,7 +72,7 @@ module CodeRay
 
             tag = false
 
-            if match = scan(/%[-\w:]+\/?/)
+            if match = scan(%r{%[-\w:]+/?})
               encoder.text_token match, :tag
               # if match = scan(/( +)(.+)/)
               #   encoder.text_token self[1], :space
@@ -126,7 +126,7 @@ module CodeRay
               encoder.text_token self[3], :plain if self[3]
             end
 
-            if tag && match = scan(/\//)
+            if tag && match = scan(%r{/})
               encoder.text_token match, :tag
             end
 
@@ -139,7 +139,7 @@ module CodeRay
                   @ruby_scanner.tokenize self[4], :tokens => encoder
                 end
               end
-            elsif match = scan(/((?:<|><?)(?![!?\/\w]))?(.+)?/)
+            elsif match = scan(%r{((?:<|><?)(?![!?/\w]))?(.+)?})
               encoder.text_token self[1], :plain if self[1]
               # TODO: recognize #{...} snippets
               @html_scanner.tokenize self[2], :tokens => encoder if self[2]

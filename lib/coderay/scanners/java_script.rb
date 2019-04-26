@@ -43,7 +43,7 @@ module CodeRay
       STRING_CONTENT_PATTERN = {
         "'" => /[^\\']+/,
         '"' => /[^\\"]+/,
-        '/' => /[^\\\/]+/
+        '/' => %r{[^\\/]+}
       }.freeze  # :nodoc:
       KEY_CHECK_PATTERN = {
         "'" => / (?> [^\\']* (?: \\. [^\\']* )* ) ' \s* : /mx,
@@ -91,7 +91,7 @@ module CodeRay
                 encoder.text_token match, :integer
               end
 
-            elsif value_expected && match = scan(/<([[:alpha:]]\w*) (?: [^\/>]*\/> | .*?<\/\1>)/xim)
+            elsif value_expected && match = scan(%r{<([[:alpha:]]\w*) (?: [^/>]*/> | .*?</\1>)}xim)
               # TODO: scan over nested tags
               xml_scanner.tokenize match, :tokens => encoder
               value_expected = false
@@ -136,13 +136,13 @@ module CodeRay
               string_delimiter = match
               encoder.text_token match, :delimiter
 
-            elsif value_expected && (match = scan(/\//))
+            elsif value_expected && (match = scan(%r{/}))
               encoder.begin_group :regexp
               state = :regexp
               string_delimiter = '/'
               encoder.text_token match, :delimiter
 
-            elsif match = scan(/ \/ /x)
+            elsif match = scan(%r{ / }x)
               value_expected = true
               key_expected = false
               encoder.text_token match, :operator
@@ -155,7 +155,7 @@ module CodeRay
           when :string, :regexp, :key
             if match = scan(STRING_CONTENT_PATTERN[string_delimiter])
               encoder.text_token match, :content
-            elsif match = scan(/["'\/]/)
+            elsif match = scan(%r{["'/]})
               encoder.text_token match, :delimiter
               if state == :regexp
                 modifiers = scan(/[gim]+/)
@@ -189,7 +189,7 @@ module CodeRay
             if match = scan(%r{ .*? \*/ }mx)
               state = :initial
             else
-              match = scan(%r{ .+ }mx)
+              match = scan(/ .+ /mx)
             end
             value_expected = true
             encoder.text_token match, :comment if match
