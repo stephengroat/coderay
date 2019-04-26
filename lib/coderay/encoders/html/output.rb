@@ -25,7 +25,7 @@ module CodeRay
 <style type="text/css">
 #{sheet}
 </style>
-          CSS
+            CSS
             sheet
           end
 
@@ -101,11 +101,8 @@ module CodeRay
 
           def apply(target, replacement)
             target = Regexp.new(Regexp.escape("<%#{target}%>"))
-            if self =~ target
-              Template.new($` + replacement + $')
-            else
-              raise format('Template target <%%%p%%> not found', target)
-            end
+            raise format('Template target <%%%p%%> not found', target) unless self =~ target
+            Template.new($` + replacement + $') if self =~ target
           end
         end
 
@@ -115,14 +112,14 @@ module CodeRay
 <div class="CodeRay">
   <div class="code"><pre><%CONTENT%></pre></div>
 </div>
-      DIV
+        DIV
 
         TABLE = Template.new <<-TABLE
 <table class="CodeRay"><tr>
   <td class="line-numbers"><pre><%LINE_NUMBERS%></pre></td>
   <td class="code"><pre><%CONTENT%></pre></td>
 </tr></table>
-      TABLE
+        TABLE
 
         PAGE = Template.new <<-PAGE
 <!DOCTYPE html>
@@ -151,7 +148,7 @@ body {
 <%CONTENT%>
 </body>
 </html>
-      PAGE
+        PAGE
       end
     end
   end

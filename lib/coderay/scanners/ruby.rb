@@ -279,12 +279,11 @@ module CodeRay
               if match = scan(unicode ? /(?>#{patterns::METHOD_NAME_EX})(?!\.|::)/uo :
                                         /(?>#{patterns::METHOD_NAME_EX})(?!\.|::)/o)
                 encoder.text_token match, :method
-                state = :initial
               else
                 last_state = :dot_expected
-                state = :initial
               end
 
+              state = :initial
             elsif state == :dot_expected
               if match = scan(/\.|::/)
                 # invalid definition

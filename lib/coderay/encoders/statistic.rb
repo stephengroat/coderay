@@ -31,7 +31,7 @@ Token Types (%d):
   type                     count     ratio    size (average)
 -------------------------------------------------------------
 %s
-    STATS
+      STATS
 
       TOKEN_TYPES_ROW = <<-TKR.freeze  # :nodoc:
   %-20s  %8d  %6.2f %%   %5.1f

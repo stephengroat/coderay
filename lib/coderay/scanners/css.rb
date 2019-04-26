@@ -12,35 +12,35 @@ module CodeRay
       ].freeze # :nodoc:
 
       module RE # :nodoc:
-        Hex = /[0-9a-fA-F]/.freeze
-        Unicode = /\\#{Hex}{1,6}\b/.freeze # differs from standard because it allows uppercase hex too
-        Escape = /#{Unicode}|\\[^\n0-9a-fA-F]/.freeze
-        NMChar = /[-_a-zA-Z0-9]/.freeze
-        NMStart = /[_a-zA-Z]/.freeze
-        String1 = /"(?:[^\n\\"]+|\\\n|#{Escape})*"?/.freeze  # TODO: buggy regexp
-        String2 = /'(?:[^\n\\']+|\\\n|#{Escape})*'?/.freeze  # TODO: buggy regexp
-        String = /#{String1}|#{String2}/.freeze
+        HEX = /[0-9a-fA-F]/.freeze
+        UNICODE = /\\#{HEX}{1,6}\b/.freeze # differs from standard because it allows uppercase hex too
+        ESCAPE = /#{UNICODE}|\\[^\n0-9a-fA-F]/.freeze
+        NM_CHAR = /[-_a-zA-Z0-9]/.freeze
+        NM_START = /[_a-zA-Z]/.freeze
+        STRING_1 = /"(?:[^\n\\"]+|\\\n|#{ESCAPE})*"?/.freeze  # TODO: buggy regexp
+        STRING_2 = /'(?:[^\n\\']+|\\\n|#{ESCAPE})*'?/.freeze  # TODO: buggy regexp
+        STRING = /#{STRING_1}|#{STRING_2}/.freeze
 
-        HexColor = /#(?:#{Hex}{6}|#{Hex}{3})/.freeze
+        HEX_COLOR = /#(?:#{HEX}{6}|#{HEX}{3})/.freeze
 
-        Num = /-?(?:[0-9]*\.[0-9]+|[0-9]+)n?/.freeze
-        Name = /#{NMChar}+/.freeze
-        Ident = /-?#{NMStart}#{NMChar}*/.freeze
-        AtKeyword = /@#{Ident}/.freeze
-        Percentage = /#{Num}%/.freeze
+        NUM = /-?(?:[0-9]*\.[0-9]+|[0-9]+)n?/.freeze
+        NAME = /#{NM_CHAR}+/.freeze
+        IDENT = /-?#{NM_START}#{NM_CHAR}*/.freeze
+        AT_KEYWORD = /@#{IDENT}/.freeze
+        PERCENTAGE = /#{NUM}%/.freeze
 
         reldimensions = %w[em ex px]
         absdimensions = %w[in cm mm pt pc]
         Unit = Regexp.union(*(reldimensions + absdimensions + %w[s dpi dppx deg]))
 
-        Dimension = /#{Num}#{Unit}/.freeze
+        DIMENSION = /#{NUM}#{Unit}/.freeze
 
-        Function = /(?:url|alpha|attr|counters?)\((?:[^)\n]|\\\))*\)?/.freeze
+        FUNCTION = /(?:url|alpha|attr|counters?)\((?:[^)\n]|\\\))*\)?/.freeze
 
-        Id = /(?!#{HexColor}\b(?!-))##{Name}/.freeze
-        Class = /\.#{Name}/.freeze
-        PseudoClass = /::?#{Ident}/.freeze
-        AttributeSelector = /\[[^\]]*\]?/.freeze
+        ID = /(?!#{HEX_COLOR}\b(?!-))##{NAME}/.freeze
+        CLASS = /\.#{NAME}/.freeze
+        PSEUDO_CLASS = /::?#{IDENT}/.freeze
+        ATTRIBUTE_SELECTOR = /\[[^\]]*\]?/.freeze
       end
 
       protected
@@ -61,19 +61,19 @@ module CodeRay
 
           elsif case states.last
                 when :initial, :media
-                  if match = scan(/(?>#{RE::Ident})(?!\()|\*/ox)
+                  if match = scan(/(?>#{RE::IDENT})(?!\()|\*/ox)
                     encoder.text_token match, :tag
                     next
-                  elsif match = scan(RE::Class)
+                  elsif match = scan(RE::CLASS)
                     encoder.text_token match, :class
                     next
-                  elsif match = scan(RE::Id)
+                  elsif match = scan(RE::ID)
                     encoder.text_token match, :id
                     next
-                  elsif match = scan(RE::PseudoClass)
+                  elsif match = scan(RE::PSEUDO_CLASS)
                     encoder.text_token match, :pseudo_class
                     next
-                  elsif match = scan(RE::AttributeSelector)
+                  elsif match = scan(RE::ATTRIBUTE_SELECTOR)
                     # TODO: Improve highlighting inside of attribute selectors.
                     encoder.text_token match[0, 1], :operator
                     encoder.text_token match[1..-2], :attribute_name if match.size > 2
@@ -86,7 +86,7 @@ module CodeRay
                   end
 
                 when :block
-                  if match = scan(/(?>#{RE::Ident})(?!\()/ox)
+                  if match = scan(/(?>#{RE::IDENT})(?!\()/ox)
                     if value_expected
                       encoder.text_token match, :value
                     else
@@ -96,7 +96,7 @@ module CodeRay
                   end
 
                 when :media_before_name
-                  if match = scan(RE::Ident)
+                  if match = scan(RE::IDENT)
                     encoder.text_token match, :type
                     states[-1] = :media_after_name
                     next
@@ -129,14 +129,14 @@ module CodeRay
             encoder.text_token match, :operator
             states.pop if states.last == :block || states.last == :media
 
-          elsif match = scan(/#{RE::String}/o)
+          elsif match = scan(/#{RE::STRING}/o)
             encoder.begin_group :string
             encoder.text_token match[0, 1], :delimiter
             encoder.text_token match[1..-2], :content if match.size > 2
             encoder.text_token match[-1, 1], :delimiter if match.size >= 2
             encoder.end_group :string
 
-          elsif match = scan(/#{RE::Function}/o)
+          elsif match = scan(/#{RE::FUNCTION}/o)
             encoder.begin_group :function
             start = match[/^\w+\(/]
             encoder.text_token start, :delimiter
@@ -148,10 +148,10 @@ module CodeRay
             end
             encoder.end_group :function
 
-          elsif match = scan(/(?: #{RE::Dimension} | #{RE::Percentage} | #{RE::Num} )/ox)
+          elsif match = scan(/(?: #{RE::DIMENSION} | #{RE::PERCENTAGE} | #{RE::NUM} )/ox)
             encoder.text_token match, :float
 
-          elsif match = scan(/#{RE::HexColor}/o)
+          elsif match = scan(/#{RE::HEX_COLOR}/o)
             encoder.text_token match, :color
 
           elsif match = scan(/! *important/)
@@ -160,7 +160,7 @@ module CodeRay
           elsif match = scan(/(?:rgb|hsl)a?\([^()\n]*\)?/)
             encoder.text_token match, :color
 
-          elsif match = scan(RE::AtKeyword)
+          elsif match = scan(RE::AT_KEYWORD)
             encoder.text_token match, :directive
 
           elsif match = scan(%r{ [+>~:;,.=()/] }x)

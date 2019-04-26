@@ -55,27 +55,27 @@ module Test
           path = realdir(name)
           if @file.directory?(path)
             dir_name = name unless name == '.'
-      @dir.entries(path).each do |e|
-        next if e == '.' || e == '..'
-
-        e_name = dir_name ? @file.join(dir_name, e) : e
-        if @file.directory?(realdir(e_name))
-          next if /\ACVS\z/ =~ e
-
-          sub_suite = recursive_collect(e_name, already_gathered)
-          sub_suites << sub_suite unless sub_suite.empty?
-        else
-          next if /~\z/ =~ e_name || /\A\.\#/ =~ e
-
-          if @pattern && !@pattern.empty?
-            next unless @pattern.any? { |pat| pat =~ e_name }
-          end
-          if @exclude && !@exclude.empty?
-            next if @exclude.any? { |pat| pat =~ e_name }
-          end
-          collect_file(e_name, sub_suites, already_gathered)
-        end
-      end
+            @dir.entries(path).each do |e|
+              next if e == '.' || e == '..'
+      
+              e_name = dir_name ? @file.join(dir_name, e) : e
+              if @file.directory?(realdir(e_name))
+                next if /\ACVS\z/ =~ e
+      
+                sub_suite = recursive_collect(e_name, already_gathered)
+                sub_suites << sub_suite unless sub_suite.empty?
+              else
+                next if /~\z/ =~ e_name || /\A\.\#/ =~ e
+      
+                if @pattern && !@pattern.empty?
+                  next unless @pattern.any? { |pat| pat =~ e_name }
+                end
+                if @exclude && !@exclude.empty?
+                  next if @exclude.any? { |pat| pat =~ e_name }
+                end
+                collect_file(e_name, sub_suites, already_gathered)
+              end
+            end
           else
             collect_file(name, sub_suites, already_gathered)
           end

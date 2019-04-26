@@ -16,6 +16,9 @@ Metrics/ModuleLength:
 Metrics/ClassLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/PerceivedComplexity:
   Enabled: false
 

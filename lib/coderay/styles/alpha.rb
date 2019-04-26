@@ -46,7 +46,7 @@ table.CodeRay td { padding: 2px 4px; vertical-align: top; }
 .CodeRay span.line-numbers { padding: 0px 4px; }
 .CodeRay .line { display: block; float: left; width: 100%; }
 .CodeRay .code { width: 100%; }
-    MAIN
+      MAIN
 
       TOKEN_COLORS = <<-'TOKENS'.freeze
 .debug { color: white !important; background: blue !important; }
@@ -143,7 +143,7 @@ table.CodeRay td { padding: 2px 4px; vertical-align: top; }
 .delete .delete { color: #c00; background:transparent; font-weight:bold }
 .change .change { color: #88f }
 .head .head { color: #f4f }
-    TOKENS
+      TOKENS
     end
   end
 end
