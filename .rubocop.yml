@@ -25,6 +25,9 @@ Metrics/CyclomaticComplexity:
 Metrics/AbcSize:
   Enabled: false
 
+Metrics/BlockNesting:
+  Enabled: false
+
 Lint/AssignmentInCondition:
   Enabled: false
 
