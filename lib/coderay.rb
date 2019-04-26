@@ -125,7 +125,7 @@
 module CodeRay
   $CODERAY_DEBUG ||= false
 
-  CODERAY_PATH = File.expand_path('coderay', __dir__)
+  CODERAY_PATH = File.expand_path('../coderay', __FILE__)
 
   # Assuming the path is a subpath of lib/coderay/
   def self.coderay_path(*path)

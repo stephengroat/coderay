@@ -1,5 +1,5 @@
 require 'benchmark'
-$LOAD_PATH << File.expand_path('../lib', __dir__)
+$LOAD_PATH << File.expand_path('../../lib', __FILE__)
 require 'coderay'
 
 if ARGV.include? '-h'
