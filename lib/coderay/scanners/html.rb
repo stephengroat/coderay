@@ -173,8 +173,8 @@ module CodeRay
                 encoder.text_token match, :attribute_value
                 state = :attribute
               elsif match = scan(/["']/)
+                encoder.begin_group :string
                 if in_attribute == :script || in_attribute == :style
-                  encoder.begin_group :string
                   encoder.text_token match, :delimiter
                   encoder.text_token matched, :comment if scan(/javascript:[ \t]*/)
                   code = scan_until(match == '"' ? /(?="|\z)/ : /(?='|\z)/)
@@ -189,7 +189,6 @@ module CodeRay
                   state = :attribute
                   in_attribute = nil
                 else
-                  encoder.begin_group :string
                   state = :attribute_value_string
                   plain_string_content = PLAIN_STRING_CONTENT[match]
                   encoder.text_token match, :delimiter

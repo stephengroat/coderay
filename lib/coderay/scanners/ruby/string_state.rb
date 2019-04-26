@@ -4,7 +4,7 @@ module CodeRay
       class StringState < Struct.new :type, :interpreted, :delim, :heredoc,
                                      :opening_paren, :paren_depth, :pattern, :next_state # :nodoc: all
 
-        CLOSING_PAREN = Hash['(', ')', '[', ']', '<', '>', '{', '}'].each { |k, v| k.freeze; v.freeze } # debug, if I try to change it with <<
+        CLOSING_PAREN = Hash['(', ')', '[', ']', '<', '>', '{', '}'].freeze
 
         STRING_PATTERN = Hash.new do |h, k|
           delim, interpreted = *k

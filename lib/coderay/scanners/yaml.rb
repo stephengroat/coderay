@@ -12,7 +12,6 @@ module CodeRay
       protected
 
       def scan_tokens(encoder, options)
-
         state = :initial
         key_indent = string_indent = 0
 

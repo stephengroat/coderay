@@ -36,3 +36,9 @@ Lint/AssignmentInCondition:
 
 Layout/IndentHeredoc:
   Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
